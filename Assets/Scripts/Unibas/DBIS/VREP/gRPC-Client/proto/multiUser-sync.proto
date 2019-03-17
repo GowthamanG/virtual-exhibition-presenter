@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+message PlayerPosition {
+    int32 xPosition = 1;
+    int32 yPosition = 2;
+    int32 zPosition = 3;
+}
+
+message PlayerRotation {
+    int32 xPosition = 1;
+    int32 yPosition = 2;
+    int32 zPosition = 3;
+}
+
+message PlayerScale {
+    int32 xPosition = 1;
+    int32 yPosition = 2;
+    int32 zPosition = 3;
+}
+
+
+service multiUserSync{
+    rpc GetPositon(stream PlayerPosition) returns (stream PlayerPosition){}
+
+    rpc GetRotation(stream PlayerRotation) returns (stream PlayerRotation){}
+
+    rpc GetScale(stream PlayerScale) returns (stream PlayerScale){}
+}
