@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
+using Valve.VR.InteractionSystem;
 
-public class VREP_Client : MonoBehaviour {
+
+public class VREPClient : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		
 	}
 	
