@@ -2,27 +2,15 @@ syntax = "proto3";
 
 message Player{
     int32 id = 1;
-    PlayerPosition playerPosition = 2;
-    PlayerRotation playerRotation = 3;
-    PlayerScale playerScale = 4;
+    repeated Vector3 playerPosition = 2;
+    repeated Vector3 playerRotation = 3;
+    repeated Vector3 playerScale = 4;
 }
 
-message PlayerPosition{
-    int32 xPosition = 1;
-    int32 yPosition = 2;
-    int32 zPosition = 3;
-}
-
-message PlayerRotation{
-    int32 xRotation = 1;
-    int32 yRotation = 2;
-    int32 zRotation = 3;
-}
-
-message PlayerScale{
-    int32 xScale = 1;
-    int32 yScale = 2;
-    int32 zScale = 3;
+message Vector3{
+    float x = 1;
+    float y = 2;
+    float z = 3;
 }
 
 message RequestPlayer{
