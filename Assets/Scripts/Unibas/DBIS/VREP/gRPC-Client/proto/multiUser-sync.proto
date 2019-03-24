@@ -2,12 +2,12 @@ syntax = "proto3";
 
 message Player{
     int32 id = 1;
-    repeated Vector3 playerPosition = 2;
-    repeated Vector3 playerRotation = 3;
-    repeated Vector3 playerScale = 4;
+    Vector playerPosition = 2;
+    Vector playerRotation = 3;
+    Vector playerScale = 4;
 }
 
-message Vector3{
+message Vector{
     float x = 1;
     float y = 2;
     float z = 3;
