@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-message Player{
+message User{
     int32 id = 1;
     Vector playerPosition = 2;
     Vector playerRotation = 3;
@@ -13,8 +13,8 @@ message Vector{
     float z = 3;
 }
 
-message RequestPlayer{
-    int32 requestPlayerID = 1;
+message RequestUser{
+    int32 requestUserID = 1;
 }
 
 message Response{
@@ -23,6 +23,6 @@ message Response{
 
 
 service multiUserSync{
-    rpc getPlayer (stream RequestPlayer) returns (stream Player){}
-    rpc setPlayer (stream Player) returns (stream Response){}
+    rpc getUser (stream RequestUser) returns (stream User){}
+    rpc setUser (stream User) returns (stream Response){}
 }

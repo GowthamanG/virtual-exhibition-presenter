@@ -22,21 +22,20 @@ public static partial class MultiUserSyncReflection {
   static MultiUserSyncReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "ChRtdWx0aVVzZXItc3luYy5wcm90byJ0CgZQbGF5ZXISCgoCaWQYASABKAUS",
-          "HwoOcGxheWVyUG9zaXRpb24YAiABKAsyBy5WZWN0b3ISHwoOcGxheWVyUm90",
-          "YXRpb24YAyABKAsyBy5WZWN0b3ISHAoLcGxheWVyU2NhbGUYBCABKAsyBy5W",
-          "ZWN0b3IiKQoGVmVjdG9yEgkKAXgYASABKAISCQoBeRgCIAEoAhIJCgF6GAMg",
-          "ASgCIigKDVJlcXVlc3RQbGF5ZXISFwoPcmVxdWVzdFBsYXllcklEGAEgASgF",
-          "IhwKCFJlc3BvbnNlEhAKCHJlc3BvbnNlGAEgASgJMmIKDW11bHRpVXNlclN5",
-          "bmMSKgoJZ2V0UGxheWVyEg4uUmVxdWVzdFBsYXllchoHLlBsYXllciIAKAEw",
-          "ARIlCglzZXRQbGF5ZXISBy5QbGF5ZXIaCS5SZXNwb25zZSIAKAEwAWIGcHJv",
-          "dG8z"));
+          "ChRtdWx0aVVzZXItc3luYy5wcm90byJyCgRVc2VyEgoKAmlkGAEgASgFEh8K",
+          "DnBsYXllclBvc2l0aW9uGAIgASgLMgcuVmVjdG9yEh8KDnBsYXllclJvdGF0",
+          "aW9uGAMgASgLMgcuVmVjdG9yEhwKC3BsYXllclNjYWxlGAQgASgLMgcuVmVj",
+          "dG9yIikKBlZlY3RvchIJCgF4GAEgASgCEgkKAXkYAiABKAISCQoBehgDIAEo",
+          "AiIkCgtSZXF1ZXN0VXNlchIVCg1yZXF1ZXN0VXNlcklEGAEgASgFIhwKCFJl",
+          "c3BvbnNlEhAKCHJlc3BvbnNlGAEgASgJMlgKDW11bHRpVXNlclN5bmMSJAoH",
+          "Z2V0VXNlchIMLlJlcXVlc3RVc2VyGgUuVXNlciIAKAEwARIhCgdzZXRVc2Vy",
+          "EgUuVXNlchoJLlJlc3BvbnNlIgAoATABYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::Player), global::Player.Parser, new[]{ "Id", "PlayerPosition", "PlayerRotation", "PlayerScale" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::User), global::User.Parser, new[]{ "Id", "PlayerPosition", "PlayerRotation", "PlayerScale" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::Vector), global::Vector.Parser, new[]{ "X", "Y", "Z" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::RequestPlayer), global::RequestPlayer.Parser, new[]{ "RequestPlayerID" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::RequestUser), global::RequestUser.Parser, new[]{ "RequestUserID" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::Response), global::Response.Parser, new[]{ "Response_" }, null, null, null)
         }));
   }
@@ -44,11 +43,11 @@ public static partial class MultiUserSyncReflection {
 
 }
 #region Messages
-public sealed partial class Player : pb::IMessage<Player> {
-  private static readonly pb::MessageParser<Player> _parser = new pb::MessageParser<Player>(() => new Player());
+public sealed partial class User : pb::IMessage<User> {
+  private static readonly pb::MessageParser<User> _parser = new pb::MessageParser<User>(() => new User());
   private pb::UnknownFieldSet _unknownFields;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public static pb::MessageParser<Player> Parser { get { return _parser; } }
+  public static pb::MessageParser<User> Parser { get { return _parser; } }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
@@ -61,14 +60,14 @@ public sealed partial class Player : pb::IMessage<Player> {
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public Player() {
+  public User() {
     OnConstruction();
   }
 
   partial void OnConstruction();
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public Player(Player other) : this() {
+  public User(User other) : this() {
     id_ = other.id_;
     playerPosition_ = other.playerPosition_ != null ? other.playerPosition_.Clone() : null;
     playerRotation_ = other.playerRotation_ != null ? other.playerRotation_.Clone() : null;
@@ -77,8 +76,8 @@ public sealed partial class Player : pb::IMessage<Player> {
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public Player Clone() {
-    return new Player(this);
+  public User Clone() {
+    return new User(this);
   }
 
   /// <summary>Field number for the "id" field.</summary>
@@ -127,11 +126,11 @@ public sealed partial class Player : pb::IMessage<Player> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
-    return Equals(other as Player);
+    return Equals(other as User);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool Equals(Player other) {
+  public bool Equals(User other) {
     if (ReferenceEquals(other, null)) {
       return false;
     }
@@ -208,7 +207,7 @@ public sealed partial class Player : pb::IMessage<Player> {
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void MergeFrom(Player other) {
+  public void MergeFrom(User other) {
     if (other == null) {
       return;
     }
@@ -460,11 +459,11 @@ public sealed partial class Vector : pb::IMessage<Vector> {
 
 }
 
-public sealed partial class RequestPlayer : pb::IMessage<RequestPlayer> {
-  private static readonly pb::MessageParser<RequestPlayer> _parser = new pb::MessageParser<RequestPlayer>(() => new RequestPlayer());
+public sealed partial class RequestUser : pb::IMessage<RequestUser> {
+  private static readonly pb::MessageParser<RequestUser> _parser = new pb::MessageParser<RequestUser>(() => new RequestUser());
   private pb::UnknownFieldSet _unknownFields;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public static pb::MessageParser<RequestPlayer> Parser { get { return _parser; } }
+  public static pb::MessageParser<RequestUser> Parser { get { return _parser; } }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
@@ -477,55 +476,55 @@ public sealed partial class RequestPlayer : pb::IMessage<RequestPlayer> {
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public RequestPlayer() {
+  public RequestUser() {
     OnConstruction();
   }
 
   partial void OnConstruction();
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public RequestPlayer(RequestPlayer other) : this() {
-    requestPlayerID_ = other.requestPlayerID_;
+  public RequestUser(RequestUser other) : this() {
+    requestUserID_ = other.requestUserID_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public RequestPlayer Clone() {
-    return new RequestPlayer(this);
+  public RequestUser Clone() {
+    return new RequestUser(this);
   }
 
-  /// <summary>Field number for the "requestPlayerID" field.</summary>
-  public const int RequestPlayerIDFieldNumber = 1;
-  private int requestPlayerID_;
+  /// <summary>Field number for the "requestUserID" field.</summary>
+  public const int RequestUserIDFieldNumber = 1;
+  private int requestUserID_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public int RequestPlayerID {
-    get { return requestPlayerID_; }
+  public int RequestUserID {
+    get { return requestUserID_; }
     set {
-      requestPlayerID_ = value;
+      requestUserID_ = value;
     }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
-    return Equals(other as RequestPlayer);
+    return Equals(other as RequestUser);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool Equals(RequestPlayer other) {
+  public bool Equals(RequestUser other) {
     if (ReferenceEquals(other, null)) {
       return false;
     }
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (RequestPlayerID != other.RequestPlayerID) return false;
+    if (RequestUserID != other.RequestUserID) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override int GetHashCode() {
     int hash = 1;
-    if (RequestPlayerID != 0) hash ^= RequestPlayerID.GetHashCode();
+    if (RequestUserID != 0) hash ^= RequestUserID.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -539,9 +538,9 @@ public sealed partial class RequestPlayer : pb::IMessage<RequestPlayer> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void WriteTo(pb::CodedOutputStream output) {
-    if (RequestPlayerID != 0) {
+    if (RequestUserID != 0) {
       output.WriteRawTag(8);
-      output.WriteInt32(RequestPlayerID);
+      output.WriteInt32(RequestUserID);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -551,8 +550,8 @@ public sealed partial class RequestPlayer : pb::IMessage<RequestPlayer> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int CalculateSize() {
     int size = 0;
-    if (RequestPlayerID != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(RequestPlayerID);
+    if (RequestUserID != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(RequestUserID);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -561,12 +560,12 @@ public sealed partial class RequestPlayer : pb::IMessage<RequestPlayer> {
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void MergeFrom(RequestPlayer other) {
+  public void MergeFrom(RequestUser other) {
     if (other == null) {
       return;
     }
-    if (other.RequestPlayerID != 0) {
-      RequestPlayerID = other.RequestPlayerID;
+    if (other.RequestUserID != 0) {
+      RequestUserID = other.RequestUserID;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -580,7 +579,7 @@ public sealed partial class RequestPlayer : pb::IMessage<RequestPlayer> {
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 8: {
-          RequestPlayerID = input.ReadInt32();
+          RequestUserID = input.ReadInt32();
           break;
         }
       }
