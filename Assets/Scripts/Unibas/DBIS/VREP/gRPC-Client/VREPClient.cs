@@ -14,13 +14,17 @@ public class VREPClient : MonoBehaviour
 	public string host;
 	public int port;
 	public GameObject player1;
-	public GameObject secondUserObject;
+	//public GameObject secondUserObject;
 	private multiUserSync.multiUserSyncClient client;
 	private User user;
 	private User secondUser;
+	private Task task;
+
+
 	// Use this for initialization
 	void Start ()
 	{
+		task = SetUser();
 		Channel channel = new Channel(host, port, ChannelCredentials.Insecure);
 		
 		client = new multiUserSync.multiUserSyncClient(channel);
@@ -59,13 +63,11 @@ public class VREPClient : MonoBehaviour
 		Debug.Log("Player details: " + player1.ToString());
 		Debug.Log("Player position x: " + user.PlayerPosition.X);
 
-		SetUser().Wait();
-		GetUser(Time.deltaTime).Wait();
+		task.Wait();
 		
-		Vector3 positionSecondUser = new Vector3(secondUser.PlayerPosition.X, secondUser.PlayerPosition.Y,
-			secondUser.PlayerPosition.Z);
+		//Vector3 positionSecondUser = new Vector3(secondUser.PlayerPosition.X, secondUser.PlayerPosition.Y, secondUser.PlayerPosition.Z);
 
-		Instantiate(secondUserObject, positionSecondUser, Quaternion.Euler(0,0,0));
+		//Instantiate(secondUserObject, positionSecondUser, Quaternion.Euler(0,0,0));
 
 		channel.ShutdownAsync().Wait();
 		
@@ -75,9 +77,8 @@ public class VREPClient : MonoBehaviour
 	void Update ()
 	{
 		updateUser(user, player1);
-		updateUser(secondUser, secondUserObject);
-		SetUser().Wait();
-		GetUser(Time.deltaTime).Wait();
+		//updateUser(secondUser, secondUserObject);
+		task.Wait();
 
 	}
 
@@ -107,13 +108,13 @@ public class VREPClient : MonoBehaviour
 		}
 		catch (RpcException e)
 		{
-			Console.WriteLine("RPC failed" + e);
+			Debug.Log("RPC failed" + e);
 			throw;
 		}
 	}
 
 	
-	public async Task GetUser(float deltaTime)
+	public async Task GetUser(float deltaTime = 1.0f)
 	{
 		try
 		{
@@ -127,9 +128,9 @@ public class VREPClient : MonoBehaviour
 						Debug.Log("Second user received: " + note);
 						secondUser = note;
 						//deltaTime used to update values per second instead per frame
-						secondUser.PlayerPosition.X *= deltaTime;
+						/*secondUser.PlayerPosition.X *= deltaTime;
 						secondUser.PlayerPosition.Y *= deltaTime;
-						secondUser.PlayerPosition.Z *= deltaTime;
+						secondUser.PlayerPosition.Z *= deltaTime;*/
 					}
 				});
 
@@ -143,7 +144,7 @@ public class VREPClient : MonoBehaviour
 		}
 		catch (RpcException e)
 		{
-			Console.WriteLine("RPC failed" + e);
+			Debug.Log("RPC failed" + e);
 			throw;
 		}
 	}
@@ -153,32 +154,6 @@ public class VREPClient : MonoBehaviour
 		var position = gameObject.transform.position;
 		var rotation = gameObject.transform.rotation;
 		var lossyScale = gameObject.transform.lossyScale;
-		
-		user = new User
-		{
-			Id = gameObject.GetInstanceID(),
-			
-			PlayerPosition = new Vector()
-			{
-				X = position.x,
-				Y = position.y,
-				Z = position.z,
-			},
-			
-			PlayerRotation = new Vector()
-			{
-				X = rotation.x,
-				Y = rotation.y,
-				Z = rotation.z,
-			},
-			
-			PlayerScale = new Vector()
-			{
-				X = lossyScale.x,
-				Y = lossyScale.y,
-				Z = lossyScale.z,
-			}
-		};
 
 		user.Id = gameObject.GetInstanceID();
 		user.PlayerPosition.X = position.x;
