@@ -1,171 +1,285 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Threading;
 using Grpc.Core;
-using Grpc.Core.Utils;
-using UnityEditor.VersionControl;
 using UnityEngine;
-using System.Threading.Tasks;
-using Valve.VR.InteractionSystem;
-using Task = System.Threading.Tasks.Task;
 
-public class VREPClient : MonoBehaviour
+namespace Unibas.DBIS.VREP
 {
-	public string host;
-	public int port;
-	public GameObject player1;
-	//public GameObject secondUserObject;
-	private multiUserSync.multiUserSyncClient client;
-	private User user;
-	private User secondUser;
-	private Task task;
-
-
-	// Use this for initialization
-	void Start ()
+	public class VREPClient : MonoBehaviour
 	{
-		task = SetUser();
-		Channel channel = new Channel(host, port, ChannelCredentials.Insecure);
-		
-		client = new multiUserSync.multiUserSyncClient(channel);
-		
-		var position = player1.transform.position;
-		var rotation = player1.transform.rotation;
-		var lossyScale = player1.transform.lossyScale;
-
-		user = new User
-		{
-			Id = player1.GetInstanceID(),
-			
-			PlayerPosition = new Vector()
-			{
-				X = position.x,
-				Y = position.y,
-				Z = position.z,
-			},
-			
-			PlayerRotation = new Vector()
-			{
-				X = rotation.x,
-				Y = rotation.y,
-				Z = rotation.z,
-			},
-			
-			PlayerScale = new Vector()
-			{
-				X = lossyScale.x,
-				Y = lossyScale.y,
-				Z = lossyScale.z,
-			}
-		};
-		
-		Debug.Log("Player ID: " + user.Id);
-		Debug.Log("Player details: " + player1.ToString());
-		Debug.Log("Player position x: " + user.PlayerPosition.X);
-
-		task.Wait();
-		
-		//Vector3 positionSecondUser = new Vector3(secondUser.PlayerPosition.X, secondUser.PlayerPosition.Y, secondUser.PlayerPosition.Z);
-
-		//Instantiate(secondUserObject, positionSecondUser, Quaternion.Euler(0,0,0));
-
-		channel.ShutdownAsync().Wait();
-		
-	}
+		private AutoResetEvent resetEvent;
+		private Thread thread;
+		public string host;
+		public int port;
+		public GameObject player1;
+		public GameObject secondUserObject;
+		private multiUserSync.multiUserSyncClient client;
+		private User firstUser;
+		private User secondUser;
+		private Channel channel;
+		private int firstUserId;
+		private Vector3 firstUserPosition;
+		private Quaternion firstUserRotation;
+		private Vector3 firstUserScale;
+		private int secondUserId;
+		private Vector3 secondUserPosition;
+		private Quaternion secondUserRotation;
+		private Vector3 secondUserScale;
+		private bool stop;
 	
-	// Update is called once per frame
-	void Update ()
-	{
-		updateUser(user, player1);
+
+		// Use this for initialization
+		void Start ()
+		{
+			firstUserId = player1.GetInstanceID();
+			firstUserPosition = player1.transform.position;
+			firstUserRotation = player1.transform.rotation;
+			firstUserScale = player1.transform.lossyScale;
+
+			firstUser = new User
+			{
+				Id = firstUserId,
+			
+				UserPosition = new Vector()
+				{
+					X = firstUserPosition.x,
+					Y = firstUserPosition.y,
+					Z = firstUserPosition.z,
+				},
+			
+				UserRotation = new Quadrublet()
+				{
+					X = firstUserRotation.x,
+					Y = firstUserRotation.y,
+					Z = firstUserRotation.z,
+					W = firstUserRotation.w
+				},
+			
+				UserScale = new Vector()
+				{
+					X = firstUserScale.x,
+					Y = firstUserScale.y,
+					Z = firstUserScale.z,
+				}
+			};
+
+
+			secondUser = null;
+		
+			resetEvent = new AutoResetEvent(false);
+		
+			thread = new Thread(Run);
+			thread.Start();
+
+
+			//client.setUser(user);
+			//SetUser(user);
+
+
+			/*task = SetUser();
+		task.Wait();*/
+		
+			//Vector3 positionSecondUser = new Vector3(secondUser.PlayerPosition.X, secondUser.PlayerPosition.Y, secondUser.PlayerPosition.Z);
+
+			//Instantiate(secondUserObject, positionSecondUser, Quaternion.Euler(0,0,0));
+
+			//channel.ShutdownAsync().Wait();
+		
+		}
+	
+		// Update is called once per frame
+		void Update ()
+		{
+			/*UpdateUser(user, player1);
 		//updateUser(secondUser, secondUserObject);
-		task.Wait();
-
-	}
-
-	//This method is to update the partners position in the same exhibition
+		//task.Wait();
+		//client.setUser(user);
+		client.setUser(user);*/
+			resetEvent.Set();
 	
+			firstUserPosition = player1.transform.position;
+			firstUserRotation = player1.transform.rotation;
+			firstUserScale = player1.transform.lossyScale;
+		
+			UpdateUser(firstUser, firstUserId, firstUserPosition, firstUserRotation, firstUserScale);
 
-	public async Task SetUser()
-	{
-		try
-		{
-			using (var call = client.setUser())
+			if (secondUser != null)
 			{
-				var responseReaderTask = Task.Run(async () =>
-				{
-					while (await call.ResponseStream.MoveNext())
-					{
-						var note = call.ResponseStream.Current;
-						Debug.Log("Received: " + note.ToString());
-					}
-				});
+				UpdateUser(secondUser, secondUserId, secondUserPosition, secondUserRotation, secondUserScale);
+				secondUserObject.transform.position = secondUserPosition;
+				secondUserObject.transform.rotation = secondUserRotation;
+			}
+			else
+			{
+				Destroy(secondUserObject);
+			}
 
-				await call.RequestStream.WriteAsync(user);
-				await call.RequestStream.CompleteAsync();
-				await responseReaderTask;
+		}
+
+
+
+		//This method is to update the partners position in the same exhibition
+//	
+//	
+//	public async Task SetUser()
+//	{
+//		try
+//		{
+//			using (var call = client.setUser())
+//			{
+//				var responseReaderTask = Task.Run(async () =>
+//				{
+//					while (await call.ResponseStream.MoveNext())
+//					{
+//						var note = call.ResponseStream.Current;
+//						Debug.Log("Received: " + note.ToString());
+//					}
+//				});
+//
+//				await call.RequestStream.WriteAsync(user);
+//				await call.RequestStream.CompleteAsync();
+//				await responseReaderTask;
+//
+//			}
+//		}
+//		catch (RpcException e)
+//		{
+//			Debug.Log("RPC failed" + e);
+//			throw;
+//		}
+//	}
+//
+//	
+//	public async Task GetUser(float deltaTime = 1.0f)
+//	{
+//		try
+//		{
+//			using (var call = client.getUser())
+//			{
+//				var responseReaderTask = Task.Run(async () =>
+//				{
+//					while (await call.ResponseStream.MoveNext())
+//					{
+//						var note = call.ResponseStream.Current;
+//						Debug.Log("Second user received: " + note);
+//						secondUser = note;
+//						//deltaTime used to update values per second instead per frame
+//						/*secondUser.PlayerPosition.X *= deltaTime;
+//						secondUser.PlayerPosition.Y *= deltaTime;
+//						secondUser.PlayerPosition.Z *= deltaTime;*/
+//					}
+//				});
+//
+//				RequestUser requestUser = new RequestUser {RequestUserID = user.Id};
+//
+//				await call.RequestStream.WriteAsync(requestUser);
+//				await call.RequestStream.CompleteAsync();
+//				await responseReaderTask;
+//
+//			}
+//		}
+//		catch (RpcException e)
+//		{
+//			Debug.Log("RPC failed" + e);
+//			throw;
+//		}
+//	}
+
+		private void Run()
+		{
+		
+			channel = new Channel(host, port, ChannelCredentials.Insecure);
+			client = new multiUserSync.multiUserSyncClient(channel);
+			DateTime time = DateTime.Now;
+		
+			while (!stop)
+			{
+				resetEvent.WaitOne();
+				var now = DateTime.Now;
+				var deltaTime = now - time;
+				time = now;
+				SetUser(firstUser);
+				GetUser(firstUserId);
+				//deltaTime.TotalSeconds;
+				if (secondUser != null)
+					Instantiate(secondUserObject, secondUserPosition, secondUserRotation);
+			}
+
+			channel.ShutdownAsync().Wait();
+		}
+
+		private void OnApplicationQuit()
+		{
+			stop = true;
+			thread.Abort();
+		}
+
+		private void OnDestroy()
+		{
+			stop = true;
+			thread.Abort();
+		}
+
+
+		private void SetUser(User user)
+		{
+			try
+			{
+				Response serverResponse = client.setUser(user);
+				Debug.Log("User is set: " + serverResponse.Response_);
 
 			}
-		}
-		catch (RpcException e)
-		{
-			Debug.Log("RPC failed" + e);
-			throw;
-		}
-	}
-
-	
-	public async Task GetUser(float deltaTime = 1.0f)
-	{
-		try
-		{
-			using (var call = client.getUser())
+			catch (RpcException e)
 			{
-				var responseReaderTask = Task.Run(async () =>
+				Debug.Log("RPC failed in method \"setUser\"" + e);
+			}
+		
+		}
+
+		private void GetUser(int userId)
+		{
+			try
+			{
+				RequestUser requestUser = new RequestUser()
 				{
-					while (await call.ResponseStream.MoveNext())
-					{
-						var note = call.ResponseStream.Current;
-						Debug.Log("Second user received: " + note);
-						secondUser = note;
-						//deltaTime used to update values per second instead per frame
-						/*secondUser.PlayerPosition.X *= deltaTime;
-						secondUser.PlayerPosition.Y *= deltaTime;
-						secondUser.PlayerPosition.Z *= deltaTime;*/
-					}
-				});
-
-				RequestUser requestUser = new RequestUser {RequestUserID = user.Id};
-
-				await call.RequestStream.WriteAsync(requestUser);
-				await call.RequestStream.CompleteAsync();
-				await responseReaderTask;
-
+					RequestUserID = userId
+				};
+				
+				var responseUser = client.getUser(requestUser);
+				
+				secondUserId = responseUser.Id;
+				secondUserPosition.x = responseUser.UserPosition.X;
+				secondUserPosition.y = responseUser.UserPosition.Y;
+				secondUserPosition.z = responseUser.UserPosition.Z;
+				secondUserRotation.x = responseUser.UserRotation.X;
+				secondUserRotation.y = responseUser.UserRotation.Y;
+				secondUserRotation.z = responseUser.UserRotation.Z;
+				secondUserRotation.w = responseUser.UserRotation.W;
+				secondUserScale.x = responseUser.UserScale.X;
+				secondUserScale.y = responseUser.UserScale.Y;
+				secondUserScale.z = responseUser.UserScale.Z;
+				
+			}
+			catch (RpcException e)
+			{
+				Debug.Log("RPC failed in method \"getUser\" " + e);
 			}
 		}
-		catch (RpcException e)
+	
+
+		private void UpdateUser(User user, int userId, Vector3 position, Quaternion rotation, Vector3 scale)
 		{
-			Debug.Log("RPC failed" + e);
-			throw;
+			user.Id = userId;
+			user.UserPosition.X = position.x;
+			user.UserPosition.Y = position.y;
+			user.UserPosition.Z = position.z;
+			user.UserRotation.X = rotation.x;
+			user.UserRotation.Y = rotation.y;
+			user.UserRotation.Z = rotation.z;
+			user.UserRotation.W = rotation.w;
+			user.UserScale.X = scale.x;
+			user.UserScale.Y = scale.y;
+			user.UserScale.Z = scale.z;
 		}
 	}
-
-	void updateUser(User user, GameObject gameObject)
-	{
-		var position = gameObject.transform.position;
-		var rotation = gameObject.transform.rotation;
-		var lossyScale = gameObject.transform.lossyScale;
-
-		user.Id = gameObject.GetInstanceID();
-		user.PlayerPosition.X = position.x;
-		user.PlayerPosition.Y = position.y;
-		user.PlayerPosition.Z = position.z;
-		user.PlayerRotation.X = rotation.x;
-		user.PlayerRotation.Y = rotation.y;
-		user.PlayerRotation.Z = rotation.z;
-		user.PlayerScale.X = rotation.x;
-		user.PlayerScale.Y = rotation.y;
-		user.PlayerScale.Z = rotation.z;
-
-	}
-	
 }

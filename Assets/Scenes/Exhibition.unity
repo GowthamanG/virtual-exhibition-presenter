@@ -621,10 +621,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   host: localhost
-  port: 8080
+  port: 8888
   player1: {fileID: 515702457}
-  secondUserObject: {fileID: 3067332512271593070, guid: f55f1d68206904874835dbc9fae96981,
-    type: 3}
 --- !u!4 &411976671
 Transform:
   m_ObjectHideFlags: 0
