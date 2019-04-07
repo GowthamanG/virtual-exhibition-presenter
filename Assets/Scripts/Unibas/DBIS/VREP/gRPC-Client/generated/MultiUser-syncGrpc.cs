@@ -16,14 +16,14 @@ public static partial class multiUserSync
   static readonly grpc::Marshaller<global::Response> __Marshaller_Response = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Response.Parser.ParseFrom);
 
   static readonly grpc::Method<global::RequestUser, global::User> __Method_getUser = new grpc::Method<global::RequestUser, global::User>(
-      grpc::MethodType.DuplexStreaming,
+      grpc::MethodType.Unary,
       __ServiceName,
       "getUser",
       __Marshaller_RequestUser,
       __Marshaller_User);
 
   static readonly grpc::Method<global::User, global::Response> __Method_setUser = new grpc::Method<global::User, global::Response>(
-      grpc::MethodType.DuplexStreaming,
+      grpc::MethodType.Unary,
       __ServiceName,
       "setUser",
       __Marshaller_User,
@@ -38,12 +38,12 @@ public static partial class multiUserSync
   /// <summary>Base class for server-side implementations of multiUserSync</summary>
   public abstract partial class multiUserSyncBase
   {
-    public virtual global::System.Threading.Tasks.Task getUser(grpc::IAsyncStreamReader<global::RequestUser> requestStream, grpc::IServerStreamWriter<global::User> responseStream, grpc::ServerCallContext context)
+    public virtual global::System.Threading.Tasks.Task<global::User> getUser(global::RequestUser request, grpc::ServerCallContext context)
     {
       throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
     }
 
-    public virtual global::System.Threading.Tasks.Task setUser(grpc::IAsyncStreamReader<global::User> requestStream, grpc::IServerStreamWriter<global::Response> responseStream, grpc::ServerCallContext context)
+    public virtual global::System.Threading.Tasks.Task<global::Response> setUser(global::User request, grpc::ServerCallContext context)
     {
       throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
     }
@@ -73,21 +73,37 @@ public static partial class multiUserSync
     {
     }
 
-    public virtual grpc::AsyncDuplexStreamingCall<global::RequestUser, global::User> getUser(grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    public virtual global::User getUser(global::RequestUser request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
     {
-      return getUser(new grpc::CallOptions(headers, deadline, cancellationToken));
+      return getUser(request, new grpc::CallOptions(headers, deadline, cancellationToken));
     }
-    public virtual grpc::AsyncDuplexStreamingCall<global::RequestUser, global::User> getUser(grpc::CallOptions options)
+    public virtual global::User getUser(global::RequestUser request, grpc::CallOptions options)
     {
-      return CallInvoker.AsyncDuplexStreamingCall(__Method_getUser, null, options);
+      return CallInvoker.BlockingUnaryCall(__Method_getUser, null, options, request);
     }
-    public virtual grpc::AsyncDuplexStreamingCall<global::User, global::Response> setUser(grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    public virtual grpc::AsyncUnaryCall<global::User> getUserAsync(global::RequestUser request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
     {
-      return setUser(new grpc::CallOptions(headers, deadline, cancellationToken));
+      return getUserAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
     }
-    public virtual grpc::AsyncDuplexStreamingCall<global::User, global::Response> setUser(grpc::CallOptions options)
+    public virtual grpc::AsyncUnaryCall<global::User> getUserAsync(global::RequestUser request, grpc::CallOptions options)
     {
-      return CallInvoker.AsyncDuplexStreamingCall(__Method_setUser, null, options);
+      return CallInvoker.AsyncUnaryCall(__Method_getUser, null, options, request);
+    }
+    public virtual global::Response setUser(global::User request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return setUser(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    public virtual global::Response setUser(global::User request, grpc::CallOptions options)
+    {
+      return CallInvoker.BlockingUnaryCall(__Method_setUser, null, options, request);
+    }
+    public virtual grpc::AsyncUnaryCall<global::Response> setUserAsync(global::User request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return setUserAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    public virtual grpc::AsyncUnaryCall<global::Response> setUserAsync(global::User request, grpc::CallOptions options)
+    {
+      return CallInvoker.AsyncUnaryCall(__Method_setUser, null, options, request);
     }
     /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
     protected override multiUserSyncClient NewInstance(ClientBaseConfiguration configuration)
@@ -111,8 +127,8 @@ public static partial class multiUserSync
   /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
   public static void BindService(grpc::ServiceBinderBase serviceBinder, multiUserSyncBase serviceImpl)
   {
-    serviceBinder.AddMethod(__Method_getUser, serviceImpl == null ? null : new grpc::DuplexStreamingServerMethod<global::RequestUser, global::User>(serviceImpl.getUser));
-    serviceBinder.AddMethod(__Method_setUser, serviceImpl == null ? null : new grpc::DuplexStreamingServerMethod<global::User, global::Response>(serviceImpl.setUser));
+    serviceBinder.AddMethod(__Method_getUser, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::RequestUser, global::User>(serviceImpl.getUser));
+    serviceBinder.AddMethod(__Method_setUser, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User, global::Response>(serviceImpl.setUser));
   }
 
 }

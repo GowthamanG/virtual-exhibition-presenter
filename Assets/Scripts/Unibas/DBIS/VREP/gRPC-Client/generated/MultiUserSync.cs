@@ -22,19 +22,21 @@ public static partial class MultiUserSyncReflection {
   static MultiUserSyncReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "ChRtdWx0aVVzZXItc3luYy5wcm90byJyCgRVc2VyEgoKAmlkGAEgASgFEh8K",
-          "DnBsYXllclBvc2l0aW9uGAIgASgLMgcuVmVjdG9yEh8KDnBsYXllclJvdGF0",
-          "aW9uGAMgASgLMgcuVmVjdG9yEhwKC3BsYXllclNjYWxlGAQgASgLMgcuVmVj",
-          "dG9yIikKBlZlY3RvchIJCgF4GAEgASgCEgkKAXkYAiABKAISCQoBehgDIAEo",
-          "AiIkCgtSZXF1ZXN0VXNlchIVCg1yZXF1ZXN0VXNlcklEGAEgASgFIhwKCFJl",
-          "c3BvbnNlEhAKCHJlc3BvbnNlGAEgASgJMlgKDW11bHRpVXNlclN5bmMSJAoH",
-          "Z2V0VXNlchIMLlJlcXVlc3RVc2VyGgUuVXNlciIAKAEwARIhCgdzZXRVc2Vy",
-          "EgUuVXNlchoJLlJlc3BvbnNlIgAoATABYgZwcm90bzM="));
+          "ChRtdWx0aVVzZXItc3luYy5wcm90byJwCgRVc2VyEgoKAmlkGAEgASgFEh0K",
+          "DHVzZXJQb3NpdGlvbhgCIAEoCzIHLlZlY3RvchIhCgx1c2VyUm90YXRpb24Y",
+          "AyABKAsyCy5RdWFkcnVibGV0EhoKCXVzZXJTY2FsZRgEIAEoCzIHLlZlY3Rv",
+          "ciIpCgZWZWN0b3ISCQoBeBgBIAEoAhIJCgF5GAIgASgCEgkKAXoYAyABKAIi",
+          "OAoKUXVhZHJ1YmxldBIJCgF4GAEgASgCEgkKAXkYAiABKAISCQoBehgDIAEo",
+          "AhIJCgF3GAQgASgCIiQKC1JlcXVlc3RVc2VyEhUKDXJlcXVlc3RVc2VySUQY",
+          "ASABKAUiHAoIUmVzcG9uc2USEAoIcmVzcG9uc2UYASABKAkyUAoNbXVsdGlV",
+          "c2VyU3luYxIgCgdnZXRVc2VyEgwuUmVxdWVzdFVzZXIaBS5Vc2VyIgASHQoH",
+          "c2V0VXNlchIFLlVzZXIaCS5SZXNwb25zZSIAYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::User), global::User.Parser, new[]{ "Id", "PlayerPosition", "PlayerRotation", "PlayerScale" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::User), global::User.Parser, new[]{ "Id", "UserPosition", "UserRotation", "UserScale" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::Vector), global::Vector.Parser, new[]{ "X", "Y", "Z" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::Quadrublet), global::Quadrublet.Parser, new[]{ "X", "Y", "Z", "W" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::RequestUser), global::RequestUser.Parser, new[]{ "RequestUserID" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::Response), global::Response.Parser, new[]{ "Response_" }, null, null, null)
         }));
@@ -69,9 +71,9 @@ public sealed partial class User : pb::IMessage<User> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public User(User other) : this() {
     id_ = other.id_;
-    playerPosition_ = other.playerPosition_ != null ? other.playerPosition_.Clone() : null;
-    playerRotation_ = other.playerRotation_ != null ? other.playerRotation_.Clone() : null;
-    playerScale_ = other.playerScale_ != null ? other.playerScale_.Clone() : null;
+    userPosition_ = other.userPosition_ != null ? other.userPosition_.Clone() : null;
+    userRotation_ = other.userRotation_ != null ? other.userRotation_.Clone() : null;
+    userScale_ = other.userScale_ != null ? other.userScale_.Clone() : null;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -91,36 +93,36 @@ public sealed partial class User : pb::IMessage<User> {
     }
   }
 
-  /// <summary>Field number for the "playerPosition" field.</summary>
-  public const int PlayerPositionFieldNumber = 2;
-  private global::Vector playerPosition_;
+  /// <summary>Field number for the "userPosition" field.</summary>
+  public const int UserPositionFieldNumber = 2;
+  private global::Vector userPosition_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public global::Vector PlayerPosition {
-    get { return playerPosition_; }
+  public global::Vector UserPosition {
+    get { return userPosition_; }
     set {
-      playerPosition_ = value;
+      userPosition_ = value;
     }
   }
 
-  /// <summary>Field number for the "playerRotation" field.</summary>
-  public const int PlayerRotationFieldNumber = 3;
-  private global::Vector playerRotation_;
+  /// <summary>Field number for the "userRotation" field.</summary>
+  public const int UserRotationFieldNumber = 3;
+  private global::Quadrublet userRotation_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public global::Vector PlayerRotation {
-    get { return playerRotation_; }
+  public global::Quadrublet UserRotation {
+    get { return userRotation_; }
     set {
-      playerRotation_ = value;
+      userRotation_ = value;
     }
   }
 
-  /// <summary>Field number for the "playerScale" field.</summary>
-  public const int PlayerScaleFieldNumber = 4;
-  private global::Vector playerScale_;
+  /// <summary>Field number for the "userScale" field.</summary>
+  public const int UserScaleFieldNumber = 4;
+  private global::Vector userScale_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public global::Vector PlayerScale {
-    get { return playerScale_; }
+  public global::Vector UserScale {
+    get { return userScale_; }
     set {
-      playerScale_ = value;
+      userScale_ = value;
     }
   }
 
@@ -138,9 +140,9 @@ public sealed partial class User : pb::IMessage<User> {
       return true;
     }
     if (Id != other.Id) return false;
-    if (!object.Equals(PlayerPosition, other.PlayerPosition)) return false;
-    if (!object.Equals(PlayerRotation, other.PlayerRotation)) return false;
-    if (!object.Equals(PlayerScale, other.PlayerScale)) return false;
+    if (!object.Equals(UserPosition, other.UserPosition)) return false;
+    if (!object.Equals(UserRotation, other.UserRotation)) return false;
+    if (!object.Equals(UserScale, other.UserScale)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -148,9 +150,9 @@ public sealed partial class User : pb::IMessage<User> {
   public override int GetHashCode() {
     int hash = 1;
     if (Id != 0) hash ^= Id.GetHashCode();
-    if (playerPosition_ != null) hash ^= PlayerPosition.GetHashCode();
-    if (playerRotation_ != null) hash ^= PlayerRotation.GetHashCode();
-    if (playerScale_ != null) hash ^= PlayerScale.GetHashCode();
+    if (userPosition_ != null) hash ^= UserPosition.GetHashCode();
+    if (userRotation_ != null) hash ^= UserRotation.GetHashCode();
+    if (userScale_ != null) hash ^= UserScale.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -168,17 +170,17 @@ public sealed partial class User : pb::IMessage<User> {
       output.WriteRawTag(8);
       output.WriteInt32(Id);
     }
-    if (playerPosition_ != null) {
+    if (userPosition_ != null) {
       output.WriteRawTag(18);
-      output.WriteMessage(PlayerPosition);
+      output.WriteMessage(UserPosition);
     }
-    if (playerRotation_ != null) {
+    if (userRotation_ != null) {
       output.WriteRawTag(26);
-      output.WriteMessage(PlayerRotation);
+      output.WriteMessage(UserRotation);
     }
-    if (playerScale_ != null) {
+    if (userScale_ != null) {
       output.WriteRawTag(34);
-      output.WriteMessage(PlayerScale);
+      output.WriteMessage(UserScale);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -191,14 +193,14 @@ public sealed partial class User : pb::IMessage<User> {
     if (Id != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(Id);
     }
-    if (playerPosition_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerPosition);
+    if (userPosition_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(UserPosition);
     }
-    if (playerRotation_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerRotation);
+    if (userRotation_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(UserRotation);
     }
-    if (playerScale_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerScale);
+    if (userScale_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(UserScale);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -214,23 +216,23 @@ public sealed partial class User : pb::IMessage<User> {
     if (other.Id != 0) {
       Id = other.Id;
     }
-    if (other.playerPosition_ != null) {
-      if (playerPosition_ == null) {
-        playerPosition_ = new global::Vector();
+    if (other.userPosition_ != null) {
+      if (userPosition_ == null) {
+        userPosition_ = new global::Vector();
       }
-      PlayerPosition.MergeFrom(other.PlayerPosition);
+      UserPosition.MergeFrom(other.UserPosition);
     }
-    if (other.playerRotation_ != null) {
-      if (playerRotation_ == null) {
-        playerRotation_ = new global::Vector();
+    if (other.userRotation_ != null) {
+      if (userRotation_ == null) {
+        userRotation_ = new global::Quadrublet();
       }
-      PlayerRotation.MergeFrom(other.PlayerRotation);
+      UserRotation.MergeFrom(other.UserRotation);
     }
-    if (other.playerScale_ != null) {
-      if (playerScale_ == null) {
-        playerScale_ = new global::Vector();
+    if (other.userScale_ != null) {
+      if (userScale_ == null) {
+        userScale_ = new global::Vector();
       }
-      PlayerScale.MergeFrom(other.PlayerScale);
+      UserScale.MergeFrom(other.UserScale);
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -248,24 +250,24 @@ public sealed partial class User : pb::IMessage<User> {
           break;
         }
         case 18: {
-          if (playerPosition_ == null) {
-            playerPosition_ = new global::Vector();
+          if (userPosition_ == null) {
+            userPosition_ = new global::Vector();
           }
-          input.ReadMessage(playerPosition_);
+          input.ReadMessage(userPosition_);
           break;
         }
         case 26: {
-          if (playerRotation_ == null) {
-            playerRotation_ = new global::Vector();
+          if (userRotation_ == null) {
+            userRotation_ = new global::Quadrublet();
           }
-          input.ReadMessage(playerRotation_);
+          input.ReadMessage(userRotation_);
           break;
         }
         case 34: {
-          if (playerScale_ == null) {
-            playerScale_ = new global::Vector();
+          if (userScale_ == null) {
+            userScale_ = new global::Vector();
           }
-          input.ReadMessage(playerScale_);
+          input.ReadMessage(userScale_);
           break;
         }
       }
@@ -459,6 +461,219 @@ public sealed partial class Vector : pb::IMessage<Vector> {
 
 }
 
+public sealed partial class Quadrublet : pb::IMessage<Quadrublet> {
+  private static readonly pb::MessageParser<Quadrublet> _parser = new pb::MessageParser<Quadrublet>(() => new Quadrublet());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<Quadrublet> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::MultiUserSyncReflection.Descriptor.MessageTypes[2]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public Quadrublet() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public Quadrublet(Quadrublet other) : this() {
+    x_ = other.x_;
+    y_ = other.y_;
+    z_ = other.z_;
+    w_ = other.w_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public Quadrublet Clone() {
+    return new Quadrublet(this);
+  }
+
+  /// <summary>Field number for the "x" field.</summary>
+  public const int XFieldNumber = 1;
+  private float x_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public float X {
+    get { return x_; }
+    set {
+      x_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "y" field.</summary>
+  public const int YFieldNumber = 2;
+  private float y_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public float Y {
+    get { return y_; }
+    set {
+      y_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "z" field.</summary>
+  public const int ZFieldNumber = 3;
+  private float z_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public float Z {
+    get { return z_; }
+    set {
+      z_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "w" field.</summary>
+  public const int WFieldNumber = 4;
+  private float w_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public float W {
+    get { return w_; }
+    set {
+      w_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as Quadrublet);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(Quadrublet other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(X, other.X)) return false;
+    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Y, other.Y)) return false;
+    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Z, other.Z)) return false;
+    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(W, other.W)) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (X != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(X);
+    if (Y != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Y);
+    if (Z != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Z);
+    if (W != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(W);
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (X != 0F) {
+      output.WriteRawTag(13);
+      output.WriteFloat(X);
+    }
+    if (Y != 0F) {
+      output.WriteRawTag(21);
+      output.WriteFloat(Y);
+    }
+    if (Z != 0F) {
+      output.WriteRawTag(29);
+      output.WriteFloat(Z);
+    }
+    if (W != 0F) {
+      output.WriteRawTag(37);
+      output.WriteFloat(W);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (X != 0F) {
+      size += 1 + 4;
+    }
+    if (Y != 0F) {
+      size += 1 + 4;
+    }
+    if (Z != 0F) {
+      size += 1 + 4;
+    }
+    if (W != 0F) {
+      size += 1 + 4;
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(Quadrublet other) {
+    if (other == null) {
+      return;
+    }
+    if (other.X != 0F) {
+      X = other.X;
+    }
+    if (other.Y != 0F) {
+      Y = other.Y;
+    }
+    if (other.Z != 0F) {
+      Z = other.Z;
+    }
+    if (other.W != 0F) {
+      W = other.W;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 13: {
+          X = input.ReadFloat();
+          break;
+        }
+        case 21: {
+          Y = input.ReadFloat();
+          break;
+        }
+        case 29: {
+          Z = input.ReadFloat();
+          break;
+        }
+        case 37: {
+          W = input.ReadFloat();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
 public sealed partial class RequestUser : pb::IMessage<RequestUser> {
   private static readonly pb::MessageParser<RequestUser> _parser = new pb::MessageParser<RequestUser>(() => new RequestUser());
   private pb::UnknownFieldSet _unknownFields;
@@ -467,7 +682,7 @@ public sealed partial class RequestUser : pb::IMessage<RequestUser> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::MultiUserSyncReflection.Descriptor.MessageTypes[2]; }
+    get { return global::MultiUserSyncReflection.Descriptor.MessageTypes[3]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -596,7 +811,7 @@ public sealed partial class Response : pb::IMessage<Response> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::MultiUserSyncReflection.Descriptor.MessageTypes[3]; }
+    get { return global::MultiUserSyncReflection.Descriptor.MessageTypes[4]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
