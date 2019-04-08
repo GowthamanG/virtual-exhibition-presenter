@@ -26,6 +26,7 @@ namespace Unibas.DBIS.VREP
 		private Quaternion secondUserRotation;
 		private Vector3 secondUserScale;
 		private bool stop;
+		private bool secondUserPresence;
 	
 
 		// Use this for initialization
@@ -109,10 +110,6 @@ namespace Unibas.DBIS.VREP
 				secondUserObject.transform.position = secondUserPosition;
 				secondUserObject.transform.rotation = secondUserRotation;
 			}
-			else
-			{
-				Destroy(secondUserObject);
-			}
 
 		}
 
@@ -192,16 +189,16 @@ namespace Unibas.DBIS.VREP
 			client = new multiUserSync.multiUserSyncClient(channel);
 			DateTime time = DateTime.Now;
 		
-			while (!stop)
+			while (!stop || channel.State == ChannelState.Shutdown) //The synchronization happens in the while loop
 			{
 				resetEvent.WaitOne();
 				var now = DateTime.Now;
 				var deltaTime = now - time;
 				time = now;
 				SetUser(firstUser);
-				GetUser(firstUserId);
+				GetUser(firstUserId); //Trick to get user which is NOT equal firstUserId, details see implementation on server
 				//deltaTime.TotalSeconds;
-				if (secondUser != null)
+				if (secondUser == null && secondUserPresence)
 					Instantiate(secondUserObject, secondUserPosition, secondUserRotation);
 			}
 
@@ -246,6 +243,12 @@ namespace Unibas.DBIS.VREP
 				};
 				
 				var responseUser = client.getUser(requestUser);
+
+				if (responseUser.Id != 0)
+					secondUserPresence = true;
+				
+				if (secondUser == null)
+					secondUser = new User();
 				
 				secondUserId = responseUser.Id;
 				secondUserPosition.x = responseUser.UserPosition.X;
