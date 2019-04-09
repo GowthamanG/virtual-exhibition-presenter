@@ -620,9 +620,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad9ea64629a4f71a8b1f214f80e84f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  host: localhost
+  host: 192.168.1.132
   port: 8888
   player1: {fileID: 515702457}
+  player2: {fileID: 3067332512271593070, guid: f55f1d68206904874835dbc9fae96981, type: 3}
 --- !u!4 &411976671
 Transform:
   m_ObjectHideFlags: 0

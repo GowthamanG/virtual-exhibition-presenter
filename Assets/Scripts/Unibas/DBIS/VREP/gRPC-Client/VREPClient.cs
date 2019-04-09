@@ -7,12 +7,12 @@ namespace Unibas.DBIS.VREP
 {
 	public class VREPClient : MonoBehaviour
 	{
-		private AutoResetEvent resetEvent;
-		private Thread thread;
+		//private AutoResetEvent resetEvent;
+		private Thread connectionThread;
 		public string host;
 		public int port;
 		public GameObject player1;
-		public GameObject secondUserObject;
+		public GameObject player2;
 		private multiUserSync.multiUserSyncClient client;
 		private User firstUser;
 		private User secondUser;
@@ -63,14 +63,45 @@ namespace Unibas.DBIS.VREP
 					Z = firstUserScale.z,
 				}
 			};
-
-
-			secondUser = null;
 		
-			resetEvent = new AutoResetEvent(false);
+			//resetEvent = new AutoResetEvent(false);
+
+			Instantiate(player2);
+
+			secondUserId = player2.GetInstanceID();
+			secondUserPosition = player2.transform.position;
+			secondUserRotation = player2.transform.rotation;
+			secondUserScale = player2.transform.lossyScale;
+			
+			secondUser = new User
+			{
+				Id = secondUserId,
+			
+				UserPosition = new Vector()
+				{
+					X = secondUserPosition.x,
+					Y = secondUserPosition.y,
+					Z = secondUserPosition.z,
+				},
+			
+				UserRotation = new Quadrublet()
+				{
+					X = secondUserRotation.x,
+					Y = secondUserRotation.y,
+					Z = secondUserRotation.z,
+					W = secondUserRotation.w
+				},
+			
+				UserScale = new Vector()
+				{
+					X = secondUserScale.x,
+					Y = secondUserScale.y,
+					Z = secondUserScale.z,
+				}
+			};
 		
-			thread = new Thread(Run);
-			thread.Start();
+			connectionThread = new Thread(Run);
+			connectionThread.Start();
 
 
 			//client.setUser(user);
@@ -96,20 +127,17 @@ namespace Unibas.DBIS.VREP
 		//task.Wait();
 		//client.setUser(user);
 		client.setUser(user);*/
-			resetEvent.Set();
+			//resetEvent.Set();
 	
 			firstUserPosition = player1.transform.position;
 			firstUserRotation = player1.transform.rotation;
 			firstUserScale = player1.transform.lossyScale;
-		
+			
 			UpdateUser(firstUser, firstUserId, firstUserPosition, firstUserRotation, firstUserScale);
-
-			if (secondUser != null)
-			{
-				UpdateUser(secondUser, secondUserId, secondUserPosition, secondUserRotation, secondUserScale);
-				secondUserObject.transform.position = secondUserPosition;
-				secondUserObject.transform.rotation = secondUserRotation;
-			}
+			UpdateUser(secondUser, secondUserId, secondUserPosition, secondUserRotation, secondUserScale);
+		
+			player2.transform.position = secondUserPosition;
+			player2.transform.rotation = secondUserRotation;
 
 		}
 
@@ -189,17 +217,15 @@ namespace Unibas.DBIS.VREP
 			client = new multiUserSync.multiUserSyncClient(channel);
 			DateTime time = DateTime.Now;
 		
-			while (!stop || channel.State == ChannelState.Shutdown) //The synchronization happens in the while loop
+			while (!stop || channel.State != ChannelState.Shutdown) //The synchronization happens in the while loop
 			{
-				resetEvent.WaitOne();
+				//resetEvent.WaitOne();
 				var now = DateTime.Now;
 				var deltaTime = now - time;
 				time = now;
 				SetUser(firstUser);
 				GetUser(firstUserId); //Trick to get user which is NOT equal firstUserId, details see implementation on server
 				//deltaTime.TotalSeconds;
-				if (secondUser == null && secondUserPresence)
-					Instantiate(secondUserObject, secondUserPosition, secondUserRotation);
 			}
 
 			channel.ShutdownAsync().Wait();
@@ -208,13 +234,13 @@ namespace Unibas.DBIS.VREP
 		private void OnApplicationQuit()
 		{
 			stop = true;
-			thread.Abort();
+			connectionThread.Abort();
 		}
 
 		private void OnDestroy()
 		{
 			stop = true;
-			thread.Abort();
+			connectionThread.Abort();
 		}
 
 
@@ -247,9 +273,6 @@ namespace Unibas.DBIS.VREP
 				if (responseUser.Id != 0)
 					secondUserPresence = true;
 				
-				if (secondUser == null)
-					secondUser = new User();
-				
 				secondUserId = responseUser.Id;
 				secondUserPosition.x = responseUser.UserPosition.X;
 				secondUserPosition.y = responseUser.UserPosition.Y;
@@ -268,7 +291,7 @@ namespace Unibas.DBIS.VREP
 				Debug.Log("RPC failed in method \"getUser\" " + e);
 			}
 		}
-	
+
 
 		private void UpdateUser(User user, int userId, Vector3 position, Quaternion rotation, Vector3 scale)
 		{
@@ -284,5 +307,35 @@ namespace Unibas.DBIS.VREP
 			user.UserScale.Y = scale.y;
 			user.UserScale.Z = scale.z;
 		}
+
+		/*private void UpdateFirstUser()
+		{
+			firstUser.Id = firstUserId;
+			firstUser.UserPosition.X = firstUserPosition.x;
+			firstUser.UserPosition.Y = firstUserPosition.y;
+			firstUser.UserPosition.Z = firstUserPosition.z;
+			firstUser.UserRotation.X = firstUserRotation.x;
+			firstUser.UserRotation.Y = firstUserRotation.y;
+			firstUser.UserRotation.Z = firstUserRotation.z;
+			firstUser.UserRotation.W = firstUserRotation.w;
+			firstUser.UserScale.X = firstUserScale.x;
+			firstUser.UserScale.Y = firstUserScale.y;
+			firstUser.UserScale.Z = firstUserScale.z;
+		}
+		
+		private void UpdateSecondUser()
+		{
+			secondUser.Id = secondUserId;
+			secondUser.UserPosition.X = secondUserPosition.x;
+			secondUser.UserPosition.Y = secondUserPosition.y;
+			secondUser.UserPosition.Z = secondUserPosition.z;
+			secondUser.UserRotation.X = secondUserRotation.x;
+			secondUser.UserRotation.Y = secondUserRotation.y;
+			secondUser.UserRotation.Z = secondUserRotation.z;
+			secondUser.UserRotation.W = secondUserRotation.w;
+			secondUser.UserScale.X = secondUserScale.x;
+			secondUser.UserScale.Y = secondUserScale.y;
+			secondUser.UserScale.Z = secondUserScale.z;
+		}*/
 	}
 }
