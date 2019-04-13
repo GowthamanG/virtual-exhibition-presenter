@@ -25,19 +25,27 @@ public static partial class MultiUserSyncReflection {
           "ChRtdWx0aVVzZXItc3luYy5wcm90byJwCgRVc2VyEgoKAmlkGAEgASgFEh0K",
           "DHVzZXJQb3NpdGlvbhgCIAEoCzIHLlZlY3RvchIhCgx1c2VyUm90YXRpb24Y",
           "AyABKAsyCy5RdWFkcnVibGV0EhoKCXVzZXJTY2FsZRgEIAEoCzIHLlZlY3Rv",
-          "ciIpCgZWZWN0b3ISCQoBeBgBIAEoAhIJCgF5GAIgASgCEgkKAXoYAyABKAIi",
-          "OAoKUXVhZHJ1YmxldBIJCgF4GAEgASgCEgkKAXkYAiABKAISCQoBehgDIAEo",
-          "AhIJCgF3GAQgASgCIiQKC1JlcXVlc3RVc2VyEhUKDXJlcXVlc3RVc2VySUQY",
-          "ASABKAUiHAoIUmVzcG9uc2USEAoIcmVzcG9uc2UYASABKAkyUAoNbXVsdGlV",
-          "c2VyU3luYxIgCgdnZXRVc2VyEgwuUmVxdWVzdFVzZXIaBS5Vc2VyIgASHQoH",
-          "c2V0VXNlchIFLlVzZXIaCS5SZXNwb25zZSIAYgZwcm90bzM="));
+          "ciJ8CgdUcmFja2VyEgoKAmlkGAEgASgFEiAKD3RyYWNrZXJQb3NpdGlvbhgC",
+          "IAEoCzIHLlZlY3RvchIkCg90cmFja2VyUm90YXRpb24YAyABKAsyCy5RdWFk",
+          "cnVibGV0Eh0KDHRyYWNrZXJTY2FsZRgEIAEoCzIHLlZlY3RvciIpCgZWZWN0",
+          "b3ISCQoBeBgBIAEoAhIJCgF5GAIgASgCEgkKAXoYAyABKAIiOAoKUXVhZHJ1",
+          "YmxldBIJCgF4GAEgASgCEgkKAXkYAiABKAISCQoBehgDIAEoAhIJCgF3GAQg",
+          "ASgCIiQKC1JlcXVlc3RVc2VyEhUKDXJlcXVlc3RVc2VySUQYASABKAUiKgoO",
+          "UmVxdWVzdFRyYWNrZXISGAoQcmVxdWVzdFRyYWNrZXJJRBgBIAEoBSIcCghS",
+          "ZXNwb25zZRIQCghyZXNwb25zZRgBIAEoCTKgAQoNbXVsdGlVc2VyU3luYxIg",
+          "CgdnZXRVc2VyEgwuUmVxdWVzdFVzZXIaBS5Vc2VyIgASHQoHc2V0VXNlchIF",
+          "LlVzZXIaCS5SZXNwb25zZSIAEikKCmdldFRyYWNrZXISDy5SZXF1ZXN0VHJh",
+          "Y2tlchoILlRyYWNrZXIiABIjCgpzZXRUcmFja2VyEgguVHJhY2tlchoJLlJl",
+          "c3BvbnNlIgBiBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::User), global::User.Parser, new[]{ "Id", "UserPosition", "UserRotation", "UserScale" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::Tracker), global::Tracker.Parser, new[]{ "Id", "TrackerPosition", "TrackerRotation", "TrackerScale" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::Vector), global::Vector.Parser, new[]{ "X", "Y", "Z" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::Quadrublet), global::Quadrublet.Parser, new[]{ "X", "Y", "Z", "W" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::RequestUser), global::RequestUser.Parser, new[]{ "RequestUserID" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::RequestTracker), global::RequestTracker.Parser, new[]{ "RequestTrackerID" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::Response), global::Response.Parser, new[]{ "Response_" }, null, null, null)
         }));
   }
@@ -276,6 +284,237 @@ public sealed partial class User : pb::IMessage<User> {
 
 }
 
+public sealed partial class Tracker : pb::IMessage<Tracker> {
+  private static readonly pb::MessageParser<Tracker> _parser = new pb::MessageParser<Tracker>(() => new Tracker());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<Tracker> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::MultiUserSyncReflection.Descriptor.MessageTypes[1]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public Tracker() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public Tracker(Tracker other) : this() {
+    id_ = other.id_;
+    trackerPosition_ = other.trackerPosition_ != null ? other.trackerPosition_.Clone() : null;
+    trackerRotation_ = other.trackerRotation_ != null ? other.trackerRotation_.Clone() : null;
+    trackerScale_ = other.trackerScale_ != null ? other.trackerScale_.Clone() : null;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public Tracker Clone() {
+    return new Tracker(this);
+  }
+
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private int id_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int Id {
+    get { return id_; }
+    set {
+      id_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "trackerPosition" field.</summary>
+  public const int TrackerPositionFieldNumber = 2;
+  private global::Vector trackerPosition_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::Vector TrackerPosition {
+    get { return trackerPosition_; }
+    set {
+      trackerPosition_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "trackerRotation" field.</summary>
+  public const int TrackerRotationFieldNumber = 3;
+  private global::Quadrublet trackerRotation_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::Quadrublet TrackerRotation {
+    get { return trackerRotation_; }
+    set {
+      trackerRotation_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "trackerScale" field.</summary>
+  public const int TrackerScaleFieldNumber = 4;
+  private global::Vector trackerScale_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::Vector TrackerScale {
+    get { return trackerScale_; }
+    set {
+      trackerScale_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as Tracker);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(Tracker other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Id != other.Id) return false;
+    if (!object.Equals(TrackerPosition, other.TrackerPosition)) return false;
+    if (!object.Equals(TrackerRotation, other.TrackerRotation)) return false;
+    if (!object.Equals(TrackerScale, other.TrackerScale)) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Id != 0) hash ^= Id.GetHashCode();
+    if (trackerPosition_ != null) hash ^= TrackerPosition.GetHashCode();
+    if (trackerRotation_ != null) hash ^= TrackerRotation.GetHashCode();
+    if (trackerScale_ != null) hash ^= TrackerScale.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (Id != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(Id);
+    }
+    if (trackerPosition_ != null) {
+      output.WriteRawTag(18);
+      output.WriteMessage(TrackerPosition);
+    }
+    if (trackerRotation_ != null) {
+      output.WriteRawTag(26);
+      output.WriteMessage(TrackerRotation);
+    }
+    if (trackerScale_ != null) {
+      output.WriteRawTag(34);
+      output.WriteMessage(TrackerScale);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (Id != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Id);
+    }
+    if (trackerPosition_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(TrackerPosition);
+    }
+    if (trackerRotation_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(TrackerRotation);
+    }
+    if (trackerScale_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(TrackerScale);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(Tracker other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Id != 0) {
+      Id = other.Id;
+    }
+    if (other.trackerPosition_ != null) {
+      if (trackerPosition_ == null) {
+        trackerPosition_ = new global::Vector();
+      }
+      TrackerPosition.MergeFrom(other.TrackerPosition);
+    }
+    if (other.trackerRotation_ != null) {
+      if (trackerRotation_ == null) {
+        trackerRotation_ = new global::Quadrublet();
+      }
+      TrackerRotation.MergeFrom(other.TrackerRotation);
+    }
+    if (other.trackerScale_ != null) {
+      if (trackerScale_ == null) {
+        trackerScale_ = new global::Vector();
+      }
+      TrackerScale.MergeFrom(other.TrackerScale);
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          Id = input.ReadInt32();
+          break;
+        }
+        case 18: {
+          if (trackerPosition_ == null) {
+            trackerPosition_ = new global::Vector();
+          }
+          input.ReadMessage(trackerPosition_);
+          break;
+        }
+        case 26: {
+          if (trackerRotation_ == null) {
+            trackerRotation_ = new global::Quadrublet();
+          }
+          input.ReadMessage(trackerRotation_);
+          break;
+        }
+        case 34: {
+          if (trackerScale_ == null) {
+            trackerScale_ = new global::Vector();
+          }
+          input.ReadMessage(trackerScale_);
+          break;
+        }
+      }
+    }
+  }
+
+}
+
 public sealed partial class Vector : pb::IMessage<Vector> {
   private static readonly pb::MessageParser<Vector> _parser = new pb::MessageParser<Vector>(() => new Vector());
   private pb::UnknownFieldSet _unknownFields;
@@ -284,7 +523,7 @@ public sealed partial class Vector : pb::IMessage<Vector> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::MultiUserSyncReflection.Descriptor.MessageTypes[1]; }
+    get { return global::MultiUserSyncReflection.Descriptor.MessageTypes[2]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -469,7 +708,7 @@ public sealed partial class Quadrublet : pb::IMessage<Quadrublet> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::MultiUserSyncReflection.Descriptor.MessageTypes[2]; }
+    get { return global::MultiUserSyncReflection.Descriptor.MessageTypes[3]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -682,7 +921,7 @@ public sealed partial class RequestUser : pb::IMessage<RequestUser> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::MultiUserSyncReflection.Descriptor.MessageTypes[3]; }
+    get { return global::MultiUserSyncReflection.Descriptor.MessageTypes[4]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -803,6 +1042,135 @@ public sealed partial class RequestUser : pb::IMessage<RequestUser> {
 
 }
 
+public sealed partial class RequestTracker : pb::IMessage<RequestTracker> {
+  private static readonly pb::MessageParser<RequestTracker> _parser = new pb::MessageParser<RequestTracker>(() => new RequestTracker());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<RequestTracker> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::MultiUserSyncReflection.Descriptor.MessageTypes[5]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public RequestTracker() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public RequestTracker(RequestTracker other) : this() {
+    requestTrackerID_ = other.requestTrackerID_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public RequestTracker Clone() {
+    return new RequestTracker(this);
+  }
+
+  /// <summary>Field number for the "requestTrackerID" field.</summary>
+  public const int RequestTrackerIDFieldNumber = 1;
+  private int requestTrackerID_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int RequestTrackerID {
+    get { return requestTrackerID_; }
+    set {
+      requestTrackerID_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as RequestTracker);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(RequestTracker other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (RequestTrackerID != other.RequestTrackerID) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (RequestTrackerID != 0) hash ^= RequestTrackerID.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (RequestTrackerID != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(RequestTrackerID);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (RequestTrackerID != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(RequestTrackerID);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(RequestTracker other) {
+    if (other == null) {
+      return;
+    }
+    if (other.RequestTrackerID != 0) {
+      RequestTrackerID = other.RequestTrackerID;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          RequestTrackerID = input.ReadInt32();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
 public sealed partial class Response : pb::IMessage<Response> {
   private static readonly pb::MessageParser<Response> _parser = new pb::MessageParser<Response>(() => new Response());
   private pb::UnknownFieldSet _unknownFields;
@@ -811,7 +1179,7 @@ public sealed partial class Response : pb::IMessage<Response> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::MultiUserSyncReflection.Descriptor.MessageTypes[4]; }
+    get { return global::MultiUserSyncReflection.Descriptor.MessageTypes[6]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

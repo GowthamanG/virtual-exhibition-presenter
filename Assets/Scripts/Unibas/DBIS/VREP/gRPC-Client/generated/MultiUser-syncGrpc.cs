@@ -14,6 +14,8 @@ public static partial class multiUserSync
   static readonly grpc::Marshaller<global::RequestUser> __Marshaller_RequestUser = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::RequestUser.Parser.ParseFrom);
   static readonly grpc::Marshaller<global::User> __Marshaller_User = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::User.Parser.ParseFrom);
   static readonly grpc::Marshaller<global::Response> __Marshaller_Response = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Response.Parser.ParseFrom);
+  static readonly grpc::Marshaller<global::RequestTracker> __Marshaller_RequestTracker = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::RequestTracker.Parser.ParseFrom);
+  static readonly grpc::Marshaller<global::Tracker> __Marshaller_Tracker = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Tracker.Parser.ParseFrom);
 
   static readonly grpc::Method<global::RequestUser, global::User> __Method_getUser = new grpc::Method<global::RequestUser, global::User>(
       grpc::MethodType.Unary,
@@ -27,6 +29,20 @@ public static partial class multiUserSync
       __ServiceName,
       "setUser",
       __Marshaller_User,
+      __Marshaller_Response);
+
+  static readonly grpc::Method<global::RequestTracker, global::Tracker> __Method_getTracker = new grpc::Method<global::RequestTracker, global::Tracker>(
+      grpc::MethodType.Unary,
+      __ServiceName,
+      "getTracker",
+      __Marshaller_RequestTracker,
+      __Marshaller_Tracker);
+
+  static readonly grpc::Method<global::Tracker, global::Response> __Method_setTracker = new grpc::Method<global::Tracker, global::Response>(
+      grpc::MethodType.Unary,
+      __ServiceName,
+      "setTracker",
+      __Marshaller_Tracker,
       __Marshaller_Response);
 
   /// <summary>Service descriptor</summary>
@@ -44,6 +60,16 @@ public static partial class multiUserSync
     }
 
     public virtual global::System.Threading.Tasks.Task<global::Response> setUser(global::User request, grpc::ServerCallContext context)
+    {
+      throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+    }
+
+    public virtual global::System.Threading.Tasks.Task<global::Tracker> getTracker(global::RequestTracker request, grpc::ServerCallContext context)
+    {
+      throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+    }
+
+    public virtual global::System.Threading.Tasks.Task<global::Response> setTracker(global::Tracker request, grpc::ServerCallContext context)
     {
       throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
     }
@@ -105,6 +131,38 @@ public static partial class multiUserSync
     {
       return CallInvoker.AsyncUnaryCall(__Method_setUser, null, options, request);
     }
+    public virtual global::Tracker getTracker(global::RequestTracker request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return getTracker(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    public virtual global::Tracker getTracker(global::RequestTracker request, grpc::CallOptions options)
+    {
+      return CallInvoker.BlockingUnaryCall(__Method_getTracker, null, options, request);
+    }
+    public virtual grpc::AsyncUnaryCall<global::Tracker> getTrackerAsync(global::RequestTracker request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return getTrackerAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    public virtual grpc::AsyncUnaryCall<global::Tracker> getTrackerAsync(global::RequestTracker request, grpc::CallOptions options)
+    {
+      return CallInvoker.AsyncUnaryCall(__Method_getTracker, null, options, request);
+    }
+    public virtual global::Response setTracker(global::Tracker request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return setTracker(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    public virtual global::Response setTracker(global::Tracker request, grpc::CallOptions options)
+    {
+      return CallInvoker.BlockingUnaryCall(__Method_setTracker, null, options, request);
+    }
+    public virtual grpc::AsyncUnaryCall<global::Response> setTrackerAsync(global::Tracker request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return setTrackerAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    public virtual grpc::AsyncUnaryCall<global::Response> setTrackerAsync(global::Tracker request, grpc::CallOptions options)
+    {
+      return CallInvoker.AsyncUnaryCall(__Method_setTracker, null, options, request);
+    }
     /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
     protected override multiUserSyncClient NewInstance(ClientBaseConfiguration configuration)
     {
@@ -118,7 +176,9 @@ public static partial class multiUserSync
   {
     return grpc::ServerServiceDefinition.CreateBuilder()
         .AddMethod(__Method_getUser, serviceImpl.getUser)
-        .AddMethod(__Method_setUser, serviceImpl.setUser).Build();
+        .AddMethod(__Method_setUser, serviceImpl.setUser)
+        .AddMethod(__Method_getTracker, serviceImpl.getTracker)
+        .AddMethod(__Method_setTracker, serviceImpl.setTracker).Build();
   }
 
   /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
@@ -129,6 +189,8 @@ public static partial class multiUserSync
   {
     serviceBinder.AddMethod(__Method_getUser, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::RequestUser, global::User>(serviceImpl.getUser));
     serviceBinder.AddMethod(__Method_setUser, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User, global::Response>(serviceImpl.setUser));
+    serviceBinder.AddMethod(__Method_getTracker, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::RequestTracker, global::Tracker>(serviceImpl.getTracker));
+    serviceBinder.AddMethod(__Method_setTracker, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Tracker, global::Response>(serviceImpl.setTracker));
   }
 
 }

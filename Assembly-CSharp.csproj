@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\Unibas\DBIS\VREP\gRPC-Client\generated\MultiUserSync.cs" />
     <Compile Include="Assets\Scripts\Unibas\DBIS\VREP\gRPC-Client\generated\MultiUser-syncGrpc.cs" />
     <Compile Include="Assets\Scripts\Unibas\DBIS\VREP\gRPC-Client\VREPClient.cs" />
+    <Compile Include="Assets\Scripts\Unibas\DBIS\VREP\gRPC-Client\VREPClientTest.cs" />
     <Compile Include="Assets\Scripts\Unibas\DBIS\VREP\LegacyObjects\Displayal.cs" />
     <Compile Include="Assets\Scripts\Unibas\DBIS\VREP\LegacyObjects\Plaquette.cs" />
     <Compile Include="Assets\Scripts\Unibas\DBIS\VREP\LegacyScripts\BuildingManager.cs" />
