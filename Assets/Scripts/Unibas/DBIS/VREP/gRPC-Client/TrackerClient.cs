@@ -5,66 +5,64 @@ using UnityEngine;
 
 namespace Unibas.DBIS.VREP
 {
-	public class VREPClient : MonoBehaviour
+	public class TrackerClient : MonoBehaviour
 	{
 		//private AutoResetEvent resetEvent;
 		private Thread connectionThread;
 		public string host;
 		public int port;
-		public GameObject player1;
-		public GameObject player2;
-		private GameObject cylinder;
+		public GameObject box;
 		private multiUserSync.multiUserSyncClient client;
-		private User firstUser;
-		private User secondUser;
+		private Tracker firstTracker;
 		private Channel channel;
-		private int firstUserId;
-		private Vector3 firstUserPosition;
-		private Quaternion firstUserRotation;
-		private Vector3 firstUserScale;
-		private int secondUserId;
-		private Vector3 secondUserPosition;
-		private Quaternion secondUserRotation;
-		private Vector3 secondUserScale;
+		private int firstTrackerId;
+		private Vector3 firstTrackerPosition;
+		private Quaternion firstTrackerRotation;
+		private Vector3 firstTrackerScale;
 		private bool stop;
-		private bool secondUserPresence;
-		private bool secondUserInstantiated;
+		public bool trackerIsActive;
+		private bool trackerInstantiated;
 
 		// Use this for initialization
 		void Start ()
 		{
-			firstUserId = player1.GetInstanceID();
-			firstUserPosition = player1.transform.position;
-			firstUserRotation = player1.transform.rotation;
-			firstUserScale = player1.transform.lossyScale;
-
-			firstUser = new User
+			if (trackerIsActive)
 			{
-				Id = firstUserId,
-			
-				UserPosition = new Vector()
+				
+				
+				firstTrackerId = GetInstanceID();
+				firstTrackerPosition = transform.position;
+				firstTrackerRotation = transform.rotation;
+
+				firstTracker = new Tracker()
 				{
-					X = firstUserPosition.x,
-					Y = firstUserPosition.y,
-					Z = firstUserPosition.z,
-				},
-			
-				UserRotation = new Quadrublet()
-				{
-					X = firstUserRotation.x,
-					Y = firstUserRotation.y,
-					Z = firstUserRotation.z,
-					W = firstUserRotation.w
-				},
-			
-				UserScale = new Vector()
-				{
-					X = firstUserScale.x,
-					Y = firstUserScale.y,
-					Z = firstUserScale.z,
-				}
-			};
-		
+					Id = firstTrackerId,
+
+					TrackerPosition = new Vector()
+					{
+						X = firstTrackerPosition.x,
+						Y = firstTrackerPosition.y,
+						Z = firstTrackerPosition.z,
+					},
+
+					TrackerRotation = new Quadrublet()
+					{
+						X = firstTrackerRotation.x,
+						Y = firstTrackerRotation.y,
+						Z = firstTrackerRotation.z,
+						W = firstTrackerRotation.w
+					},
+
+					TrackerScale = new Vector()
+					{
+						X = firstTrackerScale.x,
+						Y = firstTrackerScale.y,
+						Z = firstTrackerScale.z,
+					}
+				};
+
+			}
+
 			//resetEvent = new AutoResetEvent(false);
 
 			/*Instantiate(player2);
@@ -100,17 +98,10 @@ namespace Unibas.DBIS.VREP
 					Z = secondUserScale.z,
 				}
 			};*/
-			
-			secondUser = new User();
-			secondUserId = 0;
-			secondUserPosition = new Vector3();
-			secondUserRotation = new Quaternion();
-			secondUserScale = new Vector3();
+		
 
-			secondUserPresence = false;
-			secondUserInstantiated = false;
+			trackerInstantiated = false;
 			
-			cylinder = new GameObject();
 			
 			connectionThread = new Thread(Run);
 			connectionThread.Start();
@@ -132,7 +123,7 @@ namespace Unibas.DBIS.VREP
 		}
 	
 		// Update is called once per frame
-		void Update ()
+		void Update()
 		{
 			/*UpdateUser(user, player1);
 		//updateUser(secondUser, secondUserObject);
@@ -140,24 +131,26 @@ namespace Unibas.DBIS.VREP
 		//client.setUser(user);
 		client.setUser(user);*/
 			//resetEvent.Set();
-	
-			firstUserPosition = player1.transform.position;
-			firstUserRotation = player1.transform.rotation;
-			firstUserScale = player1.transform.lossyScale;
-			
-			UpdateUser(firstUser, firstUserId, firstUserPosition, firstUserRotation, firstUserScale);
+			if (trackerIsActive)
+			{
+				firstTrackerPosition = transform.position;
+				firstTrackerRotation = transform.rotation;
+				firstTrackerScale = transform.lossyScale;
+			}
+
+			UpdateTracker(firstTracker, firstTrackerId, firstTrackerPosition, firstTrackerRotation, firstTrackerScale);
 			//UpdateUser(secondUser, secondUserId, secondUserPosition, secondUserRotation, secondUserScale);
 
-			if (secondUserPresence && secondUserInstantiated == false)
+			if (trackerIsActive == false && trackerInstantiated == false)
 			{
-				secondUserInstantiated = true;
-				cylinder = Instantiate(player2, secondUserPosition, new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+				trackerInstantiated = true;
+				box = Instantiate(box, firstTrackerPosition, firstTrackerRotation);
 			}
 
 			//player2.transform.position = secondUserPosition;
 			//player2.transform.rotation = secondUserRotation;
-			if (secondUserPresence)
-				cylinder.transform.SetPositionAndRotation(secondUserPosition, new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+			if (trackerIsActive == false)
+				box.transform.SetPositionAndRotation(firstTrackerPosition, firstTrackerRotation);
 
 
 		}
@@ -244,9 +237,11 @@ namespace Unibas.DBIS.VREP
 				var now = DateTime.Now;
 				var deltaTime = now - time;
 				time = now;
-				SetUser(firstUser);
-				GetUser(firstUserId); //Trick to get user which is NOT equal firstUserId, details see implementation on server
+				SetTracker(firstTracker);
+				if (trackerIsActive == false)
+					GetTracker(00); //Trick to get user which is NOT equal firstUserId, details see implementation on server
 				//deltaTime.TotalSeconds;
+				
 			}
 
 			channel.ShutdownAsync().Wait();
@@ -265,47 +260,48 @@ namespace Unibas.DBIS.VREP
 		}
 
 
-		private void SetUser(User user)
+		private void SetTracker(Tracker tracker)
 		{
 			try
 			{
-				Response serverResponse = client.setUser(user);
+				Response serverResponse = client.setTracker(tracker);
 				Debug.Log("User is set: " + serverResponse.Response_);
 
 			}
 			catch (RpcException e)
 			{
-				Debug.Log("RPC failed in method \"setUser\"" + e);
+				Debug.Log("RPC failed in method \"setTracker\"" + e);
 			}
 		
 		}
 
-		private void GetUser(int userId)
+		private void GetTracker(int trackerId)
 		{
 			try
 			{
-				RequestUser requestUser = new RequestUser()
+				RequestTracker requestTracker = new RequestTracker()
 				{
-					RequestUserID = userId
+					 RequestTrackerID = trackerId
 				};
-				
-				var responseUser = client.getUser(requestUser);
 
-				if (responseUser.Id != 0)
-					secondUserPresence = true;
-				
-				secondUserId = responseUser.Id;
-				secondUserPosition.x = responseUser.UserPosition.X;
-				secondUserPosition.y = responseUser.UserPosition.Y;
-				secondUserPosition.z = responseUser.UserPosition.Z;
-				secondUserRotation.x = responseUser.UserRotation.X;
-				secondUserRotation.y = responseUser.UserRotation.Y;
-				secondUserRotation.z = responseUser.UserRotation.Z;
-				secondUserRotation.w = responseUser.UserRotation.W;
-				secondUserScale.x = responseUser.UserScale.X;
-				secondUserScale.y = responseUser.UserScale.Y;
-				secondUserScale.z = responseUser.UserScale.Z;
-				
+				var responseTracker = client.getTracker(requestTracker);
+
+				if (responseTracker.Id != 0)
+				{
+
+					firstTrackerId = responseTracker.Id;
+					firstTrackerPosition.x = responseTracker.TrackerPosition.X;
+					firstTrackerPosition.y = responseTracker.TrackerPosition.Y;
+					firstTrackerPosition.z = responseTracker.TrackerPosition.Z;
+					firstTrackerRotation.x = responseTracker.TrackerRotation.X;
+					firstTrackerRotation.y = responseTracker.TrackerRotation.Y;
+					firstTrackerRotation.z = responseTracker.TrackerRotation.Z;
+					firstTrackerRotation.w = responseTracker.TrackerRotation.W;
+					firstTrackerScale.x = responseTracker.TrackerScale.X;
+					firstTrackerScale.y = responseTracker.TrackerScale.Y;
+					firstTrackerScale.z = responseTracker.TrackerScale.Z;
+				}
+
 			}
 			catch (RpcException e)
 			{
@@ -314,19 +310,19 @@ namespace Unibas.DBIS.VREP
 		}
 
 
-		private void UpdateUser(User user, int userId, Vector3 position, Quaternion rotation, Vector3 scale)
+		private void UpdateTracker(Tracker tracker, int trackerId, Vector3 position, Quaternion rotation, Vector3 scale)
 		{
-			user.Id = userId;
-			user.UserPosition.X = position.x;
-			user.UserPosition.Y = position.y;
-			user.UserPosition.Z = position.z;
-			user.UserRotation.X = rotation.x;
-			user.UserRotation.Y = rotation.y;
-			user.UserRotation.Z = rotation.z;
-			user.UserRotation.W = rotation.w;
-			user.UserScale.X = scale.x;
-			user.UserScale.Y = scale.y;
-			user.UserScale.Z = scale.z;
+			tracker.Id = trackerId;
+			tracker.TrackerPosition.X = position.x;
+			tracker.TrackerPosition.Y = position.y;
+			tracker.TrackerPosition.Z = position.z;
+			tracker.TrackerRotation.X = rotation.x;
+			tracker.TrackerRotation.Y = rotation.y;
+			tracker.TrackerRotation.Z = rotation.z;
+			tracker.TrackerRotation.W = rotation.w;
+			tracker.TrackerScale.X = scale.x;
+			tracker.TrackerScale.Y = scale.y;
+			tracker.TrackerScale.Z = scale.z;
 		}
 
 		/*private void UpdateFirstUser()
