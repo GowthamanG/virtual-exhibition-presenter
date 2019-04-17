@@ -129,15 +129,17 @@ namespace Unibas.DBIS.VREP
 		client.setUser(user);*/
 			//resetEvent.Set();
 	
-			firstUserPosition = player1.transform.position;
+			/*firstUserPosition = player1.transform.position;
 			firstUserRotation = player1.transform.rotation;
 			firstUserScale = player1.transform.lossyScale;
 			
-			UpdateUser(firstUser, firstUserId, firstUserPosition, firstUserRotation, firstUserScale);
-			UpdateUser(secondUser, secondUserId, secondUserPosition, secondUserRotation, secondUserScale);
+			UpdateUser(firstUser, firstUserId, firstUserPosition, firstUserRotation, firstUserScale);*/
+			//UpdateUser(secondUser, secondUserId, secondUserPosition, secondUserRotation, secondUserScale);
 		
-			player2.transform.position = secondUserPosition;
-			player2.transform.rotation = secondUserRotation;
+			//player2.transform.position = secondUserPosition;
+			//player2.transform.rotation = secondUserRotation;
+			
+			player2.transform.Translate(secondUserPosition.x, secondUserPosition.y, secondUserPosition.y);
 
 		}
 
@@ -248,6 +250,12 @@ namespace Unibas.DBIS.VREP
 		{
 			try
 			{
+				firstUserPosition = player1.transform.position;
+				firstUserRotation = player1.transform.rotation;
+				firstUserScale = player1.transform.lossyScale;
+			
+				UpdateUser(firstUser, firstUserId, firstUserPosition, firstUserRotation, firstUserScale);
+				
 				Response serverResponse = client.setUser(user);
 				Debug.Log("User is set: " + serverResponse.Response_);
 
@@ -284,6 +292,8 @@ namespace Unibas.DBIS.VREP
 				secondUserScale.x = responseUser.UserScale.X;
 				secondUserScale.y = responseUser.UserScale.Y;
 				secondUserScale.z = responseUser.UserScale.Z;
+				
+				UpdateUser(secondUser, secondUserId, secondUserPosition, secondUserRotation, secondUserScale);
 				
 			}
 			catch (RpcException e)

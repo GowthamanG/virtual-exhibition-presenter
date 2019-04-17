@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414726, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -620,9 +620,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad9ea64629a4f71a8b1f214f80e84f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  host: 192.168.1.132
+  host: 10.34.58.213
   port: 8888
-  player1: {fileID: 515702457}
+  player1: {fileID: 993875551}
   player2: {fileID: 3067332512271593070, guid: f55f1d68206904874835dbc9fae96981, type: 3}
 --- !u!4 &411976671
 Transform:
@@ -1024,12 +1024,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
---- !u!1 &515702457 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 107946, guid: dc06161b6d97feb419f45f03b62e14b9,
-    type: 3}
-  m_PrefabInstance: {fileID: 515702456}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &561656636
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1725,6 +1719,12 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 160, y: 30, z: 40}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &993875551 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 125964, guid: dc06161b6d97feb419f45f03b62e14b9,
+    type: 3}
+  m_PrefabInstance: {fileID: 515702456}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &995871350
 GameObject:
   m_ObjectHideFlags: 0
