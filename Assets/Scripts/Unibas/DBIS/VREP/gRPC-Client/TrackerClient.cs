@@ -23,7 +23,7 @@ namespace Unibas.DBIS.VREP
 		public bool trackerIsActive;
 		private bool trackerInstantiated;
 		private bool strangeTrackerActive;
-		private GameObject newTracker;
+		private GameObject cubetracker;
 
 		// Use this for initialization
 		void Start ()
@@ -112,7 +112,7 @@ namespace Unibas.DBIS.VREP
 			trackerInstantiated = false;
 			strangeTrackerActive = false;
 
-			newTracker = new GameObject();
+			cubetracker = new GameObject();
 			
 			connectionThread = new Thread(Run);
 			connectionThread.Start();
@@ -156,13 +156,13 @@ namespace Unibas.DBIS.VREP
 			if (trackerIsActive == false && trackerInstantiated == false && strangeTrackerActive)
 			{
 				trackerInstantiated = true;
-				newTracker = Instantiate(box, firstTrackerPosition, firstTrackerRotation);
+				cubetracker = Instantiate(box, firstTrackerPosition, firstTrackerRotation);
 			}
 
 			//player2.transform.position = secondUserPosition;
 			//player2.transform.rotation = secondUserRotation;
 			if (trackerIsActive == false && strangeTrackerActive && trackerInstantiated)
-				newTracker.transform.SetPositionAndRotation(firstTrackerPosition, firstTrackerRotation);
+				cubetracker.transform.SetPositionAndRotation(firstTrackerPosition, firstTrackerRotation);
 
 
 		}
