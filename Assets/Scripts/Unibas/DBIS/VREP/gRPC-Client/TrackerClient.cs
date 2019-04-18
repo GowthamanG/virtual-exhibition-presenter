@@ -66,6 +66,7 @@ namespace Unibas.DBIS.VREP
 			}
 			else
 			{
+				firstTracker = new Tracker();
 				firstTrackerId = 0;
 				firstTrackerPosition = new Vector3();
 				firstTrackerRotation = new Quaternion();
