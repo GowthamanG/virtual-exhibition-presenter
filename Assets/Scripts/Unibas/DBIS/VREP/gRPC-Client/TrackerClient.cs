@@ -64,6 +64,13 @@ namespace Unibas.DBIS.VREP
 				};
 
 			}
+			else
+			{
+				firstTrackerId = 0;
+				firstTrackerPosition = new Vector3();
+				firstTrackerRotation = new Quaternion();
+				firstTrackerScale = new Vector3();
+			}
 
 			//resetEvent = new AutoResetEvent(false);
 
@@ -154,7 +161,7 @@ namespace Unibas.DBIS.VREP
 
 			//player2.transform.position = secondUserPosition;
 			//player2.transform.rotation = secondUserRotation;
-			if (trackerIsActive == false && strangeTrackerActive)
+			if (trackerIsActive == false && strangeTrackerActive && trackerInstantiated)
 				newTracker.transform.SetPositionAndRotation(firstTrackerPosition, firstTrackerRotation);
 
 
