@@ -22,6 +22,8 @@ namespace Unibas.DBIS.VREP
 		private bool stop;
 		public bool trackerIsActive;
 		private bool trackerInstantiated;
+		private bool strangeTrackerActive;
+		private GameObject newTracker;
 
 		// Use this for initialization
 		void Start ()
@@ -101,7 +103,9 @@ namespace Unibas.DBIS.VREP
 		
 
 			trackerInstantiated = false;
-			
+			strangeTrackerActive = false;
+
+			newTracker = new GameObject();
 			
 			connectionThread = new Thread(Run);
 			connectionThread.Start();
@@ -136,21 +140,22 @@ namespace Unibas.DBIS.VREP
 				firstTrackerPosition = transform.position;
 				firstTrackerRotation = transform.rotation;
 				firstTrackerScale = transform.lossyScale;
+				UpdateTracker(firstTracker, firstTrackerId, firstTrackerPosition, firstTrackerRotation, firstTrackerScale);
 			}
 
-			UpdateTracker(firstTracker, firstTrackerId, firstTrackerPosition, firstTrackerRotation, firstTrackerScale);
+			
 			//UpdateUser(secondUser, secondUserId, secondUserPosition, secondUserRotation, secondUserScale);
 
-			if (trackerIsActive == false && trackerInstantiated == false)
+			if (trackerIsActive == false && trackerInstantiated == false && strangeTrackerActive)
 			{
 				trackerInstantiated = true;
-				box = Instantiate(box, firstTrackerPosition, firstTrackerRotation);
+				newTracker = Instantiate(box, firstTrackerPosition, firstTrackerRotation);
 			}
 
 			//player2.transform.position = secondUserPosition;
 			//player2.transform.rotation = secondUserRotation;
-			if (trackerIsActive == false)
-				box.transform.SetPositionAndRotation(firstTrackerPosition, firstTrackerRotation);
+			if (trackerIsActive == false && strangeTrackerActive)
+				newTracker.transform.SetPositionAndRotation(firstTrackerPosition, firstTrackerRotation);
 
 
 		}
@@ -239,9 +244,12 @@ namespace Unibas.DBIS.VREP
 				time = now;
 				SetTracker(firstTracker);
 				if (trackerIsActive == false)
+				{
 					GetTracker(00); //Trick to get user which is NOT equal firstUserId, details see implementation on server
-				//deltaTime.TotalSeconds;
-				
+					//deltaTime.TotalSeconds;
+					strangeTrackerActive = true;
+				}
+
 			}
 
 			channel.ShutdownAsync().Wait();
