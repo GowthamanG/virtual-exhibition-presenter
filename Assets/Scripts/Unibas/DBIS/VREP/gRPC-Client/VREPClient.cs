@@ -2,6 +2,7 @@
 using System.Threading;
 using Grpc.Core;
 using UnityEngine;
+using UnityEngine.XR;
 
 namespace Unibas.DBIS.VREP
 {
@@ -29,13 +30,16 @@ namespace Unibas.DBIS.VREP
 		private bool stop;
 		private bool secondUserPresence;
 		private bool secondUserInstantiated;
+		private float translateX, translateY, translateZ;
 
 		// Use this for initialization
 		void Start ()
 		{
 			firstUserId = player1.GetInstanceID();
-			firstUserPosition = player1.transform.position;
-			firstUserRotation = player1.transform.rotation;
+			/*firstUserPosition = player1.transform.position;
+			firstUserRotation = player1.transform.rotation;*/
+			firstUserPosition = InputTracking.GetLocalPosition(XRNode.Head);
+			firstUserRotation = InputTracking.GetLocalRotation(XRNode.Head);
 			firstUserScale = player1.transform.lossyScale;
 
 			firstUser = new User
@@ -115,6 +119,10 @@ namespace Unibas.DBIS.VREP
 			connectionThread = new Thread(Run);
 			connectionThread.Start();
 
+			translateX = player1.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
+			translateY = player1.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
+			translateZ = player1.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
+
 
 			//client.setUser(user);
 			//SetUser(user);
@@ -122,13 +130,13 @@ namespace Unibas.DBIS.VREP
 
 			/*task = SetUser();
 		task.Wait();*/
-		
+
 			//Vector3 positionSecondUser = new Vector3(secondUser.PlayerPosition.X, secondUser.PlayerPosition.Y, secondUser.PlayerPosition.Z);
 
 			//Instantiate(secondUserObject, positionSecondUser, Quaternion.Euler(0,0,0));
 
 			//channel.ShutdownAsync().Wait();
-		
+
 		}
 	
 		// Update is called once per frame
@@ -141,8 +149,12 @@ namespace Unibas.DBIS.VREP
 		client.setUser(user);*/
 			//resetEvent.Set();
 	
-			firstUserPosition = player1.transform.position;
+			/*firstUserPosition = player1.transform.position;
 			firstUserRotation = player1.transform.rotation;
+			firstUserScale = player1.transform.lossyScale;*/
+
+			firstUserPosition = InputTracking.GetLocalPosition(XRNode.Head);
+			firstUserRotation = InputTracking.GetLocalRotation(XRNode.Head);
 			firstUserScale = player1.transform.lossyScale;
 			
 			UpdateUser(firstUser, firstUserId, firstUserPosition, firstUserRotation, firstUserScale);
@@ -158,8 +170,7 @@ namespace Unibas.DBIS.VREP
 			//player2.transform.rotation = secondUserRotation;
 			if (secondUserPresence)
 				cylinder.transform.SetPositionAndRotation(secondUserPosition, new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
-
-
+			
 		}
 
 
@@ -295,9 +306,9 @@ namespace Unibas.DBIS.VREP
 					secondUserPresence = true;
 				
 				secondUserId = responseUser.Id;
-				secondUserPosition.x = responseUser.UserPosition.X;
-				secondUserPosition.y = responseUser.UserPosition.Y;
-				secondUserPosition.z = responseUser.UserPosition.Z;
+				secondUserPosition.x = responseUser.UserPosition.X + translateX;
+				secondUserPosition.y = responseUser.UserPosition.Y + translateY;
+				secondUserPosition.z = responseUser.UserPosition.Z + translateZ;
 				secondUserRotation.x = responseUser.UserRotation.X;
 				secondUserRotation.y = responseUser.UserRotation.Y;
 				secondUserRotation.z = responseUser.UserRotation.Z;

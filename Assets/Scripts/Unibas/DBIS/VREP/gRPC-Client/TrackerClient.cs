@@ -2,6 +2,7 @@
 using System.Threading;
 using Grpc.Core;
 using UnityEngine;
+using UnityEngine.XR;
 
 namespace Unibas.DBIS.VREP
 {
@@ -12,6 +13,7 @@ namespace Unibas.DBIS.VREP
 		public string host;
 		public int port;
 		public GameObject box;
+		private GameObject player;
 		private multiUserSync.multiUserSyncClient client;
 		private Tracker firstTracker;
 		private Channel channel;
@@ -24,6 +26,7 @@ namespace Unibas.DBIS.VREP
 		private bool trackerInstantiated;
 		private bool strangeTrackerActive;
 		private GameObject cubetracker;
+		private float translateX, translateY, translateZ;
 
 		// Use this for initialization
 		void Start ()
@@ -118,6 +121,14 @@ namespace Unibas.DBIS.VREP
 			connectionThread = new Thread(Run);
 			connectionThread.Start();
 
+			player = GameObject.Find("VR Camera");
+			translateX = player.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
+			translateZ = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
+			translateZ = player.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
+			
+
+
+
 
 			//client.setUser(user);
 			//SetUser(user);
@@ -125,13 +136,13 @@ namespace Unibas.DBIS.VREP
 
 			/*task = SetUser();
 		task.Wait();*/
-		
+
 			//Vector3 positionSecondUser = new Vector3(secondUser.PlayerPosition.X, secondUser.PlayerPosition.Y, secondUser.PlayerPosition.Z);
 
 			//Instantiate(secondUserObject, positionSecondUser, Quaternion.Euler(0,0,0));
 
 			//channel.ShutdownAsync().Wait();
-		
+
 		}
 	
 		// Update is called once per frame
@@ -329,9 +340,9 @@ namespace Unibas.DBIS.VREP
 		private void UpdateTracker(Tracker tracker, int trackerId, Vector3 position, Quaternion rotation, Vector3 scale)
 		{
 			tracker.Id = trackerId;
-			tracker.TrackerPosition.X = position.x;
-			tracker.TrackerPosition.Y = position.y;
-			tracker.TrackerPosition.Z = position.z;
+			tracker.TrackerPosition.X = position.x + translateX;
+			tracker.TrackerPosition.Y = position.y + translateY;
+			tracker.TrackerPosition.Z = position.z + translateZ;
 			tracker.TrackerRotation.X = rotation.x;
 			tracker.TrackerRotation.Y = rotation.y;
 			tracker.TrackerRotation.Z = rotation.z;
