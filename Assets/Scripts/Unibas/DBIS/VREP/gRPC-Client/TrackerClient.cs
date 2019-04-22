@@ -156,8 +156,10 @@ namespace Unibas.DBIS.VREP
 			//resetEvent.Set();
 			if (trackerIsActive)
 			{
-				firstTrackerPosition = transform.position;
-				firstTrackerRotation = transform.rotation;
+				/*firstTrackerPosition = transform.position;
+				firstTrackerRotation = transform.rotation;*/
+				firstTrackerPosition = InputTracking.GetLocalPosition(XRNode.HardwareTracker);
+				firstTrackerRotation = InputTracking.GetLocalRotation(XRNode.HardwareTracker);
 				firstTrackerScale = transform.lossyScale;
 				UpdateTracker(firstTracker, firstTrackerId, firstTrackerPosition, firstTrackerRotation, firstTrackerScale);
 			}
@@ -317,9 +319,9 @@ namespace Unibas.DBIS.VREP
 				{
 
 					firstTrackerId = responseTracker.Id;
-					firstTrackerPosition.x = responseTracker.TrackerPosition.X;
-					firstTrackerPosition.y = responseTracker.TrackerPosition.Y;
-					firstTrackerPosition.z = responseTracker.TrackerPosition.Z;
+					firstTrackerPosition.x = responseTracker.TrackerPosition.X + translateX;
+					firstTrackerPosition.y = responseTracker.TrackerPosition.Y + translateY;
+					firstTrackerPosition.z = responseTracker.TrackerPosition.Z + translateZ;
 					firstTrackerRotation.x = responseTracker.TrackerRotation.X;
 					firstTrackerRotation.y = responseTracker.TrackerRotation.Y;
 					firstTrackerRotation.z = responseTracker.TrackerRotation.Z;
@@ -340,9 +342,9 @@ namespace Unibas.DBIS.VREP
 		private void UpdateTracker(Tracker tracker, int trackerId, Vector3 position, Quaternion rotation, Vector3 scale)
 		{
 			tracker.Id = trackerId;
-			tracker.TrackerPosition.X = position.x + translateX;
-			tracker.TrackerPosition.Y = position.y + translateY;
-			tracker.TrackerPosition.Z = position.z + translateZ;
+			tracker.TrackerPosition.X = position.x;
+			tracker.TrackerPosition.Y = position.y;
+			tracker.TrackerPosition.Z = position.z;
 			tracker.TrackerRotation.X = rotation.x;
 			tracker.TrackerRotation.Y = rotation.y;
 			tracker.TrackerRotation.Z = rotation.z;

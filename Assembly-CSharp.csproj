@@ -291,19 +291,19 @@
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\SeeThru.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Readme_InteractionSystem.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.10f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -507,28 +507,28 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.10f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Google.Protobuf">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Assets/Plugins/Google.Protobuf/lib/net45/Google.Protobuf.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Assets/Plugins/Google.Protobuf/lib/net45/Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="Grpc.Core">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Assets/Plugins/Grpc.Core/lib/net45/Grpc.Core.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Assets/Plugins/Grpc.Core/lib/net45/Grpc.Core.dll</HintPath>
     </Reference>
     <Reference Include="Grpc.Core.Api">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Assets/Plugins/Grpc.Core.Api/lib/net45/Grpc.Core.Api.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Assets/Plugins/Grpc.Core.Api/lib/net45/Grpc.Core.Api.dll</HintPath>
     </Reference>
     <Reference Include="System.Interactive.Async">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Assets/Plugins/System.Interactive.Async/lib/net45/System.Interactive.Async.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Assets/Plugins/System.Interactive.Async/lib/net45/System.Interactive.Async.dll</HintPath>
     </Reference>
     <Reference Include="Valve.Newtonsoft.Json">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Assets/SteamVR/Input/Plugins/JSON.NET/Valve.Newtonsoft.Json.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Assets/SteamVR/Input/Plugins/JSON.NET/Valve.Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.10f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
