@@ -13,7 +13,7 @@ namespace Unibas.DBIS.VREP
 		public string host;
 		public int port;
 		public GameObject box;
-		private GameObject player;
+		public GameObject player;
 		private multiUserSync.multiUserSyncClient client;
 		private Tracker firstTracker;
 		private Channel channel;
@@ -121,9 +121,8 @@ namespace Unibas.DBIS.VREP
 			connectionThread = new Thread(Run);
 			connectionThread.Start();
 
-			player = GameObject.Find("VR Camera");
 			translateX = player.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
-			translateZ = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
+			translateY = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
 			translateZ = player.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
 			
 
@@ -158,8 +157,8 @@ namespace Unibas.DBIS.VREP
 			{
 				/*firstTrackerPosition = transform.position;
 				firstTrackerRotation = transform.rotation;*/
-				firstTrackerPosition = InputTracking.GetLocalPosition(XRNode.HardwareTracker);
-				firstTrackerRotation = InputTracking.GetLocalRotation(XRNode.HardwareTracker);
+				firstTrackerPosition = transform.position;
+				firstTrackerRotation = transform.rotation;
 				firstTrackerScale = transform.lossyScale;
 				UpdateTracker(firstTracker, firstTrackerId, firstTrackerPosition, firstTrackerRotation, firstTrackerScale);
 			}
