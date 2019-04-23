@@ -163,13 +163,13 @@ namespace Unibas.DBIS.VREP
 			if (secondUserPresence && secondUserInstantiated == false)
 			{
 				secondUserInstantiated = true;
-				cylinder = Instantiate(player2, secondUserPosition, new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+				cylinder = Instantiate(player2, secondUserPosition, secondUserRotation);
 			}
 
 			//player2.transform.position = secondUserPosition;
 			//player2.transform.rotation = secondUserRotation;
 			if (secondUserPresence)
-				cylinder.transform.SetPositionAndRotation(secondUserPosition, new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+				cylinder.transform.SetPositionAndRotation(secondUserPosition, secondUserRotation);
 			
 		}
 
@@ -307,7 +307,7 @@ namespace Unibas.DBIS.VREP
 				
 				secondUserId = responseUser.Id;
 				secondUserPosition.x = responseUser.UserPosition.X + translateX;
-				secondUserPosition.y = responseUser.UserPosition.Y + translateY;
+				secondUserPosition.y = responseUser.UserPosition.Y;
 				secondUserPosition.z = responseUser.UserPosition.Z + translateZ;
 				secondUserRotation.x = responseUser.UserRotation.X;
 				secondUserRotation.y = responseUser.UserRotation.Y;

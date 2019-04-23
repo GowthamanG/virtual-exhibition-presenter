@@ -319,8 +319,8 @@ namespace Unibas.DBIS.VREP
 
 					firstTrackerId = responseTracker.Id;
 					firstTrackerPosition.x = responseTracker.TrackerPosition.X + translateX;
-					firstTrackerPosition.y = responseTracker.TrackerPosition.Y + translateY;
-					firstTrackerPosition.z = responseTracker.TrackerPosition.Z + translateZ;
+					firstTrackerPosition.y = responseTracker.TrackerPosition.Y - translateY;
+					firstTrackerPosition.z = responseTracker.TrackerPosition.Z - translateZ;
 					firstTrackerRotation.x = responseTracker.TrackerRotation.X;
 					firstTrackerRotation.y = responseTracker.TrackerRotation.Y;
 					firstTrackerRotation.z = responseTracker.TrackerRotation.Z;
