@@ -49,6 +49,18 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Google.Protobuf, Version=3.7.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604">
+      <HintPath>Assets\Plugins\Google.Protobuf\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d754f35622e28bad">
+      <HintPath>Assets\Plugins\Grpc.Core\lib\net45\Grpc.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Core.Api, Version=0.0.0.0, Culture=neutral, PublicKeyToken=d754f35622e28bad">
+      <HintPath>Assets\Plugins\Grpc.Core.Api\lib\net45\Grpc.Core.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Interactive.Async, Version=3.2.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263">
+      <HintPath>Assets\Plugins\System.Interactive.Async\lib\net45\System.Interactive.Async.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
