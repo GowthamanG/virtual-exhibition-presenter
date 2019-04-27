@@ -13,19 +13,21 @@ namespace Unibas.DBIS.VREP
 		public int port;
 		public GameObject player1;
 		public GameObject player2;
-		private GameObject cylinder;
+		private GameObject cowboy;
 		private multiUserSync.multiUserSyncClient client;
 		private User firstUser;
 		private User secondUser;
 		private Channel channel;
 		private int firstUserId;
-		private Vector3 firstUserPosition;
-		private Quaternion firstUserRotation;
-		private Vector3 firstUserScale;
+		private Vector3 firstUserPhysicalPosition;
+		private Quaternion firstUserPhysicalRotation;
+		private Vector3 firstUserVRWorldPosition;
+		private Quaternion firstUserVRWorldRotation;
 		private int secondUserId;
-		private Vector3 secondUserPosition;
-		private Quaternion secondUserRotation;
-		private Vector3 secondUserScale;
+		private Vector3 secondUserOriginVRPosition;
+		private Quaternion secondUserOriginVRRotation;
+		private Vector3 secondUserVRWorldPosition;
+		private Quaternion secondUserVRWorldRotation;
 		private bool stop;
 		private bool secondUserIsPresent;
 		private bool secondUserIsInstantiated;
@@ -35,47 +37,59 @@ namespace Unibas.DBIS.VREP
 		void Start ()
 		{
 			firstUserId = player1.GetInstanceID();
-			firstUserPosition = InputTracking.GetLocalPosition(XRNode.Head);
-			firstUserRotation = InputTracking.GetLocalRotation(XRNode.Head);
-			firstUserScale = player1.transform.lossyScale;
+			firstUserPhysicalPosition = InputTracking.GetLocalPosition(XRNode.Head);
+			firstUserPhysicalRotation = InputTracking.GetLocalRotation(XRNode.Head);
+			firstUserVRWorldPosition = player1.transform.position;
+			firstUserVRWorldRotation = player1.transform.rotation;
 
 			firstUser = new User
 			{
 				Id = firstUserId,
-			
-				UserPosition = new Vector()
+				
+				UserPhysicalPosition = new Vector()
 				{
-					X = firstUserPosition.x,
-					Y = firstUserPosition.y,
-					Z = firstUserPosition.z,
+					X = firstUserPhysicalPosition.x,
+					Y = firstUserPhysicalPosition.y,
+					Z = firstUserPhysicalPosition.z,
 				},
 			
-				UserRotation = new Quadrublet()
+				UserPhysicalRotation = new Quadrublet()
 				{
-					X = firstUserRotation.x,
-					Y = firstUserRotation.y,
-					Z = firstUserRotation.z,
-					W = firstUserRotation.w
+					X = firstUserPhysicalRotation.x,
+					Y = firstUserPhysicalRotation.y,
+					Z = firstUserPhysicalRotation.z,
+					W = firstUserPhysicalRotation.w
+				},
+				
+				UserVRWorldPosition = new Vector()
+				{
+					X = firstUserVRWorldPosition.x,
+					Y = firstUserVRWorldPosition.y,
+					Z = firstUserVRWorldPosition.z,
 				},
 			
-				UserScale = new Vector()
+				UserVRWorldRotation = new Quadrublet()
 				{
-					X = firstUserScale.x,
-					Y = firstUserScale.y,
-					Z = firstUserScale.z,
-				}
+					X = firstUserVRWorldRotation.x,
+					Y = firstUserVRWorldRotation.y,
+					Z = firstUserVRWorldRotation.z,
+					W = firstUserVRWorldRotation.w
+				},
+			
+				
 			};
 			
 			secondUser = new User();
 			secondUserId = 0;
-			secondUserPosition = new Vector3();
-			secondUserRotation = new Quaternion();
-			secondUserScale = new Vector3();
+			secondUserOriginVRPosition = new Vector3();
+			secondUserOriginVRRotation = new Quaternion();
+			secondUserVRWorldPosition = new Vector3();
+			secondUserVRWorldRotation = new Quaternion();
 
 			secondUserIsPresent = false;
 			secondUserIsInstantiated = false;
 			
-			cylinder = new GameObject();
+			cowboy = new GameObject();
 			
 			connectionThread = new Thread(Run);
 			connectionThread.Start();
@@ -87,22 +101,28 @@ namespace Unibas.DBIS.VREP
 	
 		void Update ()
 		{
-
-			firstUserPosition = InputTracking.GetLocalPosition(XRNode.Head);
-			firstUserRotation = InputTracking.GetLocalRotation(XRNode.Head);
-			firstUserScale = player1.transform.lossyScale;
 			
-			UpdateUser(firstUser, firstUserId, firstUserPosition, firstUserRotation, firstUserScale);
+
+			firstUserPhysicalPosition = InputTracking.GetLocalPosition(XRNode.Head);
+			firstUserPhysicalRotation = InputTracking.GetLocalRotation(XRNode.Head);
+			firstUserVRWorldPosition = player1.transform.position;
+			firstUserVRWorldRotation = player1.transform.rotation;
+			
+			translateX = player1.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
+			translateY = player1.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
+			translateZ = player1.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
+			
+			
+			UpdateUser(firstUser, firstUserId, firstUserVRWorldPosition, firstUserVRWorldRotation, firstUserPhysicalPosition, firstUserPhysicalRotation);
 
 			if (secondUserIsPresent && secondUserIsInstantiated == false)
 			{
 				secondUserIsInstantiated = true;
-				cylinder = Instantiate(player2, secondUserPosition, secondUserRotation);
+				cowboy = Instantiate(player2, secondUserVRWorldPosition, secondUserVRWorldRotation);
 			} 
 
 			if (secondUserIsPresent && secondUserIsInstantiated)
-				cylinder.transform.SetPositionAndRotation(secondUserPosition, secondUserRotation);
-			
+				cowboy.transform.SetPositionAndRotation(secondUserVRWorldPosition, secondUserVRWorldRotation);		
 		}
 
 
@@ -168,17 +188,23 @@ namespace Unibas.DBIS.VREP
 					secondUserIsPresent = true;
 				
 				secondUserId = responseUser.Id;
-				secondUserPosition.x = responseUser.UserPosition.X + translateX;
-				secondUserPosition.y = 0.0f;
-				secondUserPosition.z = responseUser.UserPosition.Z + translateZ;
-				secondUserRotation.x = responseUser.UserRotation.X;
-				secondUserRotation.y = responseUser.UserRotation.Y;
-				secondUserRotation.z = responseUser.UserRotation.Z;
-				secondUserRotation.w = responseUser.UserRotation.W;
-				secondUserScale.x = responseUser.UserScale.X;
-				secondUserScale.y = responseUser.UserScale.Y;
-				secondUserScale.z = responseUser.UserScale.Z;
+				secondUserVRWorldPosition.x = responseUser.UserPhysicalPosition.X + translateX;
+				secondUserVRWorldPosition.y = 0.0f;
+				secondUserVRWorldPosition.z = responseUser.UserPhysicalPosition.Z + translateZ;
 				
+				secondUserVRWorldRotation.x = responseUser.UserPhysicalRotation.X;
+				secondUserVRWorldRotation.y = responseUser.UserPhysicalRotation.Y;
+				secondUserVRWorldRotation.z = responseUser.UserPhysicalRotation.Z;
+				secondUserVRWorldRotation.w = responseUser.UserPhysicalRotation.W;
+				
+				secondUserOriginVRPosition.x = responseUser.UserVRWorldPosition.X;
+				secondUserOriginVRPosition.y = responseUser.UserVRWorldPosition.Y;
+				secondUserOriginVRPosition.z = responseUser.UserVRWorldPosition.Z;
+
+				secondUserOriginVRRotation.x = responseUser.UserVRWorldRotation.X;
+				secondUserOriginVRRotation.y = responseUser.UserVRWorldRotation.Y;
+				secondUserOriginVRRotation.z = responseUser.UserVRWorldRotation.Z;
+				secondUserOriginVRRotation.w = responseUser.UserVRWorldRotation.W;
 			}
 			catch (RpcException e)
 			{
@@ -187,19 +213,26 @@ namespace Unibas.DBIS.VREP
 		}
 
 
-		private void UpdateUser(User user, int userId, Vector3 position, Quaternion rotation, Vector3 scale)
+		private void UpdateUser(User user, int userId, Vector3 worldPosition, Quaternion worldRotation, Vector3 physicalPosition, Quaternion physicalRotation)
 		{
 			user.Id = userId;
-			user.UserPosition.X = position.x;
-			user.UserPosition.Y = position.y;
-			user.UserPosition.Z = position.z;
-			user.UserRotation.X = rotation.x;
-			user.UserRotation.Y = rotation.y;
-			user.UserRotation.Z = rotation.z;
-			user.UserRotation.W = rotation.w;
-			user.UserScale.X = scale.x;
-			user.UserScale.Y = scale.y;
-			user.UserScale.Z = scale.z;
+			user.UserVRWorldPosition.X = worldPosition.x;
+			user.UserVRWorldPosition.Y = worldPosition.y;
+			user.UserVRWorldPosition.Z = worldPosition.z;
+			user.UserVRWorldRotation.X = worldRotation.x;
+			user.UserVRWorldRotation.Y = worldRotation.y;
+			user.UserVRWorldRotation.Z = worldRotation.z;
+			user.UserVRWorldRotation.W = worldRotation.w;
+			
+			user.UserPhysicalPosition.X = physicalPosition.x;
+			user.UserPhysicalPosition.Y = physicalPosition.y;
+			user.UserPhysicalPosition.Z = physicalPosition.z;
+			user.UserPhysicalRotation.X = physicalRotation.x;
+			user.UserPhysicalRotation.Y = physicalRotation.y;
+			user.UserPhysicalRotation.Z = physicalRotation.z;
+			user.UserPhysicalRotation.W = physicalRotation.w;
+			
+			
 		}
 
 	}
