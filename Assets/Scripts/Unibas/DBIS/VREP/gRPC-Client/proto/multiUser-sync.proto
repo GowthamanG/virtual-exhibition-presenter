@@ -2,16 +2,16 @@ syntax = "proto3";
 
 message User{
     int32 id = 1;
-    Vector userVRWorldPosition = 2;
-    Quadrublet userVRWorldRotation = 3;
+    Vector userVRPosition = 2;
+    Quadrublet userVRRotation = 3;
     Vector userPhysicalPosition = 4;
     Quadrublet userPhysicalRotation = 5;
 }
 
 message Tracker{
     int32 id = 1;
-    Vector trackerVRWorldPosition = 2;
-    Quadrublet trackerVRWorldRotation = 3;
+    Vector trackerVRPosition = 2;
+    Quadrublet trackerVRRotation = 3;
     Vector trackerPhysicalPosition = 4;
     Quadrublet trackerPhysicalRotation = 5;
 }
@@ -40,7 +40,6 @@ message RequestTracker{
 message Response{
     string response = 1;
 }
-
 
 service multiUserSync{
     rpc getUser (RequestUser) returns (User){}

@@ -21,17 +21,21 @@ namespace Unibas.DBIS.VREP
 		private int firstUserId;
 		private Vector3 firstUserPhysicalPosition;
 		private Quaternion firstUserPhysicalRotation;
-		private Vector3 firstUserVRWorldPosition;
-		private Quaternion firstUserVRWorldRotation;
+		private Vector3 firstUserVRPosition;
+		private Quaternion firstUserVRRotation;
 		private int secondUserId;
 		private Vector3 secondUserOriginVRPosition;
 		private Quaternion secondUserOriginVRRotation;
-		private Vector3 secondUserVRWorldPosition;
-		private Quaternion secondUserVRWorldRotation;
+		private Vector3 secondUserVRPosition;
+		private Quaternion secondUserVRRotation;
+		private Vector3 secondUserPhysicalPosition;
+		private Quaternion secondUserPhysicalRotation;
 		private bool stop;
+		private bool differenceSecondUserPosToOriginIsSet;
 		private bool secondUserIsPresent;
 		private bool secondUserIsInstantiated;
-		private float translateX, translateY, translateZ;
+		private Vector3 translation;
+		private Vector3 differenceSecondUserPosToOrigin;
 
 		// Use this for initialization
 		void Start ()
@@ -39,8 +43,9 @@ namespace Unibas.DBIS.VREP
 			firstUserId = player1.GetInstanceID();
 			firstUserPhysicalPosition = InputTracking.GetLocalPosition(XRNode.Head);
 			firstUserPhysicalRotation = InputTracking.GetLocalRotation(XRNode.Head);
-			firstUserVRWorldPosition = player1.transform.position;
-			firstUserVRWorldRotation = player1.transform.rotation;
+			firstUserVRPosition = player1.transform.position;
+			firstUserVRRotation = player1.transform.rotation;
+
 
 			firstUser = new User
 			{
@@ -61,19 +66,19 @@ namespace Unibas.DBIS.VREP
 					W = firstUserPhysicalRotation.w
 				},
 				
-				UserVRWorldPosition = new Vector()
+				UserVRPosition = new Vector()
 				{
-					X = firstUserVRWorldPosition.x,
-					Y = firstUserVRWorldPosition.y,
-					Z = firstUserVRWorldPosition.z,
+					X = firstUserVRPosition.x,
+					Y = firstUserVRPosition.y,
+					Z = firstUserVRPosition.z,
 				},
 			
-				UserVRWorldRotation = new Quadrublet()
+				UserVRRotation = new Quadrublet()
 				{
-					X = firstUserVRWorldRotation.x,
-					Y = firstUserVRWorldRotation.y,
-					Z = firstUserVRWorldRotation.z,
-					W = firstUserVRWorldRotation.w
+					X = firstUserVRRotation.x,
+					Y = firstUserVRRotation.y,
+					Z = firstUserVRRotation.z,
+					W = firstUserVRRotation.w
 				},
 			
 				
@@ -83,20 +88,24 @@ namespace Unibas.DBIS.VREP
 			secondUserId = 0;
 			secondUserOriginVRPosition = new Vector3();
 			secondUserOriginVRRotation = new Quaternion();
-			secondUserVRWorldPosition = new Vector3();
-			secondUserVRWorldRotation = new Quaternion();
+			secondUserVRPosition = new Vector3();
+			secondUserVRRotation = new Quaternion();
+
+			differenceSecondUserPosToOrigin = new Vector3();
 
 			secondUserIsPresent = false;
 			secondUserIsInstantiated = false;
+			differenceSecondUserPosToOriginIsSet = false;
 			
 			cowboy = new GameObject();
 			
 			connectionThread = new Thread(Run);
 			connectionThread.Start();
 
-			translateX = player1.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
-			translateY = player1.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
-			translateZ = player1.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
+			translation = new Vector3();
+			translation.x = player1.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
+			translation.y = player1.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
+			translation.z = player1.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
 		}
 	
 		void Update ()
@@ -105,24 +114,36 @@ namespace Unibas.DBIS.VREP
 
 			firstUserPhysicalPosition = InputTracking.GetLocalPosition(XRNode.Head);
 			firstUserPhysicalRotation = InputTracking.GetLocalRotation(XRNode.Head);
-			firstUserVRWorldPosition = player1.transform.position;
-			firstUserVRWorldRotation = player1.transform.rotation;
+			firstUserVRPosition = player1.transform.position;
+			firstUserVRRotation = player1.transform.rotation;
 			
-			translateX = player1.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
-			translateY = player1.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
-			translateZ = player1.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
+			translation.x = player1.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
+			translation.y = player1.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
+			translation.z = player1.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
 			
 			
-			UpdateUser(firstUser, firstUserId, firstUserVRWorldPosition, firstUserVRWorldRotation, firstUserPhysicalPosition, firstUserPhysicalRotation);
+			UpdateUser(firstUser, firstUserId, firstUserVRPosition, firstUserVRRotation, firstUserPhysicalPosition, firstUserPhysicalRotation);
 
 			if (secondUserIsPresent && secondUserIsInstantiated == false)
 			{
 				secondUserIsInstantiated = true;
-				cowboy = Instantiate(player2, secondUserVRWorldPosition, secondUserVRWorldRotation);
+				cowboy = Instantiate(player2, secondUserVRPosition, secondUserVRRotation);
 			} 
 
 			if (secondUserIsPresent && secondUserIsInstantiated)
-				cowboy.transform.SetPositionAndRotation(secondUserVRWorldPosition, secondUserVRWorldRotation);		
+				cowboy.transform.SetPositionAndRotation(secondUserVRPosition, secondUserVRRotation);	
+			
+			if(checkSecondUserHasTeleported(secondUserVRPosition, secondUserOriginVRPosition, differenceSecondUserPosToOrigin))
+			{
+				Vector3 newPos = secondUserOriginVRPosition + differenceSecondUserPosToOrigin;
+				
+				cowboy.transform.SetPositionAndRotation(newPos, secondUserVRRotation);
+				translation.x = cowboy.transform.position.x - secondUserPhysicalPosition.x;
+				translation.y = cowboy.transform.position.y - secondUserPhysicalPosition.y;
+				translation.z = cowboy.transform.position.z - secondUserPhysicalPosition.z;
+				
+				player1.transform.SetPositionAndRotation(InputTracking.GetLocalPosition(XRNode.Head) + translation, InputTracking.GetLocalRotation(XRNode.Head));
+			}
 		}
 
 
@@ -163,7 +184,7 @@ namespace Unibas.DBIS.VREP
 			try
 			{
 				Response serverResponse = client.setUser(user);
-				Debug.Log("User is set: " + serverResponse.Response_);
+				Debug.Log("User is set: " + serverResponse.User);
 
 			}
 			catch (RpcException e)
@@ -188,23 +209,33 @@ namespace Unibas.DBIS.VREP
 					secondUserIsPresent = true;
 				
 				secondUserId = responseUser.Id;
-				secondUserVRWorldPosition.x = responseUser.UserPhysicalPosition.X + translateX;
-				secondUserVRWorldPosition.y = 0.0f;
-				secondUserVRWorldPosition.z = responseUser.UserPhysicalPosition.Z + translateZ;
+				secondUserVRPosition.x = responseUser.UserPhysicalPosition.X + translation.x;
+				secondUserVRPosition.y = 0.0f;
+				secondUserVRPosition.z = responseUser.UserPhysicalPosition.Z + translation.z;
 				
-				secondUserVRWorldRotation.x = responseUser.UserPhysicalRotation.X;
-				secondUserVRWorldRotation.y = responseUser.UserPhysicalRotation.Y;
-				secondUserVRWorldRotation.z = responseUser.UserPhysicalRotation.Z;
-				secondUserVRWorldRotation.w = responseUser.UserPhysicalRotation.W;
+				secondUserVRRotation.x = responseUser.UserPhysicalRotation.X;
+				secondUserVRRotation.y = responseUser.UserPhysicalRotation.Y;
+				secondUserVRRotation.z = responseUser.UserPhysicalRotation.Z;
+				secondUserVRRotation.w = responseUser.UserPhysicalRotation.W;
 				
-				secondUserOriginVRPosition.x = responseUser.UserVRWorldPosition.X;
-				secondUserOriginVRPosition.y = responseUser.UserVRWorldPosition.Y;
-				secondUserOriginVRPosition.z = responseUser.UserVRWorldPosition.Z;
+				secondUserOriginVRPosition.x = responseUser.UserVRPosition.X;
+				secondUserOriginVRPosition.y = responseUser.UserVRPosition.Y;
+				secondUserOriginVRPosition.z = responseUser.UserVRPosition.Z;
 
-				secondUserOriginVRRotation.x = responseUser.UserVRWorldRotation.X;
-				secondUserOriginVRRotation.y = responseUser.UserVRWorldRotation.Y;
-				secondUserOriginVRRotation.z = responseUser.UserVRWorldRotation.Z;
-				secondUserOriginVRRotation.w = responseUser.UserVRWorldRotation.W;
+				secondUserOriginVRRotation.x = responseUser.UserVRRotation.X;
+				secondUserOriginVRRotation.y = responseUser.UserVRRotation.Y;
+				secondUserOriginVRRotation.z = responseUser.UserVRRotation.Z;
+				secondUserOriginVRRotation.w = responseUser.UserVRRotation.W;
+
+				if (differenceSecondUserPosToOriginIsSet == false)
+				{
+					differenceSecondUserPosToOrigin.x = Math.Abs(secondUserVRPosition.x - secondUserOriginVRPosition.x);
+					differenceSecondUserPosToOrigin.y = Math.Abs(secondUserVRPosition.y - secondUserOriginVRPosition.y);
+					differenceSecondUserPosToOrigin.z = Math.Abs(secondUserVRPosition.z - secondUserOriginVRPosition.z);
+
+					differenceSecondUserPosToOriginIsSet = true;
+				}
+					
 			}
 			catch (RpcException e)
 			{
@@ -216,13 +247,13 @@ namespace Unibas.DBIS.VREP
 		private void UpdateUser(User user, int userId, Vector3 worldPosition, Quaternion worldRotation, Vector3 physicalPosition, Quaternion physicalRotation)
 		{
 			user.Id = userId;
-			user.UserVRWorldPosition.X = worldPosition.x;
-			user.UserVRWorldPosition.Y = worldPosition.y;
-			user.UserVRWorldPosition.Z = worldPosition.z;
-			user.UserVRWorldRotation.X = worldRotation.x;
-			user.UserVRWorldRotation.Y = worldRotation.y;
-			user.UserVRWorldRotation.Z = worldRotation.z;
-			user.UserVRWorldRotation.W = worldRotation.w;
+			user.UserVRPosition.X = worldPosition.x;
+			user.UserVRPosition.Y = worldPosition.y;
+			user.UserVRPosition.Z = worldPosition.z;
+			user.UserVRRotation.X = worldRotation.x;
+			user.UserVRRotation.Y = worldRotation.y;
+			user.UserVRRotation.Z = worldRotation.z;
+			user.UserVRRotation.W = worldRotation.w;
 			
 			user.UserPhysicalPosition.X = physicalPosition.x;
 			user.UserPhysicalPosition.Y = physicalPosition.y;
@@ -233,6 +264,20 @@ namespace Unibas.DBIS.VREP
 			user.UserPhysicalRotation.W = physicalRotation.w;
 			
 			
+		}
+
+		private bool checkSecondUserHasTeleported(Vector3 secondUserPosition, Vector3 secondUserOriginPosition, 
+			Vector3 differencePosToOrigin)
+		{
+			var diffPosTempX = Math.Abs(secondUserPosition.x - secondUserOriginPosition.x);
+			var diffPosTempY = Math.Abs(secondUserPosition.y - secondUserOriginPosition.y);
+			var diffPosTempZ = Math.Abs(secondUserPosition.z - secondUserOriginPosition.z);
+
+			if (differencePosToOrigin.x != diffPosTempX || differencePosToOrigin.y != diffPosTempY ||
+			    differencePosToOrigin.z != diffPosTempZ)
+				return true;
+			
+			return false;
 		}
 
 	}

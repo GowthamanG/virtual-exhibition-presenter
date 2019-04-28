@@ -59,14 +59,14 @@ namespace Unibas.DBIS.VREP
 						W = firstTrackerPhysicalRotation.w
 					},
 					
-					TrackerVRWorldPosition = new Vector()
+					TrackerVRPosition = new Vector()
 					{
 						X = firstTrackerPhysicalPosition.x,
 						Y = firstTrackerPhysicalPosition.y,
 						Z = firstTrackerPhysicalPosition.z,
 					},
 
-					TrackerVRWorldRotation = new Quadrublet()
+					TrackerVRRotation = new Quadrublet()
 					{
 						X = firstTrackerPhysicalRotation.x,
 						Y = firstTrackerPhysicalRotation.y,
@@ -164,7 +164,7 @@ namespace Unibas.DBIS.VREP
 			try
 			{
 				Response serverResponse = client.setTracker(tracker);
-				Debug.Log("User is set: " + serverResponse.Response_);
+				Debug.Log("User is set: " + serverResponse.User);
 
 			}
 			catch (RpcException e)
@@ -198,14 +198,14 @@ namespace Unibas.DBIS.VREP
 					firstTrackerPhysicalRotation.z = responseTracker.TrackerPhysicalRotation.Z;
 					firstTrackerPhysicalRotation.w = responseTracker.TrackerPhysicalRotation.W;
 					
-					firstTrackerVRWorldPosition.x = responseTracker.TrackerVRWorldPosition.X + translateX;
-					firstTrackerVRWorldPosition.y = responseTracker.TrackerVRWorldPosition.Y + translateY;
-					firstTrackerVRWorldPosition.z = responseTracker.TrackerVRWorldPosition.Z + translateZ;
+					firstTrackerVRWorldPosition.x = responseTracker.TrackerVRPosition.X + translateX;
+					firstTrackerVRWorldPosition.y = responseTracker.TrackerVRPosition.Y + translateY;
+					firstTrackerVRWorldPosition.z = responseTracker.TrackerVRPosition.Z + translateZ;
 					
-					firstTrackerVRWorldRotation.x = responseTracker.TrackerVRWorldRotation.X;
-					firstTrackerVRWorldRotation.y = responseTracker.TrackerVRWorldRotation.Y;
-					firstTrackerVRWorldRotation.z = responseTracker.TrackerVRWorldRotation.Z;
-					firstTrackerVRWorldRotation.w = responseTracker.TrackerVRWorldRotation.W;
+					firstTrackerVRWorldRotation.x = responseTracker.TrackerVRRotation.X;
+					firstTrackerVRWorldRotation.y = responseTracker.TrackerVRRotation.Y;
+					firstTrackerVRWorldRotation.z = responseTracker.TrackerVRRotation.Z;
+					firstTrackerVRWorldRotation.w = responseTracker.TrackerVRRotation.W;
 				}
 
 			}
@@ -219,14 +219,14 @@ namespace Unibas.DBIS.VREP
 		private void UpdateTracker(Tracker tracker, int userId, Vector3 worldPosition, Quaternion worldRotation, Vector3 physicalPosition, Quaternion physicalRotation)
 		{
 			tracker.Id = userId;
-			tracker.TrackerVRWorldPosition.X = worldPosition.x;
-			tracker.TrackerVRWorldPosition.Y = worldPosition.y;
-			tracker.TrackerVRWorldPosition.Z = worldPosition.z;
+			tracker.TrackerVRPosition.X = worldPosition.x;
+			tracker.TrackerVRPosition.Y = worldPosition.y;
+			tracker.TrackerVRPosition.Z = worldPosition.z;
 			
-			tracker.TrackerVRWorldRotation.X = worldRotation.x;
-			tracker.TrackerVRWorldRotation.Y = worldRotation.y;
-			tracker.TrackerVRWorldRotation.Z = worldRotation.z;
-			tracker.TrackerVRWorldRotation.W = worldRotation.w;
+			tracker.TrackerVRRotation.X = worldRotation.x;
+			tracker.TrackerVRRotation.Y = worldRotation.y;
+			tracker.TrackerVRRotation.Z = worldRotation.z;
+			tracker.TrackerVRRotation.W = worldRotation.w;
 			
 			tracker.TrackerPhysicalPosition.X = physicalPosition.x;
 			tracker.TrackerPhysicalPosition.Y = physicalPosition.y;

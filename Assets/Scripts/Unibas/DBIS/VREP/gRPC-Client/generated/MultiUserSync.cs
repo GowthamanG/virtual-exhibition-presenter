@@ -22,34 +22,34 @@ public static partial class MultiUserSyncReflection {
   static MultiUserSyncReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "ChRtdWx0aVVzZXItc3luYy5wcm90byK0AQoEVXNlchIKCgJpZBgBIAEoBRIk",
-          "ChN1c2VyVlJXb3JsZFBvc2l0aW9uGAIgASgLMgcuVmVjdG9yEigKE3VzZXJW",
-          "UldvcmxkUm90YXRpb24YAyABKAsyCy5RdWFkcnVibGV0EiUKFHVzZXJQaHlz",
-          "aWNhbFBvc2l0aW9uGAQgASgLMgcuVmVjdG9yEikKFHVzZXJQaHlzaWNhbFJv",
-          "dGF0aW9uGAUgASgLMgsuUXVhZHJ1YmxldCLDAQoHVHJhY2tlchIKCgJpZBgB",
-          "IAEoBRInChZ0cmFja2VyVlJXb3JsZFBvc2l0aW9uGAIgASgLMgcuVmVjdG9y",
-          "EisKFnRyYWNrZXJWUldvcmxkUm90YXRpb24YAyABKAsyCy5RdWFkcnVibGV0",
-          "EigKF3RyYWNrZXJQaHlzaWNhbFBvc2l0aW9uGAQgASgLMgcuVmVjdG9yEiwK",
-          "F3RyYWNrZXJQaHlzaWNhbFJvdGF0aW9uGAUgASgLMgsuUXVhZHJ1YmxldCIp",
-          "CgZWZWN0b3ISCQoBeBgBIAEoAhIJCgF5GAIgASgCEgkKAXoYAyABKAIiOAoK",
-          "UXVhZHJ1YmxldBIJCgF4GAEgASgCEgkKAXkYAiABKAISCQoBehgDIAEoAhIJ",
-          "CgF3GAQgASgCIiQKC1JlcXVlc3RVc2VyEhUKDXJlcXVlc3RVc2VySUQYASAB",
-          "KAUiKgoOUmVxdWVzdFRyYWNrZXISGAoQcmVxdWVzdFRyYWNrZXJJRBgBIAEo",
-          "BSIcCghSZXNwb25zZRIQCghyZXNwb25zZRgBIAEoCTKgAQoNbXVsdGlVc2Vy",
-          "U3luYxIgCgdnZXRVc2VyEgwuUmVxdWVzdFVzZXIaBS5Vc2VyIgASHQoHc2V0",
-          "VXNlchIFLlVzZXIaCS5SZXNwb25zZSIAEikKCmdldFRyYWNrZXISDy5SZXF1",
-          "ZXN0VHJhY2tlchoILlRyYWNrZXIiABIjCgpzZXRUcmFja2VyEgguVHJhY2tl",
-          "choJLlJlc3BvbnNlIgBiBnByb3RvMw=="));
+          "ChRtdWx0aVVzZXItc3luYy5wcm90byKqAQoEVXNlchIKCgJpZBgBIAEoBRIf",
+          "Cg51c2VyVlJQb3NpdGlvbhgCIAEoCzIHLlZlY3RvchIjCg51c2VyVlJSb3Rh",
+          "dGlvbhgDIAEoCzILLlF1YWRydWJsZXQSJQoUdXNlclBoeXNpY2FsUG9zaXRp",
+          "b24YBCABKAsyBy5WZWN0b3ISKQoUdXNlclBoeXNpY2FsUm90YXRpb24YBSAB",
+          "KAsyCy5RdWFkcnVibGV0IrkBCgdUcmFja2VyEgoKAmlkGAEgASgFEiIKEXRy",
+          "YWNrZXJWUlBvc2l0aW9uGAIgASgLMgcuVmVjdG9yEiYKEXRyYWNrZXJWUlJv",
+          "dGF0aW9uGAMgASgLMgsuUXVhZHJ1YmxldBIoChd0cmFja2VyUGh5c2ljYWxQ",
+          "b3NpdGlvbhgEIAEoCzIHLlZlY3RvchIsChd0cmFja2VyUGh5c2ljYWxSb3Rh",
+          "dGlvbhgFIAEoCzILLlF1YWRydWJsZXQiKQoGVmVjdG9yEgkKAXgYASABKAIS",
+          "CQoBeRgCIAEoAhIJCgF6GAMgASgCIjgKClF1YWRydWJsZXQSCQoBeBgBIAEo",
+          "AhIJCgF5GAIgASgCEgkKAXoYAyABKAISCQoBdxgEIAEoAiIkCgtSZXF1ZXN0",
+          "VXNlchIVCg1yZXF1ZXN0VXNlcklEGAEgASgFIioKDlJlcXVlc3RUcmFja2Vy",
+          "EhgKEHJlcXVlc3RUcmFja2VySUQYASABKAUiHwoIUmVzcG9uc2USEwoEdXNl",
+          "chgBIAEoCzIFLlVzZXIyoAEKDW11bHRpVXNlclN5bmMSIAoHZ2V0VXNlchIM",
+          "LlJlcXVlc3RVc2VyGgUuVXNlciIAEh0KB3NldFVzZXISBS5Vc2VyGgkuUmVz",
+          "cG9uc2UiABIpCgpnZXRUcmFja2VyEg8uUmVxdWVzdFRyYWNrZXIaCC5UcmFj",
+          "a2VyIgASIwoKc2V0VHJhY2tlchIILlRyYWNrZXIaCS5SZXNwb25zZSIAYgZw",
+          "cm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::User), global::User.Parser, new[]{ "Id", "UserVRWorldPosition", "UserVRWorldRotation", "UserPhysicalPosition", "UserPhysicalRotation" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::Tracker), global::Tracker.Parser, new[]{ "Id", "TrackerVRWorldPosition", "TrackerVRWorldRotation", "TrackerPhysicalPosition", "TrackerPhysicalRotation" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::User), global::User.Parser, new[]{ "Id", "UserVRPosition", "UserVRRotation", "UserPhysicalPosition", "UserPhysicalRotation" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::Tracker), global::Tracker.Parser, new[]{ "Id", "TrackerVRPosition", "TrackerVRRotation", "TrackerPhysicalPosition", "TrackerPhysicalRotation" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::Vector), global::Vector.Parser, new[]{ "X", "Y", "Z" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::Quadrublet), global::Quadrublet.Parser, new[]{ "X", "Y", "Z", "W" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::RequestUser), global::RequestUser.Parser, new[]{ "RequestUserID" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::RequestTracker), global::RequestTracker.Parser, new[]{ "RequestTrackerID" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::Response), global::Response.Parser, new[]{ "Response_" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::Response), global::Response.Parser, new[]{ "User" }, null, null, null)
         }));
   }
   #endregion
@@ -82,8 +82,8 @@ public sealed partial class User : pb::IMessage<User> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public User(User other) : this() {
     id_ = other.id_;
-    userVRWorldPosition_ = other.userVRWorldPosition_ != null ? other.userVRWorldPosition_.Clone() : null;
-    userVRWorldRotation_ = other.userVRWorldRotation_ != null ? other.userVRWorldRotation_.Clone() : null;
+    userVRPosition_ = other.userVRPosition_ != null ? other.userVRPosition_.Clone() : null;
+    userVRRotation_ = other.userVRRotation_ != null ? other.userVRRotation_.Clone() : null;
     userPhysicalPosition_ = other.userPhysicalPosition_ != null ? other.userPhysicalPosition_.Clone() : null;
     userPhysicalRotation_ = other.userPhysicalRotation_ != null ? other.userPhysicalRotation_.Clone() : null;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -105,25 +105,25 @@ public sealed partial class User : pb::IMessage<User> {
     }
   }
 
-  /// <summary>Field number for the "userVRWorldPosition" field.</summary>
-  public const int UserVRWorldPositionFieldNumber = 2;
-  private global::Vector userVRWorldPosition_;
+  /// <summary>Field number for the "userVRPosition" field.</summary>
+  public const int UserVRPositionFieldNumber = 2;
+  private global::Vector userVRPosition_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public global::Vector UserVRWorldPosition {
-    get { return userVRWorldPosition_; }
+  public global::Vector UserVRPosition {
+    get { return userVRPosition_; }
     set {
-      userVRWorldPosition_ = value;
+      userVRPosition_ = value;
     }
   }
 
-  /// <summary>Field number for the "userVRWorldRotation" field.</summary>
-  public const int UserVRWorldRotationFieldNumber = 3;
-  private global::Quadrublet userVRWorldRotation_;
+  /// <summary>Field number for the "userVRRotation" field.</summary>
+  public const int UserVRRotationFieldNumber = 3;
+  private global::Quadrublet userVRRotation_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public global::Quadrublet UserVRWorldRotation {
-    get { return userVRWorldRotation_; }
+  public global::Quadrublet UserVRRotation {
+    get { return userVRRotation_; }
     set {
-      userVRWorldRotation_ = value;
+      userVRRotation_ = value;
     }
   }
 
@@ -163,8 +163,8 @@ public sealed partial class User : pb::IMessage<User> {
       return true;
     }
     if (Id != other.Id) return false;
-    if (!object.Equals(UserVRWorldPosition, other.UserVRWorldPosition)) return false;
-    if (!object.Equals(UserVRWorldRotation, other.UserVRWorldRotation)) return false;
+    if (!object.Equals(UserVRPosition, other.UserVRPosition)) return false;
+    if (!object.Equals(UserVRRotation, other.UserVRRotation)) return false;
     if (!object.Equals(UserPhysicalPosition, other.UserPhysicalPosition)) return false;
     if (!object.Equals(UserPhysicalRotation, other.UserPhysicalRotation)) return false;
     return Equals(_unknownFields, other._unknownFields);
@@ -174,8 +174,8 @@ public sealed partial class User : pb::IMessage<User> {
   public override int GetHashCode() {
     int hash = 1;
     if (Id != 0) hash ^= Id.GetHashCode();
-    if (userVRWorldPosition_ != null) hash ^= UserVRWorldPosition.GetHashCode();
-    if (userVRWorldRotation_ != null) hash ^= UserVRWorldRotation.GetHashCode();
+    if (userVRPosition_ != null) hash ^= UserVRPosition.GetHashCode();
+    if (userVRRotation_ != null) hash ^= UserVRRotation.GetHashCode();
     if (userPhysicalPosition_ != null) hash ^= UserPhysicalPosition.GetHashCode();
     if (userPhysicalRotation_ != null) hash ^= UserPhysicalRotation.GetHashCode();
     if (_unknownFields != null) {
@@ -195,13 +195,13 @@ public sealed partial class User : pb::IMessage<User> {
       output.WriteRawTag(8);
       output.WriteInt32(Id);
     }
-    if (userVRWorldPosition_ != null) {
+    if (userVRPosition_ != null) {
       output.WriteRawTag(18);
-      output.WriteMessage(UserVRWorldPosition);
+      output.WriteMessage(UserVRPosition);
     }
-    if (userVRWorldRotation_ != null) {
+    if (userVRRotation_ != null) {
       output.WriteRawTag(26);
-      output.WriteMessage(UserVRWorldRotation);
+      output.WriteMessage(UserVRRotation);
     }
     if (userPhysicalPosition_ != null) {
       output.WriteRawTag(34);
@@ -222,11 +222,11 @@ public sealed partial class User : pb::IMessage<User> {
     if (Id != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(Id);
     }
-    if (userVRWorldPosition_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(UserVRWorldPosition);
+    if (userVRPosition_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(UserVRPosition);
     }
-    if (userVRWorldRotation_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(UserVRWorldRotation);
+    if (userVRRotation_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(UserVRRotation);
     }
     if (userPhysicalPosition_ != null) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(UserPhysicalPosition);
@@ -248,17 +248,17 @@ public sealed partial class User : pb::IMessage<User> {
     if (other.Id != 0) {
       Id = other.Id;
     }
-    if (other.userVRWorldPosition_ != null) {
-      if (userVRWorldPosition_ == null) {
-        userVRWorldPosition_ = new global::Vector();
+    if (other.userVRPosition_ != null) {
+      if (userVRPosition_ == null) {
+        userVRPosition_ = new global::Vector();
       }
-      UserVRWorldPosition.MergeFrom(other.UserVRWorldPosition);
+      UserVRPosition.MergeFrom(other.UserVRPosition);
     }
-    if (other.userVRWorldRotation_ != null) {
-      if (userVRWorldRotation_ == null) {
-        userVRWorldRotation_ = new global::Quadrublet();
+    if (other.userVRRotation_ != null) {
+      if (userVRRotation_ == null) {
+        userVRRotation_ = new global::Quadrublet();
       }
-      UserVRWorldRotation.MergeFrom(other.UserVRWorldRotation);
+      UserVRRotation.MergeFrom(other.UserVRRotation);
     }
     if (other.userPhysicalPosition_ != null) {
       if (userPhysicalPosition_ == null) {
@@ -288,17 +288,17 @@ public sealed partial class User : pb::IMessage<User> {
           break;
         }
         case 18: {
-          if (userVRWorldPosition_ == null) {
-            userVRWorldPosition_ = new global::Vector();
+          if (userVRPosition_ == null) {
+            userVRPosition_ = new global::Vector();
           }
-          input.ReadMessage(userVRWorldPosition_);
+          input.ReadMessage(userVRPosition_);
           break;
         }
         case 26: {
-          if (userVRWorldRotation_ == null) {
-            userVRWorldRotation_ = new global::Quadrublet();
+          if (userVRRotation_ == null) {
+            userVRRotation_ = new global::Quadrublet();
           }
-          input.ReadMessage(userVRWorldRotation_);
+          input.ReadMessage(userVRRotation_);
           break;
         }
         case 34: {
@@ -347,8 +347,8 @@ public sealed partial class Tracker : pb::IMessage<Tracker> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public Tracker(Tracker other) : this() {
     id_ = other.id_;
-    trackerVRWorldPosition_ = other.trackerVRWorldPosition_ != null ? other.trackerVRWorldPosition_.Clone() : null;
-    trackerVRWorldRotation_ = other.trackerVRWorldRotation_ != null ? other.trackerVRWorldRotation_.Clone() : null;
+    trackerVRPosition_ = other.trackerVRPosition_ != null ? other.trackerVRPosition_.Clone() : null;
+    trackerVRRotation_ = other.trackerVRRotation_ != null ? other.trackerVRRotation_.Clone() : null;
     trackerPhysicalPosition_ = other.trackerPhysicalPosition_ != null ? other.trackerPhysicalPosition_.Clone() : null;
     trackerPhysicalRotation_ = other.trackerPhysicalRotation_ != null ? other.trackerPhysicalRotation_.Clone() : null;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -370,25 +370,25 @@ public sealed partial class Tracker : pb::IMessage<Tracker> {
     }
   }
 
-  /// <summary>Field number for the "trackerVRWorldPosition" field.</summary>
-  public const int TrackerVRWorldPositionFieldNumber = 2;
-  private global::Vector trackerVRWorldPosition_;
+  /// <summary>Field number for the "trackerVRPosition" field.</summary>
+  public const int TrackerVRPositionFieldNumber = 2;
+  private global::Vector trackerVRPosition_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public global::Vector TrackerVRWorldPosition {
-    get { return trackerVRWorldPosition_; }
+  public global::Vector TrackerVRPosition {
+    get { return trackerVRPosition_; }
     set {
-      trackerVRWorldPosition_ = value;
+      trackerVRPosition_ = value;
     }
   }
 
-  /// <summary>Field number for the "trackerVRWorldRotation" field.</summary>
-  public const int TrackerVRWorldRotationFieldNumber = 3;
-  private global::Quadrublet trackerVRWorldRotation_;
+  /// <summary>Field number for the "trackerVRRotation" field.</summary>
+  public const int TrackerVRRotationFieldNumber = 3;
+  private global::Quadrublet trackerVRRotation_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public global::Quadrublet TrackerVRWorldRotation {
-    get { return trackerVRWorldRotation_; }
+  public global::Quadrublet TrackerVRRotation {
+    get { return trackerVRRotation_; }
     set {
-      trackerVRWorldRotation_ = value;
+      trackerVRRotation_ = value;
     }
   }
 
@@ -428,8 +428,8 @@ public sealed partial class Tracker : pb::IMessage<Tracker> {
       return true;
     }
     if (Id != other.Id) return false;
-    if (!object.Equals(TrackerVRWorldPosition, other.TrackerVRWorldPosition)) return false;
-    if (!object.Equals(TrackerVRWorldRotation, other.TrackerVRWorldRotation)) return false;
+    if (!object.Equals(TrackerVRPosition, other.TrackerVRPosition)) return false;
+    if (!object.Equals(TrackerVRRotation, other.TrackerVRRotation)) return false;
     if (!object.Equals(TrackerPhysicalPosition, other.TrackerPhysicalPosition)) return false;
     if (!object.Equals(TrackerPhysicalRotation, other.TrackerPhysicalRotation)) return false;
     return Equals(_unknownFields, other._unknownFields);
@@ -439,8 +439,8 @@ public sealed partial class Tracker : pb::IMessage<Tracker> {
   public override int GetHashCode() {
     int hash = 1;
     if (Id != 0) hash ^= Id.GetHashCode();
-    if (trackerVRWorldPosition_ != null) hash ^= TrackerVRWorldPosition.GetHashCode();
-    if (trackerVRWorldRotation_ != null) hash ^= TrackerVRWorldRotation.GetHashCode();
+    if (trackerVRPosition_ != null) hash ^= TrackerVRPosition.GetHashCode();
+    if (trackerVRRotation_ != null) hash ^= TrackerVRRotation.GetHashCode();
     if (trackerPhysicalPosition_ != null) hash ^= TrackerPhysicalPosition.GetHashCode();
     if (trackerPhysicalRotation_ != null) hash ^= TrackerPhysicalRotation.GetHashCode();
     if (_unknownFields != null) {
@@ -460,13 +460,13 @@ public sealed partial class Tracker : pb::IMessage<Tracker> {
       output.WriteRawTag(8);
       output.WriteInt32(Id);
     }
-    if (trackerVRWorldPosition_ != null) {
+    if (trackerVRPosition_ != null) {
       output.WriteRawTag(18);
-      output.WriteMessage(TrackerVRWorldPosition);
+      output.WriteMessage(TrackerVRPosition);
     }
-    if (trackerVRWorldRotation_ != null) {
+    if (trackerVRRotation_ != null) {
       output.WriteRawTag(26);
-      output.WriteMessage(TrackerVRWorldRotation);
+      output.WriteMessage(TrackerVRRotation);
     }
     if (trackerPhysicalPosition_ != null) {
       output.WriteRawTag(34);
@@ -487,11 +487,11 @@ public sealed partial class Tracker : pb::IMessage<Tracker> {
     if (Id != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(Id);
     }
-    if (trackerVRWorldPosition_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(TrackerVRWorldPosition);
+    if (trackerVRPosition_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(TrackerVRPosition);
     }
-    if (trackerVRWorldRotation_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(TrackerVRWorldRotation);
+    if (trackerVRRotation_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(TrackerVRRotation);
     }
     if (trackerPhysicalPosition_ != null) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(TrackerPhysicalPosition);
@@ -513,17 +513,17 @@ public sealed partial class Tracker : pb::IMessage<Tracker> {
     if (other.Id != 0) {
       Id = other.Id;
     }
-    if (other.trackerVRWorldPosition_ != null) {
-      if (trackerVRWorldPosition_ == null) {
-        trackerVRWorldPosition_ = new global::Vector();
+    if (other.trackerVRPosition_ != null) {
+      if (trackerVRPosition_ == null) {
+        trackerVRPosition_ = new global::Vector();
       }
-      TrackerVRWorldPosition.MergeFrom(other.TrackerVRWorldPosition);
+      TrackerVRPosition.MergeFrom(other.TrackerVRPosition);
     }
-    if (other.trackerVRWorldRotation_ != null) {
-      if (trackerVRWorldRotation_ == null) {
-        trackerVRWorldRotation_ = new global::Quadrublet();
+    if (other.trackerVRRotation_ != null) {
+      if (trackerVRRotation_ == null) {
+        trackerVRRotation_ = new global::Quadrublet();
       }
-      TrackerVRWorldRotation.MergeFrom(other.TrackerVRWorldRotation);
+      TrackerVRRotation.MergeFrom(other.TrackerVRRotation);
     }
     if (other.trackerPhysicalPosition_ != null) {
       if (trackerPhysicalPosition_ == null) {
@@ -553,17 +553,17 @@ public sealed partial class Tracker : pb::IMessage<Tracker> {
           break;
         }
         case 18: {
-          if (trackerVRWorldPosition_ == null) {
-            trackerVRWorldPosition_ = new global::Vector();
+          if (trackerVRPosition_ == null) {
+            trackerVRPosition_ = new global::Vector();
           }
-          input.ReadMessage(trackerVRWorldPosition_);
+          input.ReadMessage(trackerVRPosition_);
           break;
         }
         case 26: {
-          if (trackerVRWorldRotation_ == null) {
-            trackerVRWorldRotation_ = new global::Quadrublet();
+          if (trackerVRRotation_ == null) {
+            trackerVRRotation_ = new global::Quadrublet();
           }
-          input.ReadMessage(trackerVRWorldRotation_);
+          input.ReadMessage(trackerVRRotation_);
           break;
         }
         case 34: {
@@ -1267,7 +1267,7 @@ public sealed partial class Response : pb::IMessage<Response> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public Response(Response other) : this() {
-    response_ = other.response_;
+    user_ = other.user_ != null ? other.user_.Clone() : null;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1276,14 +1276,14 @@ public sealed partial class Response : pb::IMessage<Response> {
     return new Response(this);
   }
 
-  /// <summary>Field number for the "response" field.</summary>
-  public const int Response_FieldNumber = 1;
-  private string response_ = "";
+  /// <summary>Field number for the "user" field.</summary>
+  public const int UserFieldNumber = 1;
+  private global::User user_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public string Response_ {
-    get { return response_; }
+  public global::User User {
+    get { return user_; }
     set {
-      response_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      user_ = value;
     }
   }
 
@@ -1300,14 +1300,14 @@ public sealed partial class Response : pb::IMessage<Response> {
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (Response_ != other.Response_) return false;
+    if (!object.Equals(User, other.User)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override int GetHashCode() {
     int hash = 1;
-    if (Response_.Length != 0) hash ^= Response_.GetHashCode();
+    if (user_ != null) hash ^= User.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1321,9 +1321,9 @@ public sealed partial class Response : pb::IMessage<Response> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void WriteTo(pb::CodedOutputStream output) {
-    if (Response_.Length != 0) {
+    if (user_ != null) {
       output.WriteRawTag(10);
-      output.WriteString(Response_);
+      output.WriteMessage(User);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -1333,8 +1333,8 @@ public sealed partial class Response : pb::IMessage<Response> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int CalculateSize() {
     int size = 0;
-    if (Response_.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(Response_);
+    if (user_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(User);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1347,8 +1347,11 @@ public sealed partial class Response : pb::IMessage<Response> {
     if (other == null) {
       return;
     }
-    if (other.Response_.Length != 0) {
-      Response_ = other.Response_;
+    if (other.user_ != null) {
+      if (user_ == null) {
+        user_ = new global::User();
+      }
+      User.MergeFrom(other.User);
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -1362,7 +1365,10 @@ public sealed partial class Response : pb::IMessage<Response> {
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          Response_ = input.ReadString();
+          if (user_ == null) {
+            user_ = new global::User();
+          }
+          input.ReadMessage(user_);
           break;
         }
       }
