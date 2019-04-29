@@ -13,10 +13,9 @@ public static partial class multiUserSync
 
   static readonly grpc::Marshaller<global::RequestUser> __Marshaller_RequestUser = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::RequestUser.Parser.ParseFrom);
   static readonly grpc::Marshaller<global::User> __Marshaller_User = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::User.Parser.ParseFrom);
-  static readonly grpc::Marshaller<global::Confirmation> __Marshaller_Confirmation = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Confirmation.Parser.ParseFrom);
+  static readonly grpc::Marshaller<global::Response> __Marshaller_Response = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Response.Parser.ParseFrom);
   static readonly grpc::Marshaller<global::RequestTracker> __Marshaller_RequestTracker = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::RequestTracker.Parser.ParseFrom);
   static readonly grpc::Marshaller<global::Tracker> __Marshaller_Tracker = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Tracker.Parser.ParseFrom);
-  static readonly grpc::Marshaller<global::Vector> __Marshaller_Vector = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Vector.Parser.ParseFrom);
 
   static readonly grpc::Method<global::RequestUser, global::User> __Method_getUser = new grpc::Method<global::RequestUser, global::User>(
       grpc::MethodType.Unary,
@@ -25,12 +24,12 @@ public static partial class multiUserSync
       __Marshaller_RequestUser,
       __Marshaller_User);
 
-  static readonly grpc::Method<global::User, global::Confirmation> __Method_setUser = new grpc::Method<global::User, global::Confirmation>(
+  static readonly grpc::Method<global::User, global::Response> __Method_setUser = new grpc::Method<global::User, global::Response>(
       grpc::MethodType.Unary,
       __ServiceName,
       "setUser",
       __Marshaller_User,
-      __Marshaller_Confirmation);
+      __Marshaller_Response);
 
   static readonly grpc::Method<global::RequestTracker, global::Tracker> __Method_getTracker = new grpc::Method<global::RequestTracker, global::Tracker>(
       grpc::MethodType.Unary,
@@ -39,26 +38,12 @@ public static partial class multiUserSync
       __Marshaller_RequestTracker,
       __Marshaller_Tracker);
 
-  static readonly grpc::Method<global::Tracker, global::Confirmation> __Method_setTracker = new grpc::Method<global::Tracker, global::Confirmation>(
+  static readonly grpc::Method<global::Tracker, global::Response> __Method_setTracker = new grpc::Method<global::Tracker, global::Response>(
       grpc::MethodType.Unary,
       __ServiceName,
       "setTracker",
       __Marshaller_Tracker,
-      __Marshaller_Confirmation);
-
-  static readonly grpc::Method<global::Vector, global::Confirmation> __Method_setDistanceTeleport = new grpc::Method<global::Vector, global::Confirmation>(
-      grpc::MethodType.Unary,
-      __ServiceName,
-      "setDistanceTeleport",
-      __Marshaller_Vector,
-      __Marshaller_Confirmation);
-
-  static readonly grpc::Method<global::RequestUser, global::Vector> __Method_getDistanceTeleport = new grpc::Method<global::RequestUser, global::Vector>(
-      grpc::MethodType.Unary,
-      __ServiceName,
-      "getDistanceTeleport",
-      __Marshaller_RequestUser,
-      __Marshaller_Vector);
+      __Marshaller_Response);
 
   /// <summary>Service descriptor</summary>
   public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -74,7 +59,7 @@ public static partial class multiUserSync
       throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
     }
 
-    public virtual global::System.Threading.Tasks.Task<global::Confirmation> setUser(global::User request, grpc::ServerCallContext context)
+    public virtual global::System.Threading.Tasks.Task<global::Response> setUser(global::User request, grpc::ServerCallContext context)
     {
       throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
     }
@@ -84,17 +69,7 @@ public static partial class multiUserSync
       throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
     }
 
-    public virtual global::System.Threading.Tasks.Task<global::Confirmation> setTracker(global::Tracker request, grpc::ServerCallContext context)
-    {
-      throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
-    }
-
-    public virtual global::System.Threading.Tasks.Task<global::Confirmation> setDistanceTeleport(global::Vector request, grpc::ServerCallContext context)
-    {
-      throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
-    }
-
-    public virtual global::System.Threading.Tasks.Task<global::Vector> getDistanceTeleport(global::RequestUser request, grpc::ServerCallContext context)
+    public virtual global::System.Threading.Tasks.Task<global::Response> setTracker(global::Tracker request, grpc::ServerCallContext context)
     {
       throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
     }
@@ -140,19 +115,19 @@ public static partial class multiUserSync
     {
       return CallInvoker.AsyncUnaryCall(__Method_getUser, null, options, request);
     }
-    public virtual global::Confirmation setUser(global::User request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    public virtual global::Response setUser(global::User request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
     {
       return setUser(request, new grpc::CallOptions(headers, deadline, cancellationToken));
     }
-    public virtual global::Confirmation setUser(global::User request, grpc::CallOptions options)
+    public virtual global::Response setUser(global::User request, grpc::CallOptions options)
     {
       return CallInvoker.BlockingUnaryCall(__Method_setUser, null, options, request);
     }
-    public virtual grpc::AsyncUnaryCall<global::Confirmation> setUserAsync(global::User request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    public virtual grpc::AsyncUnaryCall<global::Response> setUserAsync(global::User request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
     {
       return setUserAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
     }
-    public virtual grpc::AsyncUnaryCall<global::Confirmation> setUserAsync(global::User request, grpc::CallOptions options)
+    public virtual grpc::AsyncUnaryCall<global::Response> setUserAsync(global::User request, grpc::CallOptions options)
     {
       return CallInvoker.AsyncUnaryCall(__Method_setUser, null, options, request);
     }
@@ -172,53 +147,21 @@ public static partial class multiUserSync
     {
       return CallInvoker.AsyncUnaryCall(__Method_getTracker, null, options, request);
     }
-    public virtual global::Confirmation setTracker(global::Tracker request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    public virtual global::Response setTracker(global::Tracker request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
     {
       return setTracker(request, new grpc::CallOptions(headers, deadline, cancellationToken));
     }
-    public virtual global::Confirmation setTracker(global::Tracker request, grpc::CallOptions options)
+    public virtual global::Response setTracker(global::Tracker request, grpc::CallOptions options)
     {
       return CallInvoker.BlockingUnaryCall(__Method_setTracker, null, options, request);
     }
-    public virtual grpc::AsyncUnaryCall<global::Confirmation> setTrackerAsync(global::Tracker request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    public virtual grpc::AsyncUnaryCall<global::Response> setTrackerAsync(global::Tracker request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
     {
       return setTrackerAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
     }
-    public virtual grpc::AsyncUnaryCall<global::Confirmation> setTrackerAsync(global::Tracker request, grpc::CallOptions options)
+    public virtual grpc::AsyncUnaryCall<global::Response> setTrackerAsync(global::Tracker request, grpc::CallOptions options)
     {
       return CallInvoker.AsyncUnaryCall(__Method_setTracker, null, options, request);
-    }
-    public virtual global::Confirmation setDistanceTeleport(global::Vector request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-    {
-      return setDistanceTeleport(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-    }
-    public virtual global::Confirmation setDistanceTeleport(global::Vector request, grpc::CallOptions options)
-    {
-      return CallInvoker.BlockingUnaryCall(__Method_setDistanceTeleport, null, options, request);
-    }
-    public virtual grpc::AsyncUnaryCall<global::Confirmation> setDistanceTeleportAsync(global::Vector request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-    {
-      return setDistanceTeleportAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-    }
-    public virtual grpc::AsyncUnaryCall<global::Confirmation> setDistanceTeleportAsync(global::Vector request, grpc::CallOptions options)
-    {
-      return CallInvoker.AsyncUnaryCall(__Method_setDistanceTeleport, null, options, request);
-    }
-    public virtual global::Vector getDistanceTeleport(global::RequestUser request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-    {
-      return getDistanceTeleport(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-    }
-    public virtual global::Vector getDistanceTeleport(global::RequestUser request, grpc::CallOptions options)
-    {
-      return CallInvoker.BlockingUnaryCall(__Method_getDistanceTeleport, null, options, request);
-    }
-    public virtual grpc::AsyncUnaryCall<global::Vector> getDistanceTeleportAsync(global::RequestUser request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-    {
-      return getDistanceTeleportAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-    }
-    public virtual grpc::AsyncUnaryCall<global::Vector> getDistanceTeleportAsync(global::RequestUser request, grpc::CallOptions options)
-    {
-      return CallInvoker.AsyncUnaryCall(__Method_getDistanceTeleport, null, options, request);
     }
     /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
     protected override multiUserSyncClient NewInstance(ClientBaseConfiguration configuration)
@@ -235,9 +178,7 @@ public static partial class multiUserSync
         .AddMethod(__Method_getUser, serviceImpl.getUser)
         .AddMethod(__Method_setUser, serviceImpl.setUser)
         .AddMethod(__Method_getTracker, serviceImpl.getTracker)
-        .AddMethod(__Method_setTracker, serviceImpl.setTracker)
-        .AddMethod(__Method_setDistanceTeleport, serviceImpl.setDistanceTeleport)
-        .AddMethod(__Method_getDistanceTeleport, serviceImpl.getDistanceTeleport).Build();
+        .AddMethod(__Method_setTracker, serviceImpl.setTracker).Build();
   }
 
   /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
@@ -247,11 +188,9 @@ public static partial class multiUserSync
   public static void BindService(grpc::ServiceBinderBase serviceBinder, multiUserSyncBase serviceImpl)
   {
     serviceBinder.AddMethod(__Method_getUser, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::RequestUser, global::User>(serviceImpl.getUser));
-    serviceBinder.AddMethod(__Method_setUser, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User, global::Confirmation>(serviceImpl.setUser));
+    serviceBinder.AddMethod(__Method_setUser, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User, global::Response>(serviceImpl.setUser));
     serviceBinder.AddMethod(__Method_getTracker, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::RequestTracker, global::Tracker>(serviceImpl.getTracker));
-    serviceBinder.AddMethod(__Method_setTracker, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Tracker, global::Confirmation>(serviceImpl.setTracker));
-    serviceBinder.AddMethod(__Method_setDistanceTeleport, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Vector, global::Confirmation>(serviceImpl.setDistanceTeleport));
-    serviceBinder.AddMethod(__Method_getDistanceTeleport, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::RequestUser, global::Vector>(serviceImpl.getDistanceTeleport));
+    serviceBinder.AddMethod(__Method_setTracker, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Tracker, global::Response>(serviceImpl.setTracker));
   }
 
 }

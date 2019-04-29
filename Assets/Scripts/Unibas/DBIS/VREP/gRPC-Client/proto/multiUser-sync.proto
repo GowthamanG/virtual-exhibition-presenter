@@ -2,18 +2,16 @@ syntax = "proto3";
 
 message User{
     int32 id = 1;
-    Vector userVRPosition = 2;
-    Quadrublet userVRRotation = 3;
-    Vector userPhysicalPosition = 4;
-    Quadrublet userPhysicalRotation = 5;
+    Vector userPosition = 2;
+    Quadrublet userRotation = 3;
+    Vector userScale = 4;
 }
 
 message Tracker{
     int32 id = 1;
-    Vector trackerVRPosition = 2;
-    Quadrublet trackerVRRotation = 3;
-    Vector trackerPhysicalPosition = 4;
-    Quadrublet trackerPhysicalRotation = 5;
+    Vector trackerPosition = 2;
+    Quadrublet trackerRotation = 3;
+    Vector trackerScale = 4;
 }
 
 message Vector{
@@ -37,16 +35,15 @@ message RequestTracker{
     int32 requestTrackerID = 1;
 }
 
-message Confirmation{
-    string confirm = 1;
+message Response{
+    string response = 1;
 }
 
 
 service multiUserSync{
     rpc getUser (RequestUser) returns (User){}
-    rpc setUser (User) returns (Confirmation){}
+    rpc setUser (User) returns (Response){}
     rpc getTracker (RequestTracker) returns (Tracker){}
-    rpc setTracker (Tracker) returns (Confirmation){}
-    rpc setDistanceTeleport (Vector) returns (Confirmation) {}
-    rpc getDistanceTeleport (RequestUser) returns (Vector) {}
+    rpc setTracker (Tracker) returns (Response){}
+
 }
