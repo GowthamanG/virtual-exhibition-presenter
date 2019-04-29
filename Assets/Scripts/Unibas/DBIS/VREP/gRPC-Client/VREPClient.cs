@@ -19,7 +19,8 @@ namespace Unibas.DBIS.VREP
 		private User secondUser;
 		private Channel channel;
 		private int firstUserId;
-		private Vector3 firstUserPosition;
+		private Vector3 firstUserPhysicalPosition;
+		private Vector3 firstUserVRPositoin;
 		private Quaternion firstUserRotation;
 		private Vector3 firstUserScale;
 		private int secondUserId;
@@ -39,7 +40,8 @@ namespace Unibas.DBIS.VREP
 		void Start ()
 		{
 			firstUserId = player1.GetInstanceID();
-			firstUserPosition = InputTracking.GetLocalPosition(XRNode.Head);
+			firstUserPhysicalPosition = InputTracking.GetLocalPosition(XRNode.Head);
+			firstUserVRPositoin = player1.transform.position;
 			firstUserRotation = InputTracking.GetLocalRotation(XRNode.Head);
 
 			firstUser = new User
@@ -48,16 +50,16 @@ namespace Unibas.DBIS.VREP
 			
 				UserPhysicalPosition = new Vector()
 				{
-					X = firstUserPosition.x,
-					Y = firstUserPosition.y,
-					Z = firstUserPosition.z,
+					X = firstUserPhysicalPosition.x,
+					Y = firstUserPhysicalPosition.y,
+					Z = firstUserPhysicalPosition.z,
 				},
 				
 				UserVRPosition = new Vector()
 				{
-					X = player1.transform.position.x,
-					Y = player1.transform.position.y,
-					Z = player1.transform.position.z
+					X = firstUserVRPositoin.x,
+					Y = firstUserVRPositoin.y,
+					Z = firstUserVRPositoin.z
 				},
 			
 				UserRotation = new Quadrublet()
@@ -98,11 +100,12 @@ namespace Unibas.DBIS.VREP
 		void Update ()
 		{
 
-			firstUserPosition = InputTracking.GetLocalPosition(XRNode.Head);
+			firstUserPhysicalPosition = InputTracking.GetLocalPosition(XRNode.Head);
+			firstUserVRPositoin = player1.transform.position;
 			firstUserRotation = InputTracking.GetLocalRotation(XRNode.Head);
 			firstUserScale = player1.transform.lossyScale;
 			
-			UpdateUser(firstUser, firstUserId, firstUserPosition, firstUserRotation, firstUserScale);
+			UpdateUser(firstUser, firstUserId, firstUserPhysicalPosition, firstUserVRPositoin, firstUserRotation, firstUserScale);
 
 			if (secondUserIsPresent && secondUserIsInstantiated == false)
 			{
@@ -118,9 +121,9 @@ namespace Unibas.DBIS.VREP
 				
 				Vector3 newPosFirstUser = new Vector3()
 				{
-					x = firstUserPosition.x + distanceTeleporting.x,
-					y = firstUserPosition.y + distanceTeleporting.y,
-					z = firstUserPosition.z + distanceTeleporting.z
+					x = firstUserVRPositoin.x + distanceTeleporting.x,
+					y = firstUserVRPositoin.y + distanceTeleporting.y,
+					z = firstUserVRPositoin.z + distanceTeleporting.z
 
 				};
 			
@@ -231,12 +234,15 @@ namespace Unibas.DBIS.VREP
 		}
 
 
-		private void UpdateUser(User user, int userId, Vector3 position, Quaternion rotation, Vector3 scale)
+		private void UpdateUser(User user, int userId, Vector3 physicalPosition, Vector3 vrPosition, Quaternion rotation, Vector3 scale)
 		{
 			user.Id = userId;
-			user.UserPhysicalPosition.X = position.x;
-			user.UserPhysicalPosition.Y = position.y;
-			user.UserPhysicalPosition.Z = position.z;
+			user.UserPhysicalPosition.X = physicalPosition.x;
+			user.UserPhysicalPosition.Y = physicalPosition.y;
+			user.UserPhysicalPosition.Z = physicalPosition.z;
+			user.UserVRPosition.X = vrPosition.x;
+			user.UserVRPosition.Y = vrPosition.y;
+			user.UserVRPosition.Z = vrPosition.z;
 			user.UserRotation.X = rotation.x;
 			user.UserRotation.Y = rotation.y;
 			user.UserRotation.Z = rotation.z;
