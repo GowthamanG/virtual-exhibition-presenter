@@ -163,7 +163,8 @@ namespace Unibas.DBIS.VREP
 		{
 			try
 			{
-				Response serverResponse = client.setTracker(tracker);
+				Confirmation serverResponse = client.setTracker(tracker);
+				Debug.Log(serverResponse);
 
 			}
 			catch (RpcException e)

@@ -6,7 +6,6 @@ message User{
     Quadrublet userVRRotation = 3;
     Vector userPhysicalPosition = 4;
     Quadrublet userPhysicalRotation = 5;
-    Vector userOtherVRPosition = 6;
 }
 
 message Tracker{
@@ -15,7 +14,6 @@ message Tracker{
     Quadrublet trackerVRRotation = 3;
     Vector trackerPhysicalPosition = 4;
     Quadrublet trackerPhysicalRotation = 5;
-    Vector userOtherVRPosition = 6;
 }
 
 message Vector{
@@ -39,14 +37,16 @@ message RequestTracker{
     int32 requestTrackerID = 1;
 }
 
-message Response{
-    Vector posInOtherVR = 1;
+message Confirmation{
+    string confirm = 1;
 }
+
 
 service multiUserSync{
     rpc getUser (RequestUser) returns (User){}
-    rpc setUser (User) returns (Response){}
+    rpc setUser (User) returns (Confirmation){}
     rpc getTracker (RequestTracker) returns (Tracker){}
-    rpc setTracker (Tracker) returns (Response){}
-
+    rpc setTracker (Tracker) returns (Confirmation){}
+    rpc setDistanceTeleport (Vector) returns (Confirmation) {}
+    rpc getDistanceTeleport (RequestUser) returns (Vector) {}
 }
