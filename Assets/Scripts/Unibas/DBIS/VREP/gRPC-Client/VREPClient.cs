@@ -221,9 +221,9 @@ namespace Unibas.DBIS.VREP
 				if (tempV2 != v2)
 				{
 					playerHasTeleported = true;
-					distanceTeleporting.x = tempV2.x - v2.x;
-					distanceTeleporting.y = tempV2.y - v2.y;
-					distanceTeleporting.z = tempV2.y - v2.z;
+					distanceTeleporting.x = v2.x - tempV2.x;
+					distanceTeleporting.y = v2.y - tempV2.y;
+					distanceTeleporting.z = v2.z - tempV2.z;
 				}
 
 			}
