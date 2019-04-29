@@ -162,9 +162,9 @@ namespace Unibas.DBIS.VREP
 				playersHaveTeleportedInOtherVR = false;
 			}
 			
-			translation.x = player1.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
+			/*translation.x = player1.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
 			translation.y = player1.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
-			translation.z = player1.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
+			translation.z = player1.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;*/
 			
 		}
 
