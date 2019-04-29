@@ -42,7 +42,7 @@ namespace Unibas.DBIS.VREP
 				{
 					Id = firstTrackerId,
 
-					TrackerPosition = new Vector()
+					TrackerPhysicalPosition = new Vector()
 					{
 						X = firstTrackerPosition.x,
 						Y = firstTrackerPosition.y,
@@ -55,13 +55,6 @@ namespace Unibas.DBIS.VREP
 						Y = firstTrackerRotation.y,
 						Z = firstTrackerRotation.z,
 						W = firstTrackerRotation.w
-					},
-
-					TrackerScale = new Vector()
-					{
-						X = firstTrackerScale.x,
-						Y = firstTrackerScale.y,
-						Z = firstTrackerScale.z,
 					}
 				};
 
@@ -180,16 +173,13 @@ namespace Unibas.DBIS.VREP
 				{
 
 					firstTrackerId = responseTracker.Id;
-					firstTrackerPosition.x = responseTracker.TrackerPosition.X + translateX;
-					firstTrackerPosition.y = responseTracker.TrackerPosition.Y + translateY;
-					firstTrackerPosition.z = responseTracker.TrackerPosition.Z + translateZ;
+					firstTrackerPosition.x = responseTracker.TrackerPhysicalPosition.X + translateX;
+					firstTrackerPosition.y = responseTracker.TrackerPhysicalPosition.Y + translateY;
+					firstTrackerPosition.z = responseTracker.TrackerPhysicalPosition.Z + translateZ;
 					firstTrackerRotation.x = responseTracker.TrackerRotation.X;
 					firstTrackerRotation.y = responseTracker.TrackerRotation.Y;
 					firstTrackerRotation.z = responseTracker.TrackerRotation.Z;
 					firstTrackerRotation.w = responseTracker.TrackerRotation.W;
-					firstTrackerScale.x = responseTracker.TrackerScale.X;
-					firstTrackerScale.y = responseTracker.TrackerScale.Y;
-					firstTrackerScale.z = responseTracker.TrackerScale.Z;
 				}
 
 			}
@@ -203,16 +193,13 @@ namespace Unibas.DBIS.VREP
 		private void UpdateTracker(Tracker tracker, int trackerId, Vector3 position, Quaternion rotation, Vector3 scale)
 		{
 			tracker.Id = trackerId;
-			tracker.TrackerPosition.X = position.x;
-			tracker.TrackerPosition.Y = position.y;
-			tracker.TrackerPosition.Z = position.z;
+			tracker.TrackerPhysicalPosition.X = position.x;
+			tracker.TrackerPhysicalPosition.Y = position.y;
+			tracker.TrackerPhysicalPosition.Z = position.z;
 			tracker.TrackerRotation.X = rotation.x;
 			tracker.TrackerRotation.Y = rotation.y;
 			tracker.TrackerRotation.Z = rotation.z;
 			tracker.TrackerRotation.W = rotation.w;
-			tracker.TrackerScale.X = scale.x;
-			tracker.TrackerScale.Y = scale.y;
-			tracker.TrackerScale.Z = scale.z;
 		}
 
 	}

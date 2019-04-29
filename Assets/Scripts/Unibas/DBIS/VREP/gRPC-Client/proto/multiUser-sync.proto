@@ -2,16 +2,16 @@ syntax = "proto3";
 
 message User{
     int32 id = 1;
-    Vector userPosition = 2;
-    Quadrublet userRotation = 3;
-    Vector userScale = 4;
+    Vector userPhysicalPosition = 2;
+    Vector userVRPosition = 3;
+    Quadrublet userRotation = 4;
 }
 
 message Tracker{
     int32 id = 1;
-    Vector trackerPosition = 2;
-    Quadrublet trackerRotation = 3;
-    Vector trackerScale = 4;
+    Vector trackerPhysicalPosition = 2;
+    Vector trackerVRPositon = 3;
+    Quadrublet trackerRotation = 4;
 }
 
 message Vector{
