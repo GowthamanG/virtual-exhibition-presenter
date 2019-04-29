@@ -104,6 +104,10 @@ namespace Unibas.DBIS.VREP
 			firstUserVRPositoin = player1.transform.position;
 			firstUserRotation = InputTracking.GetLocalRotation(XRNode.Head);
 			firstUserScale = player1.transform.lossyScale;
+
+			v1.x = player1.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
+			v1.y = player1.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
+			v1.z = player1.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
 			
 			UpdateUser(firstUser, firstUserId, firstUserPhysicalPosition, firstUserVRPositoin, firstUserRotation, firstUserScale);
 
@@ -121,23 +125,25 @@ namespace Unibas.DBIS.VREP
 				
 				Vector3 newPosFirstUser = new Vector3()
 				{
-					x = firstUserVRPositoin.x + distanceTeleporting.x,
-					y = firstUserVRPositoin.y + distanceTeleporting.y,
-					z = firstUserVRPositoin.z + distanceTeleporting.z
+					x = firstUserVRPositoin.x - distanceTeleporting.x,
+					y = firstUserVRPositoin.y - distanceTeleporting.y,
+					z = firstUserVRPositoin.z - distanceTeleporting.z
 
 				};
 			
 				Vector3 newPosSecondUser = new Vector3()
 				{
-					x = secondUserPosition.x + distanceTeleporting.x,
-					y = secondUserPosition.y + distanceTeleporting.y,
-					z = secondUserPosition.z + distanceTeleporting.z
+					x = secondUserPosition.x - distanceTeleporting.x,
+					y = secondUserPosition.y - distanceTeleporting.y,
+					z = secondUserPosition.z - distanceTeleporting.z
 
 				};
 				
 				avatarSecondPlayer.transform.SetPositionAndRotation(newPosSecondUser, secondUserRotation);
 
-				GameObject.Find("VRCamera").transform.position = newPosFirstUser;
+				GameObject.Find("Player").transform.position = newPosFirstUser;
+
+				playerHasTeleported = false;
 			}
 			
 		}
@@ -221,9 +227,9 @@ namespace Unibas.DBIS.VREP
 				if (tempV2 != v2)
 				{
 					playerHasTeleported = true;
-					distanceTeleporting.x = v2.x - tempV2.x;
-					distanceTeleporting.y = v2.y - tempV2.y;
-					distanceTeleporting.z = v2.z - tempV2.z;
+					distanceTeleporting.x = tempV2.x - v2.x;
+					distanceTeleporting.y = tempV2.y - v2.y;
+					distanceTeleporting.z = tempV2.z - v2.z;
 				}
 
 			}
