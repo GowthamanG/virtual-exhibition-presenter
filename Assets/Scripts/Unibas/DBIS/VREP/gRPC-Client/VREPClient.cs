@@ -3,6 +3,7 @@ using System.Threading;
 using Grpc.Core;
 using UnityEngine;
 using UnityEngine.XR;
+using Valve.VR;
 
 namespace Unibas.DBIS.VREP
 {
@@ -35,7 +36,10 @@ namespace Unibas.DBIS.VREP
 		private bool secondUserIsPresent;
 		private bool secondUserIsInstantiated;
 		private Vector3 translation;
-		private Vector3 differenceSecondUserPosToOrigin;
+		private Vector3 differenceToUserInOtherVR;
+		private Vector3 translateFurther;
+		private bool playersHaveTeleported;
+		private Vector3 distanceTransport;
 
 		// Use this for initialization
 		void Start ()
@@ -80,7 +84,13 @@ namespace Unibas.DBIS.VREP
 					Z = firstUserVRRotation.z,
 					W = firstUserVRRotation.w
 				},
-			
+				
+				UserOtherVRPosition = new Vector()
+				{
+					X = 0.0f,
+					Y = 0.0f,
+					Z = 0.0f	
+				}
 				
 			};
 			
@@ -91,11 +101,11 @@ namespace Unibas.DBIS.VREP
 			secondUserVRPosition = new Vector3();
 			secondUserVRRotation = new Quaternion();
 
-			differenceSecondUserPosToOrigin = new Vector3();
-
 			secondUserIsPresent = false;
 			secondUserIsInstantiated = false;
 			differenceSecondUserPosToOriginIsSet = false;
+
+			playersHaveTeleported = false;
 			
 			cowboy = new GameObject();
 			
@@ -106,6 +116,12 @@ namespace Unibas.DBIS.VREP
 			translation.x = player1.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
 			translation.y = player1.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
 			translation.z = player1.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
+			
+			differenceToUserInOtherVR = new Vector3();
+			
+			translateFurther = new Vector3();
+			
+			distanceTransport = new Vector3();
 		}
 	
 		void Update ()
@@ -131,19 +147,32 @@ namespace Unibas.DBIS.VREP
 			} 
 
 			if (secondUserIsPresent && secondUserIsInstantiated)
-				cowboy.transform.SetPositionAndRotation(secondUserVRPosition, secondUserVRRotation);	
-			
-			if(checkSecondUserHasTeleported(secondUserVRPosition, secondUserOriginVRPosition, differenceSecondUserPosToOrigin))
+				cowboy.transform.SetPositionAndRotation(secondUserVRPosition, secondUserVRRotation);
+
+			if (playersHaveTeleported)
 			{
-				Vector3 newPos = secondUserOriginVRPosition + differenceSecondUserPosToOrigin;
+				secondUserVRPosition.x += distanceTransport.x;
+				secondUserVRPosition.y += distanceTransport.y;
+				secondUserVRPosition.z += distanceTransport.z;
 				
-				cowboy.transform.SetPositionAndRotation(newPos, secondUserVRRotation);
-				translation.x = cowboy.transform.position.x - secondUserPhysicalPosition.x;
-				translation.y = cowboy.transform.position.y - secondUserPhysicalPosition.y;
-				translation.z = cowboy.transform.position.z - secondUserPhysicalPosition.z;
-				
-				player1.transform.SetPositionAndRotation(InputTracking.GetLocalPosition(XRNode.Head) + translation, InputTracking.GetLocalRotation(XRNode.Head));
+				Vector3 newPosFirstUser = new Vector3()
+				{
+					x = firstUserVRPosition.x + distanceTransport.x,
+					y = firstUserVRPosition.y + distanceTransport.y,
+					z = firstUserVRPosition.z + distanceTransport.z
+				};
+
+		
+				cowboy.transform.SetPositionAndRotation(secondUserVRPosition, secondUserVRRotation);
+				GameObject.Find("VRCamera").transform.SetPositionAndRotation(newPosFirstUser, firstUserVRRotation);
+
+				playersHaveTeleported = false;
 			}
+			
+			translation.x = player1.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
+			translation.y = player1.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
+			translation.z = player1.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
+			
 		}
 
 
@@ -184,8 +213,25 @@ namespace Unibas.DBIS.VREP
 			try
 			{
 				Response serverResponse = client.setUser(user);
-				Debug.Log("User is set: " + serverResponse.User);
+				
+				Vector3 tempTransl = differenceToUserInOtherVR;
+				
+				differenceToUserInOtherVR.x = serverResponse.PosInOtherVR.X - InputTracking.GetLocalPosition(XRNode.Head).x;
+				differenceToUserInOtherVR.y = serverResponse.PosInOtherVR.Y - InputTracking.GetLocalPosition(XRNode.Head).y;
+				differenceToUserInOtherVR.z = serverResponse.PosInOtherVR.Z - InputTracking.GetLocalPosition(XRNode.Head).z;
 
+				
+
+				if (tempTransl != differenceToUserInOtherVR)
+				{
+					playersHaveTeleported = true;
+					
+					distanceTransport.x = differenceToUserInOtherVR.x - tempTransl.x;
+					distanceTransport.y = differenceToUserInOtherVR.y - tempTransl.y;
+					distanceTransport.z = differenceToUserInOtherVR.z - tempTransl.z;
+					
+				}
+					
 			}
 			catch (RpcException e)
 			{
@@ -227,14 +273,6 @@ namespace Unibas.DBIS.VREP
 				secondUserOriginVRRotation.z = responseUser.UserVRRotation.Z;
 				secondUserOriginVRRotation.w = responseUser.UserVRRotation.W;
 
-				if (differenceSecondUserPosToOriginIsSet == false)
-				{
-					differenceSecondUserPosToOrigin.x = Math.Abs(secondUserVRPosition.x - secondUserOriginVRPosition.x);
-					differenceSecondUserPosToOrigin.y = Math.Abs(secondUserVRPosition.y - secondUserOriginVRPosition.y);
-					differenceSecondUserPosToOrigin.z = Math.Abs(secondUserVRPosition.z - secondUserOriginVRPosition.z);
-
-					differenceSecondUserPosToOriginIsSet = true;
-				}
 					
 			}
 			catch (RpcException e)

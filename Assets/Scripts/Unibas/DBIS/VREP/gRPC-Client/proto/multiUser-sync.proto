@@ -6,6 +6,7 @@ message User{
     Quadrublet userVRRotation = 3;
     Vector userPhysicalPosition = 4;
     Quadrublet userPhysicalRotation = 5;
+    Vector userOtherVRPosition = 6;
 }
 
 message Tracker{
@@ -14,6 +15,7 @@ message Tracker{
     Quadrublet trackerVRRotation = 3;
     Vector trackerPhysicalPosition = 4;
     Quadrublet trackerPhysicalRotation = 5;
+    Vector userOtherVRPosition = 6;
 }
 
 message Vector{
@@ -38,7 +40,7 @@ message RequestTracker{
 }
 
 message Response{
-    string response = 1;
+    Vector posInOtherVR = 1;
 }
 
 service multiUserSync{

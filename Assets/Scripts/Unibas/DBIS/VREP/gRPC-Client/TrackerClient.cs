@@ -164,7 +164,6 @@ namespace Unibas.DBIS.VREP
 			try
 			{
 				Response serverResponse = client.setTracker(tracker);
-				Debug.Log("User is set: " + serverResponse.User);
 
 			}
 			catch (RpcException e)
