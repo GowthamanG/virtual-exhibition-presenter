@@ -195,9 +195,13 @@ namespace Unibas.DBIS.VREP
 				{
 
 					firstTrackerId = responseTracker.Id;
-					firstTrackerVRPosition.x = responseTracker.TrackerPhysicalPosition.X + translateX;
-					firstTrackerVRPosition.y = responseTracker.TrackerPhysicalPosition.Y + translateY;
-					firstTrackerVRPosition.z = responseTracker.TrackerPhysicalPosition.Z + translateZ;
+					/*firstTrackerVRPosition.x = responseTracker.TrackerPhysicalPosition.X;
+					firstTrackerVRPosition.y = responseTracker.TrackerPhysicalPosition.Y;
+					firstTrackerVRPosition.z = responseTracker.TrackerPhysicalPosition.Z;*/
+					firstTrackerVRPosition.x = responseTracker.TrackerVRPositon.X;
+					firstTrackerVRPosition.y = responseTracker.TrackerVRPositon.Y;
+					firstTrackerVRPosition.z = responseTracker.TrackerVRPositon.Z;
+					
 					firstTrackerRotation.x = responseTracker.TrackerRotation.X;
 					firstTrackerRotation.y = responseTracker.TrackerRotation.Y;
 					firstTrackerRotation.z = responseTracker.TrackerRotation.Z;
