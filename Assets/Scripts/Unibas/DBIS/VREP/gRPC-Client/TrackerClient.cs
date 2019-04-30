@@ -21,7 +21,6 @@ namespace Unibas.DBIS.VREP
 		private Vector3 firstTrackerPhysicalPosition;
 		private Vector3 firstTrackerVRPosition;
 		private Quaternion firstTrackerRotation;
-		private Vector3 firstTrackerScale;
 		private bool stop;
 		public bool trackerIsActive;
 		private bool trackerIsInstantiated;
@@ -39,7 +38,7 @@ namespace Unibas.DBIS.VREP
 
 		
 				firstTrackerId = GetInstanceID();
-				firstTrackerPhysicalPosition = transform.position;
+				firstTrackerPhysicalPosition = InputTracking.GetLocalPosition(XRNode.Head);
 				firstTrackerVRPosition = transform.position;
 				firstTrackerRotation = transform.rotation;
 
@@ -77,7 +76,6 @@ namespace Unibas.DBIS.VREP
 				firstTrackerId = 0;
 				firstTrackerVRPosition = new Vector3();
 				firstTrackerRotation = new Quaternion();
-				firstTrackerScale = new Vector3();
 			}
 
 			trackedObject = GetComponent<SteamVR_TrackedObject>();
@@ -108,13 +106,7 @@ namespace Unibas.DBIS.VREP
 			{
 				firstTrackerVRPosition = transform.position;
 				firstTrackerRotation = transform.rotation;
-				firstTrackerScale = transform.lossyScale;
-				UpdateTracker(firstTracker, firstTrackerId, firstTrackerPhysicalPosition, firstTrackerVRPosition, firstTrackerRotation, firstTrackerScale);
-			}
-			else
-			{
-				gameObject.SetActive(false);
-				trackerIsActive = false;
+				UpdateTracker(firstTracker, firstTrackerId, firstTrackerPhysicalPosition, firstTrackerVRPosition, firstTrackerRotation);
 			}
 
 
@@ -139,9 +131,6 @@ namespace Unibas.DBIS.VREP
 		
 			while (!stop || channel.State != ChannelState.Shutdown) //The synchronization happens in the while loop
 			{
-				var now = DateTime.Now;
-				var deltaTime = now - time;
-				time = now;
 				SetTracker(firstTracker);
 				if (trackerIsActive == false)
 				{
@@ -215,7 +204,7 @@ namespace Unibas.DBIS.VREP
 		}
 
 
-		private void UpdateTracker(Tracker tracker, int trackerId, Vector3 physicalPosition, Vector3 vrPosition, Quaternion rotation, Vector3 scale)
+		private void UpdateTracker(Tracker tracker, int trackerId, Vector3 physicalPosition, Vector3 vrPosition, Quaternion rotation)
 		{
 			tracker.Id = trackerId;
 			tracker.TrackerPhysicalPosition.X = physicalPosition.x;
