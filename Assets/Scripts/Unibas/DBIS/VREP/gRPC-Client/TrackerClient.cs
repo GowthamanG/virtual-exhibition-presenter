@@ -3,6 +3,7 @@ using System.Threading;
 using Grpc.Core;
 using UnityEngine;
 using UnityEngine.XR;
+using Valve.VR;
 
 namespace Unibas.DBIS.VREP
 {
@@ -27,13 +28,15 @@ namespace Unibas.DBIS.VREP
 		private GameObject cubetracker;
 		private float translateX, translateY, translateZ;
 
+		private SteamVR_TrackedObject trackedObject;
+
 		// Use this for initialization
-		void Start ()
+		void Start()
 		{
 			if (trackerIsActive)
 			{
-				
-				
+
+
 				firstTrackerId = GetInstanceID();
 				firstTrackerPosition = transform.position;
 				firstTrackerRotation = transform.rotation;
@@ -68,22 +71,31 @@ namespace Unibas.DBIS.VREP
 				firstTrackerScale = new Vector3();
 			}
 
+			trackedObject = GetComponent<SteamVR_TrackedObject>();
+
 			trackerIsInstantiated = false;
 			strangeTrackerIsActive = false;
 
 			cubetracker = new GameObject();
-			
+
 			connectionThread = new Thread(Run);
 			connectionThread.Start();
 
-			translateX = player.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
-			translateY = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
-			translateZ = player.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
+			translateX = player.transform.position.x - trackedObject.origin.position.x;
+			translateY = player.transform.position.y - trackedObject.origin.position.y;
+			translateZ = player.transform.position.z - trackedObject.origin.position.z;
 		}
-	
+
 		// Update is called once per frame
 		void Update()
 		{
+			
+			translateX = player.transform.position.x - trackedObject.origin.position.x;
+			translateY = player.transform.position.y - trackedObject.origin.position.y;
+			translateZ = player.transform.position.z - trackedObject.origin.position.z;
+			
+			Debug.Log("X: " + trackedObject.origin.position.x + " ,Y: " + trackedObject.origin.position.y + " ,Z: " + trackedObject.origin.position.z);
+			
 			if (trackerIsActive)
 			{
 				firstTrackerPosition = transform.position;

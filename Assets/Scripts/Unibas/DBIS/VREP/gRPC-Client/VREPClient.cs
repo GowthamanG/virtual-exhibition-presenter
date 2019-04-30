@@ -112,11 +112,11 @@ namespace Unibas.DBIS.VREP
 			if (secondUserIsPresent && secondUserIsInstantiated == false)
 			{
 				secondUserIsInstantiated = true;
-				avatarSecondPlayer = Instantiate(player2, secondUserPosition, new Quaternion(0, 0, 0, 0));
+				avatarSecondPlayer = Instantiate(player2, secondUserPosition, secondUserRotation);
 			} 
 
 			if (secondUserIsPresent && secondUserIsInstantiated)
-				avatarSecondPlayer.transform.SetPositionAndRotation(secondUserPosition, new Quaternion(0, 0, 0, 0));
+				avatarSecondPlayer.transform.SetPositionAndRotation(secondUserPosition, secondUserRotation);
 
 			if (secondUserIsPresent && playerHasTeleported)
 			{
@@ -139,7 +139,7 @@ namespace Unibas.DBIS.VREP
 				
 				avatarSecondPlayer.transform.SetPositionAndRotation(newPosSecondUser, secondUserRotation);
 				
-				GameObject.Find("Player").transform.SetPositionAndRotation(newPosFirstUser, firstUserRotation);
+				player1.transform.SetPositionAndRotation(newPosFirstUser, firstUserRotation);
 
 				playerHasTeleported = false;
 			}
@@ -209,9 +209,9 @@ namespace Unibas.DBIS.VREP
 				secondUserPosition.x = responseUser.UserPhysicalPosition.X + v1.x;
 				secondUserPosition.y = 0.0f;
 				secondUserPosition.z = responseUser.UserPhysicalPosition.Z + v1.z;
-				secondUserRotation.x = responseUser.UserRotation.X;
+				secondUserRotation.x = 0.0f;
 				secondUserRotation.y = responseUser.UserRotation.Y;
-				secondUserRotation.z = responseUser.UserRotation.Z;
+				secondUserRotation.z = 0.0f;
 				secondUserRotation.w = responseUser.UserRotation.W;
 
 				Vector3 tempV2 = v2;
