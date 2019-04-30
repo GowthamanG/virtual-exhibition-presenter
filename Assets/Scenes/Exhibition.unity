@@ -276,7 +276,7 @@ MonoBehaviour:
   port: 8888
   box: {fileID: 6985233247067464160, guid: baec84e5c189d433f82a3d231c22883b, type: 3}
   player: {fileID: 993875551}
-  trackerIsActive: 0
+  trackerIsActive: 1
 --- !u!114 &274688298
 MonoBehaviour:
   m_ObjectHideFlags: 0

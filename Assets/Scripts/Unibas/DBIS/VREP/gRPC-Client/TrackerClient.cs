@@ -102,7 +102,7 @@ namespace Unibas.DBIS.VREP
 			translateY = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
 			translateZ = player.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
 			
-			Debug.Log("Index tracker: " + trackedObject.index);
+			Debug.Log("VR Post: " + transform.position + " ,Physical Pos: " + trackedObject.transform.position );
 			
 			if (trackerIsActive)
 			{
@@ -114,6 +114,7 @@ namespace Unibas.DBIS.VREP
 			else
 			{
 				gameObject.SetActive(false);
+				trackerIsActive = false;
 			}
 
 
