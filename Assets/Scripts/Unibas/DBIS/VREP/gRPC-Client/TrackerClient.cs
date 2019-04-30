@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Grpc.Core;
 using UnityEngine;
 using UnityEngine.XR;
 using Valve.VR;
+using Valve.VR.InteractionSystem;
 
 namespace Unibas.DBIS.VREP
 {
@@ -35,10 +37,16 @@ namespace Unibas.DBIS.VREP
 		{
 			if (trackerIsActive)
 			{
+				
+				translateX = player.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
+				translateY = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
+				translateZ = player.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
 
-		
+				
 				firstTrackerId = GetInstanceID();
-				firstTrackerPhysicalPosition = InputTracking.GetLocalPosition(XRNode.Head);
+				firstTrackerPhysicalPosition.x = transform.position.x - translateX;
+				firstTrackerPhysicalPosition.y = transform.position.y - translateY;
+				firstTrackerPhysicalPosition.z = transform.position.z - translateZ;
 				firstTrackerVRPosition = transform.position;
 				firstTrackerRotation = transform.rotation;
 
@@ -78,7 +86,7 @@ namespace Unibas.DBIS.VREP
 				firstTrackerRotation = new Quaternion();
 			}
 
-			trackedObject = GetComponent<SteamVR_TrackedObject>();
+			trackedObject = GetComponent<SteamVR_TrackedObject>();			
 
 			trackerIsInstantiated = false;
 			strangeTrackerIsActive = false;
@@ -88,14 +96,14 @@ namespace Unibas.DBIS.VREP
 			connectionThread = new Thread(Run);
 			connectionThread.Start();
 
-			translateX = player.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
-			translateY = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
-			translateZ = player.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
 		}
 
 		// Update is called once per frame
 		void Update()
 		{
+			Debug.Log("Hardwaretracker: " + InputTracking.GetLocalPosition(XRNode.HardwareTracker));
+			Debug.Log("TrackingReference: " + InputTracking.GetLocalPosition(XRNode.HardwareTracker));
+			
 			translateX = player.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
 			translateY = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
 			translateZ = player.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
@@ -207,9 +215,9 @@ namespace Unibas.DBIS.VREP
 		private void UpdateTracker(Tracker tracker, int trackerId, Vector3 physicalPosition, Vector3 vrPosition, Quaternion rotation)
 		{
 			tracker.Id = trackerId;
-			tracker.TrackerPhysicalPosition.X = physicalPosition.x;
-			tracker.TrackerPhysicalPosition.Y = physicalPosition.y;
-			tracker.TrackerPhysicalPosition.Z = physicalPosition.z;
+			tracker.TrackerPhysicalPosition.X = physicalPosition.x - translateX;
+			tracker.TrackerPhysicalPosition.Y = physicalPosition.y - translateY;
+			tracker.TrackerPhysicalPosition.Z = physicalPosition.z - translateZ;
 			tracker.TrackerVRPositon.X = vrPosition.x;
 			tracker.TrackerVRPositon.Y = vrPosition.y;
 			tracker.TrackerVRPositon.Z = vrPosition.z;
