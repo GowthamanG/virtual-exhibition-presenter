@@ -16,6 +16,7 @@ namespace Unibas.DBIS.VREP
 		public int port;
 		public GameObject box;
 		public GameObject player;
+		private Vector3 playerPosition;
 		private multiUserSync.multiUserSyncClient client;
 		private Tracker firstTracker;
 		private Channel channel;
@@ -35,6 +36,7 @@ namespace Unibas.DBIS.VREP
 		// Use this for initialization
 		void Start()
 		{
+			playerPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
 			
 			if (trackerIsActive)
 			{
@@ -192,9 +194,9 @@ namespace Unibas.DBIS.VREP
 					/*firstTrackerVRPosition.x = responseTracker.TrackerPhysicalPosition.X;
 					firstTrackerVRPosition.y = responseTracker.TrackerPhysicalPosition.Y;
 					firstTrackerVRPosition.z = responseTracker.TrackerPhysicalPosition.Z;*/
-					firstTrackerVRPosition.x = player.transform.position.x + responseTracker.TrackerPhysicalPosition.X;
-					firstTrackerVRPosition.y = player.transform.position.x + responseTracker.TrackerPhysicalPosition.Y;
-					firstTrackerVRPosition.z = player.transform.position.x + responseTracker.TrackerPhysicalPosition.Z;
+					firstTrackerVRPosition.x = playerPosition.x + responseTracker.TrackerPhysicalPosition.X;
+					firstTrackerVRPosition.y = playerPosition.y + responseTracker.TrackerPhysicalPosition.Y;
+					firstTrackerVRPosition.z = playerPosition.z + responseTracker.TrackerPhysicalPosition.Z;
 					
 					firstTrackerRotation.x = responseTracker.TrackerRotation.X;
 					firstTrackerRotation.y = responseTracker.TrackerRotation.Y;
@@ -214,8 +216,8 @@ namespace Unibas.DBIS.VREP
 		{
 			tracker.Id = trackerId;
 			tracker.TrackerPhysicalPosition.X = transform.position.x - player.transform.position.x;
-			tracker.TrackerPhysicalPosition.Y = transform.position.x - player.transform.position.x;
-			tracker.TrackerPhysicalPosition.Z = transform.position.x - player.transform.position.x;
+			tracker.TrackerPhysicalPosition.Y = transform.position.y - player.transform.position.y;
+			tracker.TrackerPhysicalPosition.Z = transform.position.z - player.transform.position.z;
 			tracker.TrackerVRPositon.X = vrPosition.x;
 			tracker.TrackerVRPositon.Y = vrPosition.y;
 			tracker.TrackerVRPositon.Z = vrPosition.z;
