@@ -18,70 +18,74 @@ namespace Unibas.DBIS.VREP
 		public GameObject player;
 		private Vector3 playerPosition;
 		private multiUserSync.multiUserSyncClient client;
-		private Tracker firstTracker;
+		private Tracker tracker;
 		private Channel channel;
-		private int firstTrackerId;
-		private Vector3 firstTrackerPhysicalPosition;
-		private Vector3 firstTrackerVRPosition;
-		private Quaternion firstTrackerRotation;
+		private int trackerId;
+		private Vector3 trackerPhysicalPosition;
+		private Vector3 trackerVRPosition;
+		private Quaternion trackerRotation;
 		private bool stop;
 		public bool trackerIsActive;
 		private bool trackerIsInstantiated;
 		private bool strangeTrackerIsActive;
 		private GameObject cubetracker;
-		
 
+		private List<XRNodeState> nodes;
 		private SteamVR_TrackedObject trackedObject;
+		private XRNodeState hardwareTracker;
+
+		private Vector3 translate;
 
 		// Use this for initialization
 		void Start()
 		{
-			playerPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
+			nodes = new List<XRNodeState>();
+			InputTracking.GetNodeStates(nodes);
+			hardwareTracker = nodes.Find(state => trackedObject);
+
 			
 			if (trackerIsActive)
 			{
 				
-				firstTrackerId = GetInstanceID();
-				firstTrackerPhysicalPosition.x = transform.position.x - player.transform.position.x;
-				firstTrackerPhysicalPosition.y = transform.position.y - player.transform.position.y;
-				firstTrackerPhysicalPosition.z = transform.position.z - player.transform.position.z;
-				firstTrackerVRPosition = transform.position;
-				firstTrackerRotation = transform.rotation;
+				trackerId = GetInstanceID();
+				hardwareTracker.TryGetPosition(out trackerPhysicalPosition);
+				trackerVRPosition = transform.position;
+				trackerRotation = transform.rotation;
 
-				firstTracker = new Tracker()
+				tracker = new Tracker()
 				{
-					Id = firstTrackerId,
+					Id = trackerId,
 
 					TrackerPhysicalPosition = new Vector()
 					{
-						X = firstTrackerPhysicalPosition.x,
-						Y = firstTrackerPhysicalPosition.y,
-						Z = firstTrackerPhysicalPosition.z,
+						X = trackerPhysicalPosition.x,
+						Y = trackerPhysicalPosition.y,
+						Z = trackerPhysicalPosition.z,
 					},
 					
 					TrackerVRPositon = new Vector()
 					{
-						X = firstTrackerVRPosition.x,
-						Y = firstTrackerVRPosition.y,
-						Z = firstTrackerVRPosition.z
+						X = trackerVRPosition.x,
+						Y = trackerVRPosition.y,
+						Z = trackerVRPosition.z
 					},
 
 					TrackerRotation = new Quadrublet()
 					{
-						X = firstTrackerRotation.x,
-						Y = firstTrackerRotation.y,
-						Z = firstTrackerRotation.z,
-						W = firstTrackerRotation.w
+						X = trackerRotation.x,
+						Y = trackerRotation.y,
+						Z = trackerRotation.z,
+						W = trackerRotation.w
 					}
 				};
 
 			}
 			else
 			{
-				firstTracker = new Tracker();
-				firstTrackerId = 0;
-				firstTrackerVRPosition = new Vector3();
-				firstTrackerRotation = new Quaternion();
+				tracker = new Tracker();
+				trackerId = 0;
+				trackerVRPosition = new Vector3();
+				trackerRotation = new Quaternion();
 			}
 
 			trackedObject = GetComponent<SteamVR_TrackedObject>();			
@@ -93,35 +97,43 @@ namespace Unibas.DBIS.VREP
 
 			connectionThread = new Thread(Run);
 			connectionThread.Start();
-
+			
+			translate = new Vector3()
+			{
+				x = player.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x,
+				y = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y,
+				z = player.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z
+			};
+			
+			
 		}
 
 		// Update is called once per frame
 		void Update()
-		{	
-			
-			Debug.Log("VR Post: " + transform.position + " ,Physical Pos: " + trackedObject.transform.position );
+		{
+
+			Debug.Log("TRACKER PHYSICAL POSITION: " + trackerPhysicalPosition);
+			translate.x = player.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
+			translate.y = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
+			translate.z = player.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
 			
 			if (trackerIsActive)
 			{
-				firstTrackerPhysicalPosition.x = transform.position.x - player.transform.position.x;
-				firstTrackerPhysicalPosition.y = transform.position.y - player.transform.position.y;
-				firstTrackerPhysicalPosition.z = transform.position.z - player.transform.position.z;
-				                                 
-				firstTrackerVRPosition = transform.position;
-				firstTrackerRotation = transform.rotation;
-				UpdateTracker(firstTracker, firstTrackerId, firstTrackerPhysicalPosition, firstTrackerVRPosition, firstTrackerRotation);
+				hardwareTracker.TryGetPosition(out trackerPhysicalPosition);
+				trackerVRPosition = transform.position;
+				trackerRotation = transform.rotation;
+				UpdateTracker(tracker, trackerId, trackerPhysicalPosition, trackerVRPosition, trackerRotation);
 			}
 
 
 			if (trackerIsActive == false && trackerIsInstantiated == false && strangeTrackerIsActive)
 			{
 				trackerIsInstantiated = true;
-				cubetracker = Instantiate(box, firstTrackerVRPosition, firstTrackerRotation);
+				cubetracker = Instantiate(box, trackerVRPosition, trackerRotation);
 			}
 
 			if (trackerIsActive == false && strangeTrackerIsActive && trackerIsInstantiated)
-				cubetracker.transform.SetPositionAndRotation(firstTrackerVRPosition, firstTrackerRotation);
+				cubetracker.transform.SetPositionAndRotation(trackerVRPosition, trackerRotation);
 
 
 		}
@@ -131,15 +143,13 @@ namespace Unibas.DBIS.VREP
 		
 			channel = new Channel(host, port, ChannelCredentials.Insecure);
 			client = new multiUserSync.multiUserSyncClient(channel);
-			DateTime time = DateTime.Now;
 		
 			while (!stop || channel.State != ChannelState.Shutdown) //The synchronization happens in the while loop
 			{
-				SetTracker(firstTracker);
+				SetTracker(tracker);
 				if (trackerIsActive == false)
 				{
 					GetTracker(00); //Trick to get user which is NOT equal firstUserId, details see implementation on server
-					//deltaTime.TotalSeconds;
 					strangeTrackerIsActive = true;
 				}
 
@@ -190,18 +200,15 @@ namespace Unibas.DBIS.VREP
 				if (responseTracker.Id != 0)
 				{
 
-					firstTrackerId = responseTracker.Id;
-					/*firstTrackerVRPosition.x = responseTracker.TrackerPhysicalPosition.X;
-					firstTrackerVRPosition.y = responseTracker.TrackerPhysicalPosition.Y;
-					firstTrackerVRPosition.z = responseTracker.TrackerPhysicalPosition.Z;*/
-					firstTrackerVRPosition.x = playerPosition.x + responseTracker.TrackerPhysicalPosition.X;
-					firstTrackerVRPosition.y = playerPosition.y + responseTracker.TrackerPhysicalPosition.Y;
-					firstTrackerVRPosition.z = playerPosition.z + responseTracker.TrackerPhysicalPosition.Z;
+					this.trackerId = responseTracker.Id;
+					trackerVRPosition.x = responseTracker.TrackerPhysicalPosition.X + translate.x;
+					trackerVRPosition.y = responseTracker.TrackerPhysicalPosition.Y + translate.y;
+					trackerVRPosition.z = responseTracker.TrackerPhysicalPosition.Z + translate.z;
 					
-					firstTrackerRotation.x = responseTracker.TrackerRotation.X;
-					firstTrackerRotation.y = responseTracker.TrackerRotation.Y;
-					firstTrackerRotation.z = responseTracker.TrackerRotation.Z;
-					firstTrackerRotation.w = responseTracker.TrackerRotation.W;
+					trackerRotation.x = responseTracker.TrackerRotation.X;
+					trackerRotation.y = responseTracker.TrackerRotation.Y;
+					trackerRotation.z = responseTracker.TrackerRotation.Z;
+					trackerRotation.w = responseTracker.TrackerRotation.W;
 				}
 
 			}
@@ -215,9 +222,9 @@ namespace Unibas.DBIS.VREP
 		private void UpdateTracker(Tracker tracker, int trackerId, Vector3 physicalPosition, Vector3 vrPosition, Quaternion rotation)
 		{
 			tracker.Id = trackerId;
-			tracker.TrackerPhysicalPosition.X = transform.position.x - player.transform.position.x;
-			tracker.TrackerPhysicalPosition.Y = transform.position.y - player.transform.position.y;
-			tracker.TrackerPhysicalPosition.Z = transform.position.z - player.transform.position.z;
+			tracker.TrackerPhysicalPosition.X = physicalPosition.x;
+			tracker.TrackerPhysicalPosition.Y = physicalPosition.y;
+			tracker.TrackerPhysicalPosition.Z = physicalPosition.z;
 			tracker.TrackerVRPositon.X = vrPosition.x;
 			tracker.TrackerVRPositon.Y = vrPosition.y;
 			tracker.TrackerVRPositon.Z = vrPosition.z;
