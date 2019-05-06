@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using Grpc.Core;
+using HTC.UnityPlugin.Vive;
 using UnityEngine;
 using UnityEngine.XR;
 using Valve.VR;
@@ -16,6 +17,7 @@ namespace Unibas.DBIS.VREP
 		public int port;
 		public GameObject box;
 		public GameObject player;
+		public ViveRoleProperty viveRole = ViveRoleProperty.New();
 		private Vector3 playerPosition;
 		private multiUserSync.multiUserSyncClient client;
 		private Tracker tracker;
@@ -30,25 +32,17 @@ namespace Unibas.DBIS.VREP
 		private bool strangeTrackerIsActive;
 		private GameObject cubetracker;
 
-		private List<XRNodeState> nodes;
-		private SteamVR_TrackedObject trackedObject;
-		private XRNodeState hardwareTracker;
-
 		private Vector3 translate;
 
 		// Use this for initialization
 		void Start()
 		{
-			nodes = new List<XRNodeState>();
-			InputTracking.GetNodeStates(nodes);
-			hardwareTracker = nodes.Find(state => trackedObject);
-
 			
 			if (trackerIsActive)
 			{
 				
 				trackerId = GetInstanceID();
-				hardwareTracker.TryGetPosition(out trackerPhysicalPosition);
+				trackerPhysicalPosition = VivePose.GetPose(viveRole).pos;
 				trackerVRPosition = transform.position;
 				trackerRotation = transform.rotation;
 
@@ -86,9 +80,7 @@ namespace Unibas.DBIS.VREP
 				trackerId = 0;
 				trackerVRPosition = new Vector3();
 				trackerRotation = new Quaternion();
-			}
-
-			trackedObject = GetComponent<SteamVR_TrackedObject>();			
+			}		
 
 			trackerIsInstantiated = false;
 			strangeTrackerIsActive = false;
@@ -112,14 +104,15 @@ namespace Unibas.DBIS.VREP
 		void Update()
 		{
 
-			Debug.Log("TRACKER PHYSICAL POSITION: " + trackerPhysicalPosition);
 			translate.x = player.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
 			translate.y = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
 			translate.z = player.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
+
+			trackerPhysicalPosition = VivePose.GetPose(viveRole).pos;
 			
 			if (trackerIsActive)
 			{
-				hardwareTracker.TryGetPosition(out trackerPhysicalPosition);
+				Debug.Log("TRACKER PHYSICAL POSITION: " + trackerPhysicalPosition);
 				trackerVRPosition = transform.position;
 				trackerRotation = transform.rotation;
 				UpdateTracker(tracker, trackerId, trackerPhysicalPosition, trackerVRPosition, trackerRotation);
