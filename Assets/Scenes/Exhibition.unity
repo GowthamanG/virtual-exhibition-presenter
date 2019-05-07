@@ -280,7 +280,7 @@ MonoBehaviour:
     m_roleTypeFullName: HTC.UnityPlugin.Vive.TrackerRole
     m_roleValueName: Tracker1
     m_roleValueInt: 1
-  trackerIsActive: 1
+  trackerIsActive: 0
 --- !u!114 &274688298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -705,7 +705,7 @@ MonoBehaviour:
   host: 10.34.58.222
   port: 8888
   player1: {fileID: 993875551}
-  player2: {fileID: 112068, guid: 93f8a13fb89985e4f8d0d8ecff94969a, type: 3}
+  player2: {fileID: 2754260642880922607, guid: 83c0b7f4733b2e24793478c9781693fc, type: 3}
 --- !u!4 &411976671
 Transform:
   m_ObjectHideFlags: 0
