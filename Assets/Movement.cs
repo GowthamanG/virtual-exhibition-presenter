@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
 using UnityEngine;
@@ -9,38 +10,30 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
 
     private Actions actions;
-    private IEnumerator coroutine;
+    private Vector3 pos;
     void Start()
     {
         actions = GetComponent<Actions>();
-        actions.Stay();
+        actions.Walk();
 
-        coroutine = Countdown(1);
+        pos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (transform.hasChanged)
-        {
-            actions.Walk();
-            StartCoroutine(coroutine);
-        }
-        
         actions.Stay();
         
-    }
-
-
-    IEnumerator Countdown(int seconds)
-    {
-        int counter = seconds;
-
-        while (counter > 0)
+        if (transform.hasChanged)
         {
-            yield return new WaitForSeconds(1);
-            counter--;
+            if (Math.Abs(pos.x - transform.position.x) > 0.005f ||
+                Math.Abs(pos.z - transform.position.z) > 0.005f)
+            {
+                actions.Walk();
+                pos = transform.position;
+            }
+                
         }
     }
+
 }
