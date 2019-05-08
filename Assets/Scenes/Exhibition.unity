@@ -276,11 +276,7 @@ MonoBehaviour:
   port: 8888
   box: {fileID: 6985233247067464160, guid: baec84e5c189d433f82a3d231c22883b, type: 3}
   player: {fileID: 993875551}
-  viveRole:
-    m_roleTypeFullName: HTC.UnityPlugin.Vive.TrackerRole
-    m_roleValueName: Tracker1
-    m_roleValueInt: 1
-  trackerIsActive: 0
+  trackerIsActive: 1
 --- !u!114 &274688298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,7 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d37c2cf88f7c59f4c8cf5d3812568143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 7
+  index: 5
   origin: {fileID: 0}
 --- !u!114 &274688302
 MonoBehaviour:
@@ -320,22 +316,6 @@ MonoBehaviour:
     m_TypeName: HTC.UnityPlugin.Vive.VivePoseTracker+UnityEventBool, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   role: -2
---- !u!114 &274688303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 274688295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387fb5d74b1a932479013876b27a0e1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_viveRole:
-    m_roleTypeFullName: HTC.UnityPlugin.Vive.TrackerRole
-    m_roleValueName: Tracker1
-    m_roleValueInt: 1
 --- !u!1 &322547914
 GameObject:
   m_ObjectHideFlags: 0

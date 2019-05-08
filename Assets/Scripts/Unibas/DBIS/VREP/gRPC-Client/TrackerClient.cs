@@ -8,6 +8,10 @@ using UnityEngine.XR;
 using Valve.VR;
 using Valve.VR.InteractionSystem;
 
+using HTC.UnityPlugin.PoseTracker;
+using HTC.UnityPlugin.Utility;
+
+
 namespace Unibas.DBIS.VREP
 {
 	public class TrackerClient : MonoBehaviour
@@ -42,7 +46,8 @@ namespace Unibas.DBIS.VREP
 			{
 				
 				trackerId = GetInstanceID();
-				trackerPhysicalPosition = VivePose.GetPose(viveRole).pos;
+				//trackerPhysicalPosition = VivePose.GetPoseEx(TrackerRole.Tracker1).pos;
+				trackerPhysicalPosition = VivePose.GetPose((viveRole.GetDeviceIndex()), null).pos;
 				trackerVRPosition = transform.position;
 				trackerRotation = transform.rotation;
 
@@ -108,7 +113,7 @@ namespace Unibas.DBIS.VREP
 			translate.y = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
 			translate.z = player.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
 
-			trackerPhysicalPosition = VivePose.GetPose(viveRole).pos;
+			trackerPhysicalPosition = VivePose.GetPoseEx(TrackerRole.Tracker1).pos;;
 			
 			if (trackerIsActive)
 			{
