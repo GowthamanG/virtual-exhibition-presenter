@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Threading;
 using Grpc.Core;
+using Unibas.DBIS.VREP.Scripts.Objects;
 using UnityEngine;
 using UnityEngine.XR;
 
 namespace Unibas.DBIS.VREP
 {
-	public class VREPClient : MonoBehaviour
+	public class MultiUserClient : MonoBehaviour
 	{
 		private Thread connectionThread;
 		public string host;
@@ -29,16 +30,23 @@ namespace Unibas.DBIS.VREP
 		private bool secondUserIsPresent;
 		private bool secondUserIsInstantiated;
 		private Vector3 v1;
-
 		private Vector3 v2;
 		private bool v2IsSet;
+		
 		private bool playerHasTeleported;
 		private Vector3 distanceTeleporting;
+
+		private PersonObject firstPerson;
+		private PersonObject secondPerson;
 
 		// Use this for initialization
 		void Start ()
 		{
-			firstUserId = player1.GetInstanceID();
+		
+			firstPerson = new PersonObject(player1.GetInstanceID(), InputTracking.GetLocalPosition(XRNode.Head), player1.transform.position, InputTracking.GetLocalRotation(XRNode.Head), new Vector3());
+			secondPerson = new PersonObject();
+			
+			/*firstUserId = player1.GetInstanceID();
 			firstUserPhysicalPosition = InputTracking.GetLocalPosition(XRNode.Head);
 			firstUserVRPosition = player1.transform.position;
 			firstUserRotation = InputTracking.GetLocalRotation(XRNode.Head);
@@ -76,7 +84,7 @@ namespace Unibas.DBIS.VREP
 			secondUserRotation = new Quaternion();
 
 			secondUserIsPresent = false;
-			secondUserIsInstantiated = false;
+			secondUserIsInstantiated = false;*/
 			
 			avatarSecondPlayer = new GameObject();
 			
@@ -90,6 +98,7 @@ namespace Unibas.DBIS.VREP
 				z = player1.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z
 			};
 			
+			
 			v2 = new Vector3(0.0f, 0.0f, 0.0f);
 			v2IsSet = false;
 			playerHasTeleported = false;
@@ -99,17 +108,21 @@ namespace Unibas.DBIS.VREP
 		void Update ()
 		{
 
-			firstUserPhysicalPosition = InputTracking.GetLocalPosition(XRNode.Head);
+			/*firstUserPhysicalPosition = InputTracking.GetLocalPosition(XRNode.Head);
 			firstUserVRPosition = player1.transform.position;
-			firstUserRotation = InputTracking.GetLocalRotation(XRNode.Head);
+			firstUserRotation = InputTracking.GetLocalRotation(XRNode.Head);*/
+			
+			firstPerson.SetPhysicalPosition(InputTracking.GetLocalPosition(XRNode.Head));
+			firstPerson.SetVrPosition(player1.transform.position);
+			firstPerson.SetRotation(InputTracking.GetLocalRotation(XRNode.Head));
 
 			v1.x = player1.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
 			v1.y = player1.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
 			v1.z = player1.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
 			
-			UpdateUser(firstUser, firstUserId, firstUserPhysicalPosition, firstUserVRPosition, firstUserRotation);
+			//UpdateUser(firstUser, firstUserId, firstUserPhysicalPosition, firstUserVRPosition, firstUserRotation);
 
-			if (secondUserIsPresent && secondUserIsInstantiated == false)
+			/*if (secondUserIsPresent && secondUserIsInstantiated == false)
 			{
 				secondUserIsInstantiated = true;
 				avatarSecondPlayer = Instantiate(player2, secondUserPosition, secondUserRotation);
@@ -142,7 +155,48 @@ namespace Unibas.DBIS.VREP
 				player1.transform.SetPositionAndRotation(newPosFirstUser, firstUserRotation);
 
 				playerHasTeleported = false;
+			}*/
+
+
+			if (secondPerson.PersonIsPresent() && secondPerson.PersonIsInstantiated() == false)
+			{
+				secondPerson.SetPersonIsPresent(true);
+				avatarSecondPlayer = Instantiate(player2, secondPerson.GetVrPosition(), secondPerson.GetRotation());
 			}
+			
+			if (secondPerson.PersonIsPresent() && secondPerson.PersonIsInstantiated())
+			{
+				secondPerson.SetPersonIsPresent(true);
+				avatarSecondPlayer.transform.SetPositionAndRotation(secondPerson.GetVrPosition(), secondPerson.GetRotation());
+			}
+			
+			if (secondUserIsPresent && playerHasTeleported)
+			{
+				
+				Vector3 newPosFirstUser = new Vector3()
+				{
+					x = firstPerson.GetVrPosition().x - distanceTeleporting.x,
+					y = firstPerson.GetVrPosition().y - distanceTeleporting.y,
+					z = firstPerson.GetVrPosition().z - distanceTeleporting.z
+
+				};
+			
+				Vector3 newPosSecondUser = new Vector3()
+				{
+					x = secondPerson.GetVrPosition().x - distanceTeleporting.x,
+					y = secondPerson.GetVrPosition().y - distanceTeleporting.y,
+					z = secondPerson.GetVrPosition().z - distanceTeleporting.z
+
+				};
+				
+				avatarSecondPlayer.transform.SetPositionAndRotation(newPosSecondUser, secondPerson.GetRotation());
+				
+				player1.transform.SetPositionAndRotation(newPosFirstUser, firstPerson.GetRotation());
+
+				playerHasTeleported = false;
+			}
+			
+			
 			
 		}
 
@@ -152,12 +206,11 @@ namespace Unibas.DBIS.VREP
 		
 			channel = new Channel(host, port, ChannelCredentials.Insecure);
 			client = new multiUserSync.multiUserSyncClient(channel);
-			DateTime time = DateTime.Now;
 		
 			while (!stop || channel.State != ChannelState.Shutdown) //The synchronization happens in the while loop
 			{
-				SetUser(firstUser);
-				GetUser(firstUserId); //Trick to get user which is NOT equal firstUserId, details see implementation on server
+				SetUser(firstPerson.GetPerson());
+				GetUser(firstPerson.GetObjectId()); //Trick to get user which is NOT equal firstUserId, details see implementation on server
 			}
 
 			channel.ShutdownAsync().Wait();
@@ -203,21 +256,25 @@ namespace Unibas.DBIS.VREP
 				var responseUser = client.getUser(requestUser);
 
 				if (responseUser.Id != 0)
-					secondUserIsPresent = true;
+					secondPerson.SetPersonIsPresent(true);
 				
-				secondUserId = responseUser.Id;
+				/*secondUserId = responseUser.Id;
 				secondUserPosition.x = responseUser.UserPhysicalPosition.X + v1.x;
 				secondUserPosition.y = 0.0f;
 				secondUserPosition.z = responseUser.UserPhysicalPosition.Z + v1.z;
 				secondUserRotation.x = 0.0f;
 				secondUserRotation.y = responseUser.UserRotation.Y;
 				secondUserRotation.z = 0.0f;
-				secondUserRotation.w = responseUser.UserRotation.W;
+				secondUserRotation.w = responseUser.UserRotation.W;*/
+				
+				secondPerson.SetObjectId(responseUser.Id);
+				secondPerson.SetPhysicalPosition(new Vector3(responseUser.UserPhysicalPosition.X + v1.x, 0.0f, responseUser.UserPhysicalPosition.Z + v1.z));
+				secondPerson.SetRotation(new Quaternion(0.0f, responseUser.UserRotation.Y, 0.0f, responseUser.UserRotation.W));
 
 				Vector3 tempV2 = v2;
-				v2.x = responseUser.UserVRPosition.X - secondUserPosition.x;
-				v2.y = responseUser.UserVRPosition.Y - secondUserPosition.y;
-				v2.z = responseUser.UserVRPosition.Z - secondUserPosition.z;
+				v2.x = responseUser.UserVRPosition.X - secondPerson.GetVrPosition().x;
+				v2.y = responseUser.UserVRPosition.Y - secondPerson.GetVrPosition().y;
+				v2.z = responseUser.UserVRPosition.Z - secondPerson.GetVrPosition().z;
 				Debug.Log("V2: " + v2 + " , tempV2: " + tempV2);
 
 				

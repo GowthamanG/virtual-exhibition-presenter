@@ -107,19 +107,19 @@
     <Compile Include="Assets\SteamVR\Input\Editor\SteamVR_Input_LiveWindow.cs" />
     <Compile Include="Assets\SteamVR\Input\Editor\SteamVR_Input_PostProcessBuild.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.10f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -349,50 +349,41 @@
     <Reference Include="UnityEditor.Graphs">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.10f1/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.WSA.Extensions">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.10f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.WSA.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.LinuxStandalone.Extensions">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.10f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.10f1/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.OSXStandalone.Extensions">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.10f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="JetBrains.Rider.Unity.Editor.Plugin.Repacked">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll</HintPath>
     </Reference>
     <Reference Include="Google.Protobuf">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Assets/Plugins/Google.Protobuf/lib/net45/Google.Protobuf.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Assets/Plugins/Google.Protobuf/lib/net45/Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="Grpc.Core">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Assets/Plugins/Grpc.Core/lib/net45/Grpc.Core.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Assets/Plugins/Grpc.Core/lib/net45/Grpc.Core.dll</HintPath>
     </Reference>
     <Reference Include="Grpc.Core.Api">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Assets/Plugins/Grpc.Core.Api/lib/net45/Grpc.Core.Api.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Assets/Plugins/Grpc.Core.Api/lib/net45/Grpc.Core.Api.dll</HintPath>
     </Reference>
     <Reference Include="System.Interactive.Async">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Assets/Plugins/System.Interactive.Async/lib/net45/System.Interactive.Async.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Assets/Plugins/System.Interactive.Async/lib/net45/System.Interactive.Async.dll</HintPath>
     </Reference>
     <Reference Include="Valve.Newtonsoft.Json">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Assets/SteamVR/Input/Plugins/JSON.NET/Valve.Newtonsoft.Json.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Assets/SteamVR/Input/Plugins/JSON.NET/Valve.Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Advertisements">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Purchasing">
-      <HintPath>C:/Projects/BachelorProjectGowthamanGobalasingam/virtual-exhibition-presenter/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
+      <HintPath>D:/Gowthaman/Programming_Projects/Bachelor_Thesis/virtual-exhibition-presenter/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.10f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
