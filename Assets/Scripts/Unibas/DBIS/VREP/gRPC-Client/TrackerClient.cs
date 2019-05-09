@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using System.Threading;
 using Grpc.Core;
-using HTC.UnityPlugin.Vive;
 using UnityEngine;
 using UnityEngine.XR;
 using Valve.VR;
 using Valve.VR.InteractionSystem;
-
-using HTC.UnityPlugin.PoseTracker;
-using HTC.UnityPlugin.Utility;
 
 
 namespace Unibas.DBIS.VREP
@@ -21,7 +17,6 @@ namespace Unibas.DBIS.VREP
 		public int port;
 		public GameObject box;
 		public GameObject player;
-		public ViveRoleProperty viveRole = ViveRoleProperty.New();
 		private Vector3 playerPosition;
 		private multiUserSync.multiUserSyncClient client;
 		private Tracker tracker;
@@ -46,8 +41,7 @@ namespace Unibas.DBIS.VREP
 			{
 				
 				trackerId = GetInstanceID();
-				//trackerPhysicalPosition = VivePose.GetPoseEx(TrackerRole.Tracker1).pos;
-				trackerPhysicalPosition = VivePose.GetPose((viveRole.GetDeviceIndex()), null).pos;
+				trackerPhysicalPosition = transform.localPosition;
 				trackerVRPosition = transform.position;
 				trackerRotation = transform.rotation;
 
@@ -113,11 +107,11 @@ namespace Unibas.DBIS.VREP
 			translate.y = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
 			translate.z = player.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
 
-			trackerPhysicalPosition = VivePose.GetPoseEx(TrackerRole.Tracker1).pos;;
+			trackerPhysicalPosition = transform.localPosition;
 			
 			if (trackerIsActive)
 			{
-				Debug.Log("TRACKER PHYSICAL POSITION: " + trackerPhysicalPosition);
+				Debug.Log("POSITION: " + trackerPhysicalPosition);
 				trackerVRPosition = transform.position;
 				trackerRotation = transform.rotation;
 				UpdateTracker(tracker, trackerId, trackerPhysicalPosition, trackerVRPosition, trackerRotation);
