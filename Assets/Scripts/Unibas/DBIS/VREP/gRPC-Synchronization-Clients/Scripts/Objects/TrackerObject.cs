@@ -17,8 +17,7 @@ namespace Unibas.DBIS.VREP.Scripts.Objects
             this.isInstantiated = false;
         }
 
-        public TrackerObject(int objectId, Vector3 physicalPosition, Vector3 vrPosition, Quaternion rotation,
-            Vector3 v)
+        public TrackerObject(int objectId, Vector3 physicalPosition, Vector3 vrPosition, Quaternion rotation)
         {
             this.tracker.Id = objectId;
             this.tracker.TrackerPhysicalPosition = SetVector(physicalPosition);

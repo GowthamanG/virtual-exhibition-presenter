@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Threading;
 using Grpc.Core;
-using HTC.UnityPlugin.Vive;
+using Unibas.DBIS.VREP.Scripts.Objects;
 using UnityEngine;
 using UnityEngine.XR;
 using Valve.VR;
 using Valve.VR.InteractionSystem;
-
-using HTC.UnityPlugin.PoseTracker;
-using HTC.UnityPlugin.Utility;
 
 
 namespace Unibas.DBIS.VREP
@@ -21,7 +18,6 @@ namespace Unibas.DBIS.VREP
 		public int port;
 		public GameObject box;
 		public GameObject player;
-		public ViveRoleProperty viveRole = ViveRoleProperty.New();
 		private Vector3 playerPosition;
 		private multiUserSync.multiUserSyncClient client;
 		private Tracker tracker;
@@ -36,7 +32,10 @@ namespace Unibas.DBIS.VREP
 		private bool strangeTrackerIsActive;
 		private GameObject cubetracker;
 
-		private Vector3 translate;
+		private Vector3 v1;
+
+		private TrackerObject currentTracker;
+		private TrackerObject newTracker;
 
 		// Use this for initialization
 		void Start()
@@ -45,9 +44,8 @@ namespace Unibas.DBIS.VREP
 			if (trackerIsActive)
 			{
 				
-				trackerId = GetInstanceID();
-				//trackerPhysicalPosition = VivePose.GetPoseEx(TrackerRole.Tracker1).pos;
-				trackerPhysicalPosition = VivePose.GetPose((viveRole.GetDeviceIndex()), null).pos;
+				/*trackerId = GetInstanceID();
+				trackerPhysicalPosition = transform.localPosition;
 				trackerVRPosition = transform.position;
 				trackerRotation = transform.rotation;
 
@@ -76,8 +74,10 @@ namespace Unibas.DBIS.VREP
 						Z = trackerRotation.z,
 						W = trackerRotation.w
 					}
-				};
-
+				};*/
+				
+				currentTracker = new TrackerObject(GetInstanceID(), transform.localPosition, transform.position, transform.rotation);
+				currentTracker.SetTrackerIsPresent(true);
 			}
 			else
 			{
@@ -85,23 +85,24 @@ namespace Unibas.DBIS.VREP
 				trackerId = 0;
 				trackerVRPosition = new Vector3();
 				trackerRotation = new Quaternion();
+
+				newTracker = new TrackerObject(0, new Vector3(), new Vector3(), new Quaternion());
 			}		
 
-			trackerIsInstantiated = false;
-			strangeTrackerIsActive = false;
+			/*trackerIsInstantiated = false;
+			strangeTrackerIsActive = false;*/
 
 			cubetracker = new GameObject();
 
 			connectionThread = new Thread(Run);
 			connectionThread.Start();
 			
-			translate = new Vector3()
+			v1 = new Vector3()
 			{
 				x = player.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x,
 				y = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y,
 				z = player.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z
-			};
-			
+			};	
 			
 		}
 
@@ -109,18 +110,18 @@ namespace Unibas.DBIS.VREP
 		void Update()
 		{
 
-			translate.x = player.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
-			translate.y = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
-			translate.z = player.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
-
-			trackerPhysicalPosition = VivePose.GetPoseEx(TrackerRole.Tracker1).pos;;
+			v1.x = player.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
+			v1.y = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
+			v1.z = player.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
 			
-			if (trackerIsActive)
+			if (currentTracker.TrackerIsPresent())
 			{
-				Debug.Log("TRACKER PHYSICAL POSITION: " + trackerPhysicalPosition);
-				trackerVRPosition = transform.position;
-				trackerRotation = transform.rotation;
-				UpdateTracker(tracker, trackerId, trackerPhysicalPosition, trackerVRPosition, trackerRotation);
+				currentTracker.SetPhysicalPosition(transform.localPosition);
+				currentTracker.SetVrPosition(transform.position);
+				currentTracker.SetRotation(transform.rotation);
+				/*trackerVRPosition = transform.position;
+				trackerRotation = transform.rotation;*/
+				//UpdateTracker(tracker, trackerId, trackerPhysicalPosition, trackerVRPosition, trackerRotation);
 			}
 
 
@@ -132,6 +133,18 @@ namespace Unibas.DBIS.VREP
 
 			if (trackerIsActive == false && strangeTrackerIsActive && trackerIsInstantiated)
 				cubetracker.transform.SetPositionAndRotation(trackerVRPosition, trackerRotation);
+			
+			if (currentTracker.TrackerIsPresent() == false && newTracker.TrackerIsInstantiated() == false && newTracker.TrackerIsPresent())
+			{
+				//trackerIsInstantiated = true;
+				newTracker.SetTrackerIsPresent(true);
+				cubetracker = Instantiate(box, newTracker.GetVrPosition(), newTracker.GetRotation());
+				//cubetracker = Instantiate(box, trackerVRPosition, trackerRotation);
+			}
+
+			if (trackerIsActive == false && strangeTrackerIsActive && trackerIsInstantiated)
+				//cubetracker.transform.SetPositionAndRotation(trackerVRPosition, trackerRotation);
+				cubetracker.transform.SetPositionAndRotation(newTracker.GetVrPosition(), newTracker.GetRotation());
 
 
 		}
@@ -144,11 +157,14 @@ namespace Unibas.DBIS.VREP
 		
 			while (!stop || channel.State != ChannelState.Shutdown) //The synchronization happens in the while loop
 			{
-				SetTracker(tracker);
-				if (trackerIsActive == false)
+				if(currentTracker.TrackerIsPresent())
+					SetTracker(currentTracker.GetTracker());
+				
+				else if (currentTracker.TrackerIsPresent() == false && newTracker.TrackerIsPresent() == false)
 				{
 					GetTracker(00); //Trick to get user which is NOT equal firstUserId, details see implementation on server
-					strangeTrackerIsActive = true;
+					//strangeTrackerIsActive = true;
+					newTracker.SetTrackerIsPresent(true);
 				}
 
 			}
@@ -198,15 +214,44 @@ namespace Unibas.DBIS.VREP
 				if (responseTracker.Id != 0)
 				{
 
-					this.trackerId = responseTracker.Id;
-					trackerVRPosition.x = responseTracker.TrackerPhysicalPosition.X + translate.x;
-					trackerVRPosition.y = responseTracker.TrackerPhysicalPosition.Y + translate.y;
-					trackerVRPosition.z = responseTracker.TrackerPhysicalPosition.Z + translate.z;
-					
-					trackerRotation.x = responseTracker.TrackerRotation.X;
-					trackerRotation.y = responseTracker.TrackerRotation.Y;
-					trackerRotation.z = responseTracker.TrackerRotation.Z;
-					trackerRotation.w = responseTracker.TrackerRotation.W;
+					/*this.trackerId = responseTracker.Id;
+                    trackerVRPosition.x = responseTracker.TrackerPhysicalPosition.X + v1.x;
+                    trackerVRPosition.y = responseTracker.TrackerPhysicalPosition.Y + v1.y;
+                    trackerVRPosition.z = responseTracker.TrackerPhysicalPosition.Z + v1.z;
+                                                                          					
+                    trackerRotation.x = responseTracker.TrackerRotation.X;
+                    trackerRotation.y = responseTracker.TrackerRotation.Y;
+                    trackerRotation.z = responseTracker.TrackerRotation.Z;
+                    trackerRotation.w = responseTracker.TrackerRotation.W;*/
+
+                    Vector3 physicalPosition = new Vector3()
+                    {
+	                    x = responseTracker.TrackerPhysicalPosition.X,
+	                    y = responseTracker.TrackerPhysicalPosition.Y,
+	                    z = responseTracker.TrackerPhysicalPosition.Z
+                    };
+                    
+                    Vector3 vrPosition = new Vector3()
+                    {
+	                    x = responseTracker.TrackerPhysicalPosition.X + v1.x,
+	                    y = responseTracker.TrackerPhysicalPosition.Y + v1.y,
+	                    z = responseTracker.TrackerPhysicalPosition.Z + v1.z
+                    };
+
+                    Quaternion rotation = new Quaternion()
+                    {
+	                    x = responseTracker.TrackerRotation.X,
+	                    y = responseTracker.TrackerRotation.Y,
+	                    z = responseTracker.TrackerRotation.Z,
+	                    w = responseTracker.TrackerRotation.W
+                    };
+                    
+                    
+                    
+                    newTracker.SetObjectId(responseTracker.Id);
+                    newTracker.SetPhysicalPosition(physicalPosition);
+                    newTracker.SetVrPosition(vrPosition);
+                    newTracker.SetRotation(rotation);
 				}
 
 			}

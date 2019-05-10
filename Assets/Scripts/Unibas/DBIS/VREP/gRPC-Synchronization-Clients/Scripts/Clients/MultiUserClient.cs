@@ -43,7 +43,8 @@ namespace Unibas.DBIS.VREP
 		void Start ()
 		{
 		
-			firstPerson = new PersonObject(player1.GetInstanceID(), InputTracking.GetLocalPosition(XRNode.Head), player1.transform.position, InputTracking.GetLocalRotation(XRNode.Head), new Vector3());
+			firstPerson = new PersonObject(player1.GetInstanceID(), InputTracking.GetLocalPosition(XRNode.Head), 
+				player1.transform.position, InputTracking.GetLocalRotation(XRNode.Head));
 			secondPerson = new PersonObject();
 			
 			/*firstUserId = player1.GetInstanceID();
@@ -119,6 +120,7 @@ namespace Unibas.DBIS.VREP
 			v1.x = player1.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
 			v1.y = player1.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
 			v1.z = player1.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
+			
 			
 			//UpdateUser(firstUser, firstUserId, firstUserPhysicalPosition, firstUserVRPosition, firstUserRotation);
 

@@ -17,8 +17,7 @@ namespace Unibas.DBIS.VREP.Scripts.Objects
             this.isInstantiated = false;
         }
 
-        public PersonObject(int objectId, Vector3 physicalPosition, Vector3 vrPosition, Quaternion rotation,
-            Vector3 v)
+        public PersonObject(int objectId, Vector3 physicalPosition, Vector3 vrPosition, Quaternion rotation)
         {
             this.user.Id = objectId;
             this.user.UserPhysicalPosition = SetVector(physicalPosition);
