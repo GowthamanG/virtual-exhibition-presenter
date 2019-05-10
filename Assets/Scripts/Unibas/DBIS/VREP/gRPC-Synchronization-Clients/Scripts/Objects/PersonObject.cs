@@ -6,55 +6,59 @@ namespace Unibas.DBIS.VREP.Scripts.Objects
 {
     public class PersonObject
     {
-        private User user;
+        private User _user;
         private bool isPresent;
         private bool isInstantiated;
 
         public PersonObject()
         {
-            this.user = new User();
+            this._user = new User();
             this.isPresent = false;
             this.isInstantiated = false;
         }
 
         public PersonObject(int objectId, Vector3 physicalPosition, Vector3 vrPosition, Quaternion rotation)
         {
-            this.user.Id = objectId;
-            this.user.UserPhysicalPosition = SetVector(physicalPosition);
-            this.user.UserVRPosition = SetVector(vrPosition);
-            this.user.UserRotation = SetQuadrublet(rotation);
+            this._user = new User()
+            {
+                Id = objectId,
+                UserPhysicalPosition = SetVector(physicalPosition),
+                UserVRPosition = SetVector(vrPosition),
+                UserRotation = SetQuadrublet(rotation)
+            };
+       
             this.isPresent = false;
             this.isInstantiated = false;
         }
 
         public User GetPerson()
         {
-            return this.user;
+            return this._user;
         }
 
         public void SetPerson(User user)
         {
-            this.user = user;
+            this._user = user;
         }
 
 
         public int GetObjectId()
         {
-            return this.user.Id;
+            return this._user.Id;
         }
 
         public void SetObjectId(int objectId)
         {
-            this.user.Id= objectId;
+            this._user.Id= objectId;
         }
 
         public Vector3 GetPhysicalPosition()
         {
             Vector3 newVector = new Vector3
             {
-                x = this.user.UserPhysicalPosition.X,
-                y = this.user.UserPhysicalPosition.Y,
-                z = this.user.UserPhysicalPosition.Z
+                x = this._user.UserPhysicalPosition.X,
+                y = this._user.UserPhysicalPosition.Y,
+                z = this._user.UserPhysicalPosition.Z
             };
 
 
@@ -63,16 +67,16 @@ namespace Unibas.DBIS.VREP.Scripts.Objects
 
         public void SetPhysicalPosition(Vector3 physicalPosition)
         {
-            this.user.UserPhysicalPosition = SetVector(physicalPosition);
+            this._user.UserPhysicalPosition = SetVector(physicalPosition);
         }
 
         public Vector3 GetVrPosition()
         {
             Vector3 newVector = new Vector3
             {
-                x = this.user.UserVRPosition.X, 
-                y = this.user.UserVRPosition.Y, 
-                z = this.user.UserVRPosition.Z
+                x = this._user.UserVRPosition.X, 
+                y = this._user.UserVRPosition.Y, 
+                z = this._user.UserVRPosition.Z
             };
 
 
@@ -81,17 +85,17 @@ namespace Unibas.DBIS.VREP.Scripts.Objects
 
         public void SetVrPosition(Vector3 vrPosition)
         {
-            this.user.UserVRPosition = SetVector(vrPosition);
+            this._user.UserVRPosition = SetVector(vrPosition);
         }
 
         public Quaternion GetRotation()
         {
             Quaternion newQuaternion = new Quaternion
             {
-                x = this.user.UserRotation.X,
-                y = this.user.UserRotation.Y,
-                z = this.user.UserRotation.Z,
-                w = this.user.UserRotation.W
+                x = this._user.UserRotation.X,
+                y = this._user.UserRotation.Y,
+                z = this._user.UserRotation.Z,
+                w = this._user.UserRotation.W
             };
 
 
@@ -100,7 +104,7 @@ namespace Unibas.DBIS.VREP.Scripts.Objects
 
         public void SetRotation(Quaternion rotation)
         {
-            this.user.UserRotation = SetQuadrublet(rotation);
+            this._user.UserRotation = SetQuadrublet(rotation);
         }
 
         public bool PersonIsPresent()
