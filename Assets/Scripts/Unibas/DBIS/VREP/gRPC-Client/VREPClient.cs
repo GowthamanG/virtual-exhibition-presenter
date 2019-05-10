@@ -118,6 +118,7 @@ namespace Unibas.DBIS.VREP
 			if (secondUserIsPresent && secondUserIsInstantiated)
 				avatarSecondPlayer.transform.SetPositionAndRotation(secondUserPosition, secondUserRotation);
 
+			//Implementation to set HMDs position, when second player teleports, but still not working
 			if (secondUserIsPresent && playerHasTeleported)
 			{
 				

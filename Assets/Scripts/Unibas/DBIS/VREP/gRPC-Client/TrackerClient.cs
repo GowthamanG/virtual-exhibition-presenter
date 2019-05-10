@@ -31,7 +31,7 @@ namespace Unibas.DBIS.VREP
 		private bool strangeTrackerIsActive;
 		private GameObject cubetracker;
 
-		private Vector3 translate;
+		private Vector3 v3;
 
 		// Use this for initialization
 		void Start()
@@ -41,7 +41,7 @@ namespace Unibas.DBIS.VREP
 			{
 				
 				trackerId = GetInstanceID();
-				trackerPhysicalPosition = transform.localPosition;
+				trackerPhysicalPosition = transform.localPosition; //transform.localPosition gets physical tracking position
 				trackerVRPosition = transform.position;
 				trackerRotation = transform.rotation;
 
@@ -89,7 +89,7 @@ namespace Unibas.DBIS.VREP
 			connectionThread = new Thread(Run);
 			connectionThread.Start();
 			
-			translate = new Vector3()
+			v3 = new Vector3()
 			{
 				x = player.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x,
 				y = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y,
@@ -103,9 +103,9 @@ namespace Unibas.DBIS.VREP
 		void Update()
 		{
 
-			translate.x = player.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
-			translate.y = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
-			translate.z = player.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
+			v3.x = player.transform.position.x - InputTracking.GetLocalPosition(XRNode.Head).x;
+			v3.y = player.transform.position.y - InputTracking.GetLocalPosition(XRNode.Head).y;
+			v3.z = player.transform.position.z - InputTracking.GetLocalPosition(XRNode.Head).z;
 
 			trackerPhysicalPosition = transform.localPosition;
 			
@@ -193,9 +193,9 @@ namespace Unibas.DBIS.VREP
 				{
 
 					this.trackerId = responseTracker.Id;
-					trackerVRPosition.x = responseTracker.TrackerPhysicalPosition.X + translate.x;
-					trackerVRPosition.y = responseTracker.TrackerPhysicalPosition.Y + translate.y;
-					trackerVRPosition.z = responseTracker.TrackerPhysicalPosition.Z + translate.z;
+					trackerVRPosition.x = responseTracker.TrackerPhysicalPosition.X + v3.x;
+					trackerVRPosition.y = responseTracker.TrackerPhysicalPosition.Y + v3.y;
+					trackerVRPosition.z = responseTracker.TrackerPhysicalPosition.Z + v3.z;
 					
 					trackerRotation.x = responseTracker.TrackerRotation.X;
 					trackerRotation.y = responseTracker.TrackerRotation.Y;
